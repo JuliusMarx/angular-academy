@@ -69,7 +69,13 @@
               "buildTarget": "angular-academy:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "headers": {
+              "Cross-Origin-Opener-Policy": "same-origin",
+              "Cross-Origin-Embedder-Policy": "credentialless"
+            }
+          }
         },
         "test": {
           "builder": "@angular/build:unit-test"

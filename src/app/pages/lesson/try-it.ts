@@ -99,7 +99,8 @@ export class TryIt {
         view: 'default',
         height: 512,
         hideNavigation: true,
-        terminalHeight: 0,
+        // WebContainers need SharedArrayBuffer; requires the COOP/COEP headers in netlify.toml / angular.json.
+        crossOriginIsolated: true,
       });
       this.state.set('ready');
     } catch (error) {
@@ -108,10 +109,37 @@ export class TryIt {
     }
   }
 
-  /** Fallback that always works: runs the project on stackblitz.com in a new tab. */
+  /**
+   * Runs the project on stackblitz.com in a new tab. The tab is opened synchronously in the click
+   * handler – opening it only after the example has loaded gets it blocked as a pop-up, and a
+   * re-opened (GET) /run request lands on the StackBlitz home page.
+   */
   protected async openInNewTab(): Promise<void> {
-    const { sdk, example } = await this.load();
-    sdk.openProject(this.toProject(example), { openFile: example.openFile, newWindow: true });
+    const windowName = `stackblitz-${this.example()}`;
+    const tab = this.document.defaultView?.open('about:blank', windowName);
+    const { example } = await this.load();
+    const project = this.toProject(example);
+
+    const form = this.document.createElement('form');
+    form.method = 'POST';
+    form.action = `https://stackblitz.com/run?file=${encodeURIComponent(example.openFile)}`;
+    form.target = tab ? windowName : '_self';
+    form.hidden = true;
+    const fields: Record<string, string> = {
+      'project[title]': project.title,
+      'project[template]': project.template,
+      ...Object.fromEntries(Object.entries(project.files).map(([path, code]) => [`project[files][${path}]`, code])),
+    };
+    for (const [name, value] of Object.entries(fields)) {
+      const input = this.document.createElement('input');
+      input.type = 'hidden';
+      input.name = name;
+      input.value = value;
+      form.append(input);
+    }
+    this.document.body.append(form);
+    form.submit();
+    form.remove();
   }
 
   private async load() {

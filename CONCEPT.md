@@ -125,7 +125,7 @@ Ein `ProgressService` kapselt den Zugriff (Signal-basiert), sodass ein Backend s
 - Optional: Mehr Interaktivität (Schritt-für-Schritt-Tutorials im Editor)
 
 ## 7. Offene Fragen
-- **Live-Editor eingebettet**: StackBlitz-WebContainer-Embeds brauchen je nach Browser Cross-Origin-Isolation auf der Host-Seite. Im Browser-Test (Electron) startete das eingebettete Projekt nicht; COOP/COEP-Header (`require-corp` und `credentialless`) haben das nicht gelöst. Als Fallback gibt es „In StackBlitz öffnen“ (neuer Tab). In Chrome/Edge/Firefox prüfen und ggf. auf eigenen Editor (WebContainer API) umstellen.
+- ~~Live-Editor eingebettet~~ – gelöst: COOP/COEP-Header plus `crossOriginIsolated: true` im SDK; Beispiele auf Angular 21, da Angular 22 in WebContainern nicht startet.
 - Hosting-Anbieter festlegen (Netlify vs. Cloudflare Pages) und ggf. eigene Domain
 - Name/Branding und Logo
 - Wer schreibt die Inhalte: komplett von Claude entworfen und von dir geprüft, oder gemischt?

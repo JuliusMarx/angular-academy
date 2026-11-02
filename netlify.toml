@@ -31,6 +31,9 @@
   [headers.values]
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    # Cross-origin isolation: the embedded StackBlitz WebContainers need SharedArrayBuffer.
+    Cross-Origin-Opener-Policy = "same-origin"
+    Cross-Origin-Embedder-Policy = "credentialless"
 
 # Build output file names contain a content hash, so they can be cached forever.
 [[headers]]
