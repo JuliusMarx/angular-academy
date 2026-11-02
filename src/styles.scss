@@ -23,7 +23,7 @@
   --note-soft: #e7eefc;
   --warning: #8a5a00;
   --warning-soft: #fdf1d8;
-  --code-bg: #f3f4f7;
+  --code-bg: #ffffff; /* github-light syntax colors only reach 4.5:1 on white */
   --shadow-lg: 0 10px 30px rgb(15 20 40 / 18%);
 }
 

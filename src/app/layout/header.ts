@@ -1,3 +1,4 @@
+import { NgOptimizedImage } from '@angular/common';
 import { Component, computed, inject, input, model } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Lang, LANGS } from '../content/content.model';
@@ -6,7 +7,8 @@ import { UI_TEXT } from '../core/ui-text';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink],
+  imports: [NgOptimizedImage, RouterLink],
+  host: { role: 'banner' },
   template: `
     <button
       type="button"
@@ -20,7 +22,7 @@ import { UI_TEXT } from '../core/ui-text';
     </button>
 
     <a class="brand" [routerLink]="['/', lang()]">
-      <span class="logo" aria-hidden="true">A</span>
+      <img class="logo" ngSrc="logo.svg" width="32" height="32" alt="" priority />
       <span>{{ text().appName }}</span>
     </a>
 
@@ -69,14 +71,8 @@ import { UI_TEXT } from '../core/ui-text';
       }
     }
     .logo {
-      display: grid;
-      place-items: center;
       width: 2rem;
       height: 2rem;
-      border-radius: 0.5rem;
-      background: var(--accent);
-      color: var(--on-accent);
-      font-weight: 800;
     }
     .actions {
       margin-left: auto;

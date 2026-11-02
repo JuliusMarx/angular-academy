@@ -29,9 +29,17 @@ export interface QuizQuestion {
   explanation?: string;
 }
 
+export interface TocEntry {
+  /** Anchor id of the h2 heading. */
+  id: string;
+  text: string;
+}
+
 export interface Lesson {
   id: string;
   title: string;
+  minutes: number;
+  toc: TocEntry[];
   segments: LessonSegment[];
   quiz: QuizQuestion[];
 }

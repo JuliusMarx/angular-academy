@@ -15,21 +15,40 @@ const OUT_DIR = join(ROOT, 'src/app/content/generated');
 const LANGS = ['de', 'en'];
 
 const highlighter = await createHighlighter({
-  themes: ['github-light', 'github-dark'],
+  themes: ['github-light-default', 'github-dark-default'],
   langs: ['ts', 'js', 'html', 'css', 'scss', 'json', 'bash', 'angular-html', 'angular-ts'],
 });
 
 const LANG_ALIASES = { typescript: 'angular-ts', ts: 'angular-ts', html: 'angular-html', sh: 'bash', shell: 'bash' };
 
+/** h2 headings of the lesson currently being rendered – reset per lesson, used for the table of contents. */
+let headings = [];
+
+const slugify = (text) =>
+  text
+    .toLowerCase()
+    .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+
 const marked = new Marked({
   renderer: {
+    heading({ tokens, depth }) {
+      const html = this.parser.parseInline(tokens);
+      if (depth !== 2 && depth !== 3) return `<h${depth}>${html}</h${depth}>\n`;
+      const text = html.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+      let id = slugify(text) || 'section';
+      for (let n = 2; headings.some((h) => h.id === id); n++) id = `${slugify(text)}-${n}`;
+      headings.push({ id, text, depth });
+      return `<h${depth} id="${id}">${html}</h${depth}>\n`;
+    },
     code({ text, lang }) {
       const requested = (lang ?? '').trim().split(/\s+/)[0] || 'text';
       const shikiLang = LANG_ALIASES[requested] ?? requested;
       const html = highlighter.getLoadedLanguages().includes(shikiLang)
         ? highlighter.codeToHtml(text, {
             lang: shikiLang,
-            themes: { light: 'github-light', dark: 'github-dark' },
+            themes: { light: 'github-light-default', dark: 'github-dark-default' },
             defaultColor: false,
           })
         : `<pre class="shiki"><code>${escapeHtml(text)}</code></pre>`;
@@ -128,10 +147,14 @@ async function buildLessons(exampleIds) {
         const lessonSlug = slugOf(file);
         const id = `${chapterSlug}/${lessonSlug}`;
         chapter.lessons.push({ id, slug: lessonSlug, title: data.title, minutes: data.minutes ?? 5 });
+        headings = [];
+        const segments = renderSegments(content, exampleIds, relative(ROOT, path), lang);
         const lesson = {
           id,
           title: data.title,
-          segments: renderSegments(content, exampleIds, relative(ROOT, path), lang),
+          minutes: data.minutes ?? 5,
+          toc: headings.filter((h) => h.depth === 2).map(({ id, text }) => ({ id, text })),
+          segments,
           quiz: (data.quiz ?? []).map((q) => ({
             ...q,
             explanation: q.explanation && marked.parseInline(q.explanation),

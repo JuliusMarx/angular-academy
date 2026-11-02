@@ -42,6 +42,10 @@ const de = {
   resetConfirm: 'Gesamten Lernfortschritt wirklich löschen?',
   importFailed: 'Die Datei enthält keinen gültigen Lernfortschritt.',
   progressHint: 'Dein Fortschritt wird nur in diesem Browser gespeichert.',
+  lessonOf: (index: number, total: number) => `Lektion ${index} von ${total}`,
+  readingTime: (minutes: number) => `${minutes} Min. Lesezeit`,
+  onThisPage: 'Auf dieser Seite',
+  skipToContent: 'Zum Inhalt springen',
 };
 
 export type UiText = typeof de;
@@ -88,6 +92,10 @@ const en: UiText = {
   resetConfirm: 'Really delete all your learning progress?',
   importFailed: 'This file does not contain valid progress data.',
   progressHint: 'Your progress is only stored in this browser.',
+  lessonOf: (index, total) => `Lesson ${index} of ${total}`,
+  readingTime: (minutes) => `${minutes} min read`,
+  onThisPage: 'On this page',
+  skipToContent: 'Skip to content',
 };
 
 export const UI_TEXT: Record<Lang, UiText> = { de, en };

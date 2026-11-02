@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, input, resource, signal } from '@angular/core';
+import { Component, computed, effect, inject, input, resource } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { Lang } from '../../content/content.model';
@@ -7,11 +7,12 @@ import { ProgressService } from '../../core/progress.service';
 import { UI_TEXT } from '../../core/ui-text';
 import { SafeHtmlPipe } from '../../shared/safe-html.pipe';
 import { Quiz } from './quiz';
+import { Toc } from './toc';
 import { TryIt } from './try-it';
 
 @Component({
   selector: 'app-lesson-page',
-  imports: [RouterLink, SafeHtmlPipe, Quiz, TryIt],
+  imports: [RouterLink, SafeHtmlPipe, Quiz, Toc, TryIt],
   templateUrl: './lesson-page.html',
   styleUrl: './lesson-page.scss',
   host: { '(click)': 'onClick($event)' },
@@ -31,6 +32,12 @@ export default class LessonPage {
     this.content.chapters(this.lang()).find((c) => c.slug === this.chapter()),
   );
   protected readonly neighbours = computed(() => this.content.neighbours(this.lang(), this.lessonId()));
+  /** 1-based position of this lesson within the whole course. */
+  protected readonly position = computed(() => {
+    const lessons = this.content.allLessons(this.lang());
+    const index = lessons.findIndex((l) => l.id === this.lessonId());
+    return index < 0 ? null : { index: index + 1, total: lessons.length };
+  });
 
   protected readonly data = resource({
     params: () => ({ lang: this.lang(), id: this.lessonId() }),
@@ -38,7 +45,6 @@ export default class LessonPage {
   });
 
   protected readonly done = computed(() => this.progress.completed().has(this.lessonId()));
-  protected readonly copiedAt = signal<HTMLElement | null>(null);
 
   constructor() {
     effect(() => {
