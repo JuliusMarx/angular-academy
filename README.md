@@ -59,3 +59,5 @@ Text mit `Code`, Tabellen und Codeblöcken (```ts, ```html, ```bash …).
 
 - Ordner- und Dateinamen bestimmen URL und Reihenfolge (`02-templates/01-interpolation.md` → `/de/templates/interpolation`). Sie müssen in allen Sprachen gleich sein.
 - `::tryit{id}` bettet das Beispiel aus `examples/<id>/` als echtes Angular-Projekt (StackBlitz) ein.
+- Jede Lektion muss in allen Sprachen existieren, sonst bricht `npm run content` ab.
+- Frontmatter-Werte mit ` #`, `: `, `{`, `[` oder Backticks am Anfang in Anführungszeichen setzen, sonst liest YAML sie falsch (` #` startet z. B. einen Kommentar).

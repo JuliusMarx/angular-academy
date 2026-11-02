@@ -1,4 +1,4 @@
 ---
 title: Signals
-description: Reactive state with signal() and derived values with computed().
+description: Reactive state with signal(), computed(), effect(), linkedSignal() and resource().
 ---

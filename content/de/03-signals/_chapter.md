@@ -1,4 +1,4 @@
 ---
 title: Signals
-description: Reaktiver Zustand mit signal() und abgeleitete Werte mit computed().
+description: Reaktiver Zustand mit signal(), computed(), effect(), linkedSignal() und resource().
 ---

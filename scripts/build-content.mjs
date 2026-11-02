@@ -145,6 +145,7 @@ async function buildLessons(exampleIds) {
       curriculum[lang].push(chapter);
     }
   }
+  assertSameStructure(curriculum);
   await writeTs(
     join(OUT_DIR, 'curriculum.ts'),
     `export const curriculum: Record<Lang, Chapter[]> = ${JSON.stringify(curriculum, null, 2)};\n\n` +
@@ -152,6 +153,17 @@ async function buildLessons(exampleIds) {
     "import type { Chapter, Lang, Lesson } from '../content.model';",
   );
   return loaders.length;
+}
+
+/** The language switch keeps the URL, so every lesson must exist in every language. */
+function assertSameStructure(curriculum) {
+  const idsOf = (lang) => curriculum[lang].flatMap((c) => c.lessons.map((l) => l.id)).join('\n');
+  const [first, ...others] = LANGS;
+  for (const lang of others) {
+    if (idsOf(lang) !== idsOf(first)) {
+      throw new Error(`Lessons in content/${lang} differ from content/${first} – every lesson needs both languages.`);
+    }
+  }
 }
 
 async function writeTs(path, body, imports) {
