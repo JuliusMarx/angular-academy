@@ -45,3 +45,6 @@ Thumbs.db
 
 # Generated content
 /src/app/content/generated
+
+# Local Netlify folder
+.netlify

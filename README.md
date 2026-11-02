@@ -17,6 +17,17 @@ npm run build      # Statischer Build mit vorgerenderten Seiten → dist/angular
 
 `npm start`, `npm test` und `npm run build` erzeugen vorher automatisch die Inhalte (`npm run content`). Während der Dev-Server läuft, nach Änderungen an `content/` oder `examples/` einfach `npm run content` erneut ausführen.
 
+## Deployment
+
+Die Seite läuft auf Netlify. Die Konfiguration steht in [netlify.toml](netlify.toml): Build-Befehl, Ausgabeordner, Node-Version, Weiterleitungen (Startseite je nach Browsersprache auf `/de` oder `/en`) und Header. Jeder Push auf `main` wird automatisch veröffentlicht, Pull Requests bekommen einen Vorschau-Link.
+
+Lokal testen, inklusive der Netlify-Regeln:
+
+```bash
+npm run build
+npx netlify-cli dev --offline --dir dist/angular-academy/browser
+```
+
 ## Projektstruktur
 
 ```
