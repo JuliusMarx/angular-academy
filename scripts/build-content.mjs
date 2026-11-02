@@ -63,6 +63,12 @@ const slugOf = (name) => name.replace(/^\d+-/, '').replace(/\.md$/, '');
 const escapeHtml = (s) =>
   s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
+/**
+ * Quiz questions and options often contain markup like "<input #search />" that must stay text,
+ * so only `backticks` become <code> – everything else is escaped.
+ */
+const inlineCode = (s) => escapeHtml(s).replace(/`([^`]+)`/g, '<code>$1</code>');
+
 /** GitHub-style alerts: "> [!TIP]" blockquotes become callout boxes. */
 function renderCallouts(html) {
   return html.replace(
@@ -200,6 +206,8 @@ async function buildLessons(exampleIds, exercises) {
           segments,
           quiz: (data.quiz ?? []).map((q) => ({
             ...q,
+            question: inlineCode(String(q.question)),
+            options: q.options.map((o) => inlineCode(String(o))),
             explanation: q.explanation && marked.parseInline(q.explanation),
           })),
           ...(data.exercise ? { exercise: buildExercise(data.exercise, exercises, relative(ROOT, path), lang) } : {}),

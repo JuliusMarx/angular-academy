@@ -21,6 +21,7 @@ export interface Chapter {
 export type LessonSegment = { type: 'html'; html: string } | { type: 'tryit'; example: string };
 
 export interface QuizQuestion {
+  /** Question and options: HTML-escaped text with `code` spans, rendered at build time. */
   question: string;
   options: string[];
   /** Index into `options`. */

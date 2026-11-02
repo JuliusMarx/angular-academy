@@ -7,7 +7,7 @@
       [class.correct]="submitted() && answers()[qi] === q.answer"
       [class.wrong]="submitted() && answers()[qi] !== q.answer"
     >
-      <legend>{{ qi + 1 }}. {{ q.question }}</legend>
+      <legend>{{ qi + 1 }}. <span [innerHTML]="q.question | safeHtml"></span></legend>
       @for (option of q.options; track $index; let oi = $index) {
         <label
           class="option"
@@ -21,7 +21,7 @@
             [disabled]="submitted()"
             (change)="select(qi, oi)"
           />
-          <span>{{ option }}</span>
+          <span [innerHTML]="option | safeHtml"></span>
         </label>
       }
       @if (submitted()) {
