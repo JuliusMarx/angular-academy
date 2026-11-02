@@ -143,7 +143,9 @@ async function buildLessons(exampleIds) {
       const files = (await readdir(join(langDir, chapterDir))).filter((f) => f.endsWith('.md') && !f.startsWith('_')).sort();
       for (const file of files) {
         const path = join(langDir, chapterDir, file);
-        const { data, content } = matter(await readFile(path, 'utf8'));
+        const raw = await readFile(path, 'utf8');
+        const { data, content } = matter(raw);
+        assertNoYamlComments(raw, data, relative(ROOT, path));
         const lessonSlug = slugOf(file);
         const id = `${chapterSlug}/${lessonSlug}`;
         chapter.lessons.push({ id, slug: lessonSlug, title: data.title, minutes: data.minutes ?? 5 });
@@ -176,6 +178,19 @@ async function buildLessons(exampleIds) {
     "import type { Chapter, Lang, Lesson } from '../content.model';",
   );
   return loaders.length;
+}
+
+/**
+ * In unquoted YAML, " #" starts a comment – "Variables with @let and #ref" silently becomes
+ * "Variables with @let and". Fail the build when a parsed value is followed by " #" in the source.
+ */
+function assertNoYamlComments(raw, data, file) {
+  const values = [data.title, ...(data.quiz ?? []).flatMap((q) => [q.question, ...q.options])];
+  for (const value of values) {
+    if (typeof value === 'string' && raw.includes(`${value} #`)) {
+      throw new Error(`${file}: "${value} #…" was cut off by YAML – put the value in quotes.`);
+    }
+  }
 }
 
 /** The language switch keeps the URL, so every lesson must exist in every language. */
