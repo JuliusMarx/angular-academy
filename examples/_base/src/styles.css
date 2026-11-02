@@ -1,0 +1,11 @@
+body {
+  margin: 1.5rem;
+  font-family: system-ui, sans-serif;
+  line-height: 1.5;
+}
+
+button {
+  padding: 0.4rem 0.9rem;
+  font: inherit;
+  cursor: pointer;
+}

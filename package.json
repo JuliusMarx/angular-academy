@@ -7,7 +7,10 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:angular-academy": "node dist/angular-academy/server/server.mjs"
+    "content": "node scripts/build-content.mjs",
+    "prestart": "npm run content",
+    "prebuild": "npm run content",
+    "pretest": "npm run content"
   },
   "private": true,
   "packageManager": "npm@11.4.2",
@@ -20,7 +23,7 @@
     "@angular/platform-server": "^22.2.0",
     "@angular/router": "^22.2.0",
     "@angular/ssr": "^22.2.5",
-    "express": "^5.1.0",
+    "@stackblitz/sdk": "^1.11.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
@@ -28,10 +31,12 @@
     "@angular/build": "^22.2.5",
     "@angular/cli": "^22.2.5",
     "@angular/compiler-cli": "^22.2.0",
-    "@types/express": "^5.0.1",
     "@types/node": "^22.12.0",
+    "gray-matter": "^4.0.3",
     "jsdom": "^30.0.0",
+    "marked": "^18.1.2",
     "prettier": "^3.8.1",
+    "shiki": "^4.6.0",
     "typescript": "~6.0.2",
     "vitest": "^5.0.0"
   }

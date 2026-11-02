@@ -1,0 +1,165 @@
+// Reads content/ and examples/ and generates TypeScript modules under
+// src/app/content/generated/ that the app imports (lazy-loaded per lesson).
+import { mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
+import { join, relative } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import matter from 'gray-matter';
+import { Marked } from 'marked';
+import { createHighlighter } from 'shiki';
+
+const ROOT = fileURLToPath(new URL('..', import.meta.url));
+const CONTENT_DIR = join(ROOT, 'content');
+const EXAMPLES_DIR = join(ROOT, 'examples');
+const OUT_DIR = join(ROOT, 'src/app/content/generated');
+const LANGS = ['de', 'en'];
+
+const highlighter = await createHighlighter({
+  themes: ['github-light', 'github-dark'],
+  langs: ['ts', 'js', 'html', 'css', 'scss', 'json', 'bash', 'angular-html', 'angular-ts'],
+});
+
+const LANG_ALIASES = { typescript: 'angular-ts', ts: 'angular-ts', html: 'angular-html', sh: 'bash', shell: 'bash' };
+
+const marked = new Marked({
+  renderer: {
+    code({ text, lang }) {
+      const requested = (lang ?? '').trim().split(/\s+/)[0] || 'text';
+      const shikiLang = LANG_ALIASES[requested] ?? requested;
+      const html = highlighter.getLoadedLanguages().includes(shikiLang)
+        ? highlighter.codeToHtml(text, {
+            lang: shikiLang,
+            themes: { light: 'github-light', dark: 'github-dark' },
+            defaultColor: false,
+          })
+        : `<pre class="shiki"><code>${escapeHtml(text)}</code></pre>`;
+      return `<div class="code-block"><button type="button" class="copy-button" data-copy>Copy</button>${html}</div>`;
+    },
+  },
+});
+
+/** Strips the numeric ordering prefix: "01-introduction" -> "introduction". */
+const slugOf = (name) => name.replace(/^\d+-/, '').replace(/\.md$/, '');
+
+const escapeHtml = (s) =>
+  s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+/** GitHub-style alerts: "> [!TIP]" blockquotes become callout boxes. */
+function renderCallouts(html) {
+  return html.replace(
+    /<blockquote>\s*<p>\[!(NOTE|TIP|WARNING)\]\s*/g,
+    (_, kind) => `<blockquote class="callout callout-${kind.toLowerCase()}"><p>`,
+  );
+}
+
+/**
+ * Splits the markdown body at "::tryit{example-id}" lines so the app can render
+ * an interactive component in between the static HTML segments.
+ */
+function renderSegments(markdown, exampleIds, file, lang) {
+  const segments = [];
+  const parts = markdown.split(/^::tryit\{([\w-]+)\}\s*$/m);
+  parts.forEach((part, i) => {
+    if (i % 2 === 1) {
+      if (!exampleIds.has(part)) throw new Error(`${file}: unknown example "${part}"`);
+      segments.push({ type: 'tryit', example: part });
+    } else if (part.trim()) {
+      segments.push({ type: 'html', html: localize(renderCallouts(marked.parse(part)), lang) });
+    }
+  });
+  return segments;
+}
+
+const COPY_LABEL = { de: 'Kopieren', en: 'Copy' };
+const localize = (html, lang) => html.replaceAll('data-copy>Copy</button>', `data-copy>${COPY_LABEL[lang]}</button>`);
+
+async function sortedDirs(dir) {
+  const entries = await readdir(dir, { withFileTypes: true });
+  return entries.filter((e) => e.isDirectory() && !e.name.startsWith('_')).map((e) => e.name).sort();
+}
+
+async function readExampleFiles(dir, base = dir) {
+  const files = {};
+  for (const entry of await readdir(dir, { withFileTypes: true })) {
+    const path = join(dir, entry.name);
+    if (entry.isDirectory()) Object.assign(files, await readExampleFiles(path, base));
+    else if (entry.name !== 'meta.json') files[relative(base, path).replace(/\\/g, '/')] = await readFile(path, 'utf8');
+  }
+  return files;
+}
+
+async function buildExamples() {
+  const baseFiles = await readExampleFiles(join(EXAMPLES_DIR, '_base'));
+  const ids = await sortedDirs(EXAMPLES_DIR);
+  await mkdir(join(OUT_DIR, 'examples'), { recursive: true });
+  for (const id of ids) {
+    const dir = join(EXAMPLES_DIR, id);
+    const meta = existsSync(join(dir, 'meta.json')) ? JSON.parse(await readFile(join(dir, 'meta.json'), 'utf8')) : {};
+    const example = {
+      id,
+      openFile: meta.openFile ?? 'src/app/app.ts',
+      files: { ...baseFiles, ...(await readExampleFiles(dir)) },
+    };
+    await writeTs(join(OUT_DIR, 'examples', `${id}.ts`), `export default ${JSON.stringify(example, null, 2)} satisfies Example;`, "import type { Example } from '../../content.model';");
+  }
+  const loaders = ids.map((id) => `  '${id}': () => import('./examples/${id}').then((m) => m.default),`).join('\n');
+  await writeTs(
+    join(OUT_DIR, 'examples.ts'),
+    `export const exampleLoaders: Record<string, () => Promise<Example>> = {\n${loaders}\n};`,
+    "import type { Example } from '../content.model';",
+  );
+  return new Set(ids);
+}
+
+async function buildLessons(exampleIds) {
+  const curriculum = {};
+  const loaders = [];
+  for (const lang of LANGS) {
+    curriculum[lang] = [];
+    const langDir = join(CONTENT_DIR, lang);
+    for (const chapterDir of await sortedDirs(langDir)) {
+      const chapterSlug = slugOf(chapterDir);
+      const chapterMeta = matter(await readFile(join(langDir, chapterDir, '_chapter.md'), 'utf8')).data;
+      const chapter = { slug: chapterSlug, title: chapterMeta.title, description: chapterMeta.description ?? '', lessons: [] };
+      const files = (await readdir(join(langDir, chapterDir))).filter((f) => f.endsWith('.md') && !f.startsWith('_')).sort();
+      for (const file of files) {
+        const path = join(langDir, chapterDir, file);
+        const { data, content } = matter(await readFile(path, 'utf8'));
+        const lessonSlug = slugOf(file);
+        const id = `${chapterSlug}/${lessonSlug}`;
+        chapter.lessons.push({ id, slug: lessonSlug, title: data.title, minutes: data.minutes ?? 5 });
+        const lesson = {
+          id,
+          title: data.title,
+          segments: renderSegments(content, exampleIds, relative(ROOT, path), lang),
+          quiz: (data.quiz ?? []).map((q) => ({
+            ...q,
+            explanation: q.explanation && marked.parseInline(q.explanation),
+          })),
+        };
+        const out = join(OUT_DIR, 'lessons', lang, chapterSlug, `${lessonSlug}.ts`);
+        await mkdir(join(out, '..'), { recursive: true });
+        await writeTs(out, `export default ${JSON.stringify(lesson, null, 2)} satisfies Lesson;`, "import type { Lesson } from '../../../../content.model';");
+        loaders.push(`  '${lang}/${id}': () => import('./lessons/${lang}/${id}').then((m) => m.default),`);
+      }
+      curriculum[lang].push(chapter);
+    }
+  }
+  await writeTs(
+    join(OUT_DIR, 'curriculum.ts'),
+    `export const curriculum: Record<Lang, Chapter[]> = ${JSON.stringify(curriculum, null, 2)};\n\n` +
+      `export const lessonLoaders: Record<string, () => Promise<Lesson>> = {\n${loaders.join('\n')}\n};`,
+    "import type { Chapter, Lang, Lesson } from '../content.model';",
+  );
+  return loaders.length;
+}
+
+async function writeTs(path, body, imports) {
+  await writeFile(path, `// Generated by scripts/build-content.mjs – do not edit.\n${imports}\n\n${body}\n`);
+}
+
+await rm(OUT_DIR, { recursive: true, force: true });
+await mkdir(OUT_DIR, { recursive: true });
+const exampleIds = await buildExamples();
+const lessonCount = await buildLessons(exampleIds);
+console.log(`Content built: ${lessonCount} lessons, ${exampleIds.size} examples.`);

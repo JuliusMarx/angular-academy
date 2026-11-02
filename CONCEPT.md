@@ -64,10 +64,10 @@ Jede Lektion: ca. 5–10 Minuten Lesezeit, mindestens 1 Live-Beispiel, 2–3 Qui
 - **Angular** (aktuelle Version): Standalone Components, Signals, zoneless, neuer Control Flow
 - **Prerendering (SSG)** über `@angular/ssr` für schnelle Ladezeiten und SEO
 - **Styling**: SCSS mit CSS-Custom-Properties (Theming/Dark Mode); ggf. Angular CDK für Barrierefreiheit
-- **Markdown-Rendering**: `marked` + `shiki` (Highlighting), möglichst schon zur Build-Zeit
+- **Markdown-Rendering**: `marked` + `shiki` (Highlighting) zur Build-Zeit, siehe `scripts/build-content.mjs`
 - **Live-Editor**: `@stackblitz/sdk` (`embedProject`), Projektdateien kommen aus dem Repo
-- **UI-Übersetzung**: Transloco (Sprachwechsel zur Laufzeit, gut mit SSG kombinierbar)
-- **Tests**: Vitest (Unit), Playwright (E2E)
+- **UI-Übersetzung**: kleines eigenes Wörterbuch (`src/app/core/ui-text.ts`), die Sprache steckt in der URL. Bei vielen UI-Texten ggf. später Transloco.
+- **Tests**: Vitest (Unit), später Playwright (E2E)
 
 ### Inhalte als Dateien im Repo
 Inhalte und App-Code sind getrennt, damit Lektionen ohne Angular-Wissen über die App gepflegt werden können:
@@ -125,6 +125,7 @@ Ein `ProgressService` kapselt den Zugriff (Signal-basiert), sodass ein Backend s
 - Optional: Mehr Interaktivität (Schritt-für-Schritt-Tutorials im Editor)
 
 ## 7. Offene Fragen
+- **Live-Editor eingebettet**: StackBlitz-WebContainer-Embeds brauchen je nach Browser Cross-Origin-Isolation auf der Host-Seite. Im Browser-Test (Electron) startete das eingebettete Projekt nicht; COOP/COEP-Header (`require-corp` und `credentialless`) haben das nicht gelöst. Als Fallback gibt es „In StackBlitz öffnen“ (neuer Tab). In Chrome/Edge/Firefox prüfen und ggf. auf eigenen Editor (WebContainer API) umstellen.
 - Hosting-Anbieter festlegen (Netlify vs. Cloudflare Pages) und ggf. eigene Domain
 - Name/Branding und Logo
 - Wer schreibt die Inhalte: komplett von Claude entworfen und von dir geprüft, oder gemischt?
