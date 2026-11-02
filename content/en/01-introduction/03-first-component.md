@@ -14,6 +14,19 @@ quiz:
       - Include it in index.html
     answer: 2
     explanation: Components are standalone. You import them via the `imports` array wherever you need them.
+exercise:
+  example: ex-first-component
+  title: A team badge
+  task: |-
+    Build your first own component:
+
+    1. In `user-badge.ts`, turn the class `UserBadge` into a component with the selector `app-user-badge`. Its template: `<span class="badge">Angular Fan</span>`.
+    2. Import `UserBadge` in `app.ts`.
+    3. Show the badge under both names.
+  checks:
+    component-exists: There is an `<app-user-badge>` on the page
+    used-twice: The badge is used exactly twice
+    shows-text: Each badge shows **Angular Fan** in a `<span class="badge">`
 ---
 
 # Your first component

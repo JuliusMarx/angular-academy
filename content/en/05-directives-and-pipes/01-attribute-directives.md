@@ -23,6 +23,20 @@ quiz:
       - With inject(ElementRef)
       - You can't – directives don't receive values
     answer: 0
+exercise:
+  example: ex-directive
+  title: Mark external links
+  task: |-
+    External links should open in a new tab and be recognizable as external.
+
+    1. Turn `ExternalLink` into a directive with the selector `a[appExternalLink]`.
+    2. Use the `host` object to set `target="_blank"`, `rel="noopener noreferrer"` and the class `external`.
+    3. Use it on the two external links in `app.ts` – leave the internal link as it is.
+  checks:
+    sets-target: Both external links have `target="_blank"`
+    sets-rel: Both have `rel="noopener noreferrer"`
+    adds-class: Both have the class `external`
+    internal-untouched: The internal link stays unchanged
 ---
 
 # Custom attribute directives

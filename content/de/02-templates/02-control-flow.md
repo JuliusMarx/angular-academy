@@ -9,6 +9,18 @@ quiz:
   - question: Welcher Block wird bei @for angezeigt, wenn die Liste leer ist?
     options: ["@else", "@default", "@empty", "@none"]
     answer: 2
+exercise:
+  example: ex-control-flow
+  title: Eine Aufgabenliste
+  task: |-
+    Die Liste `<ul id="tasks">` ist noch leer. Fülle sie:
+
+    1. Gib mit `@for` für jede Aufgabe ein `<li>` mit ihrem Titel aus. Vergiss `track` nicht.
+    2. Ist die Liste leer, zeige `<li class="empty">No tasks</li>` – mit `@empty`.
+  checks:
+    renders-list: Die drei Aufgaben erscheinen als Listeneinträge
+    add-works: Nach **Add** steht eine vierte Aufgabe in der Liste
+    empty-state: Nach **Clear** erscheint **No tasks**
 ---
 
 # Control Flow mit @if, @for und @switch

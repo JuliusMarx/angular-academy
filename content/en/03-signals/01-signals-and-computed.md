@@ -14,6 +14,18 @@ quiz:
       - It only works in templates
     answer: 2
     explanation: computed() is read-only, lazy and cached. It only recalculates when its dependencies change.
+exercise:
+  example: ex-signals-counter
+  title: Square and reset
+  task: |
+    The counter in the starter project already works. Extend it:
+
+    1. Create a `computed()` signal `squared` that calculates the square of `count`, and show it in an element with `id="squared"` – for example `<p id="squared">Squared: …</p>`.
+    2. Add a button with the text **Reset** that sets the counter back to 0.
+  checks:
+    squared-shown: An element with `id="squared"` shows the square
+    squared-updates: After clicking **+** three times it shows 9
+    reset: "**Reset** sets counter and square back to 0"
 ---
 
 # signal() and computed()

@@ -16,6 +16,19 @@ quiz:
   - question: Kann man einer @let-Variable im Template einen neuen Wert zuweisen?
     options: ["Ja, mit =", "Ja, mit .set()", "Nein, @let-Variablen sind schreibgeschützt", "Nur innerhalb von @for"]
     answer: 2
+exercise:
+  example: ex-template-variables
+  title: Eine Einkaufsliste
+  task: |-
+    Mach den **Add**-Button funktionsfähig – ganz ohne neues Signal für das Eingabefeld:
+
+    1. Gib dem Eingabefeld eine Template-Referenzvariable, z. B. `#item`.
+    2. Beim Klick auf **Add** übergibst du `item.value` an `add()` und leerst danach das Eingabefeld.
+    3. Speichere mit `@let` die Anzahl der Einträge und zeige sie als `<p id="count">2 items</p>` an.
+  checks:
+    count-shown: '`<p id="count">` zeigt **2 items**'
+    adds-item: '**Add** fügt den eingegebenen Text hinzu, die Anzahl steigt'
+    clears-input: Nach **Add** ist das Eingabefeld leer
 ---
 
 # Template-Variablen mit @let und #ref

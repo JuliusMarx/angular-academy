@@ -6,13 +6,14 @@ import { ContentService } from '../../content/content.service';
 import { ProgressService } from '../../core/progress.service';
 import { UI_TEXT } from '../../core/ui-text';
 import { SafeHtmlPipe } from '../../shared/safe-html.pipe';
+import { Exercise } from './exercise';
 import { Quiz } from './quiz';
 import { Toc } from './toc';
 import { TryIt } from './try-it';
 
 @Component({
   selector: 'app-lesson-page',
-  imports: [RouterLink, SafeHtmlPipe, Quiz, Toc, TryIt],
+  imports: [RouterLink, SafeHtmlPipe, Exercise, Quiz, Toc, TryIt],
   templateUrl: './lesson-page.html',
   styleUrl: './lesson-page.scss',
   host: { '(click)': 'onClick($event)' },

@@ -16,6 +16,17 @@ quiz:
       - Es wird mit der computation-Funktion neu berechnet
       - Es wirft einen Fehler
     answer: 2
+exercise:
+  example: ex-linked-signal
+  title: Auswahl zurücksetzen
+  task: |-
+    Im Startprojekt steckt ein Fehler: Wechselst du die Kategorie, bleibt ein Eintrag aus der alten Kategorie ausgewählt.
+
+    Ersetze `selected` durch ein `linkedSignal()`, das beim Kategoriewechsel auf den ersten Eintrag der neuen Kategorie springt – und sich trotzdem per Klick ändern lässt.
+  checks:
+    can-select: Ein Klick auf **Banana** wählt Banana aus
+    resets-on-category: Nach dem Wechsel zu **Vegetables** ist **Carrot** ausgewählt
+    select-after-reset: Danach lässt sich weiterhin per Klick auswählen
 ---
 
 # Abhängiger Zustand mit linkedSignal()

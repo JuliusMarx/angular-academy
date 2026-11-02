@@ -11,11 +11,13 @@ export interface Progress {
   version: 1;
   completedLessons: string[];
   quizResults: Record<string, QuizResult>;
+  /** Lesson ids whose exercise passed all checks. Added later – older exports don't have it. */
+  solvedExercises: string[];
   lastLesson?: string;
 }
 
 const STORAGE_KEY = 'angular-academy.progress';
-const emptyProgress = (): Progress => ({ version: 1, completedLessons: [], quizResults: {} });
+const emptyProgress = (): Progress => ({ version: 1, completedLessons: [], quizResults: {}, solvedExercises: [] });
 
 @Service()
 export class ProgressService {
@@ -34,6 +36,7 @@ export class ProgressService {
 
   readonly progress = this.state.asReadonly();
   readonly completed = computed(() => new Set(this.state().completedLessons));
+  readonly solvedExercises = computed(() => new Set(this.state().solvedExercises));
 
   isCompleted(lessonId: string): boolean {
     return this.completed().has(lessonId);
@@ -58,6 +61,11 @@ export class ProgressService {
   saveQuizResult(lessonId: string, score: number, total: number): void {
     const result = { score, total, date: new Date().toISOString() };
     this.update((p) => ({ ...p, quizResults: { ...p.quizResults, [lessonId]: result } }));
+  }
+
+  markExerciseSolved(lessonId: string): void {
+    if (this.solvedExercises().has(lessonId)) return;
+    this.update((p) => ({ ...p, solvedExercises: [...p.solvedExercises, lessonId] }));
   }
 
   visit(lessonId: string): void {

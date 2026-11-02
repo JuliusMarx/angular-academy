@@ -25,6 +25,10 @@
         @if (lesson.quiz.length) {
           <app-quiz [questions]="lesson.quiz" [lessonId]="lesson.id" [lang]="lang()" />
         }
+
+        @if (lesson.exercise; as exercise) {
+          <app-exercise [exercise]="exercise" [lessonId]="lesson.id" [lang]="lang()" />
+        }
       </article>
 
       <div class="done-row">

@@ -16,6 +16,19 @@ quiz:
   - question: Can you assign a new value to a @let variable in the template?
     options: ["Yes, with =", "Yes, with .set()", "No, @let variables are read-only", "Only inside @for"]
     answer: 2
+exercise:
+  example: ex-template-variables
+  title: A shopping list
+  task: |-
+    Make the **Add** button work – without a new signal for the input:
+
+    1. Give the input a template reference variable, e.g. `#item`.
+    2. When **Add** is clicked, pass `item.value` to `add()` and then clear the input.
+    3. Use `@let` to store the number of items and show it as `<p id="count">2 items</p>`.
+  checks:
+    count-shown: '`<p id="count">` shows **2 items**'
+    adds-item: '**Add** adds the entered text, and the count goes up'
+    clears-input: After **Add** the input is empty
 ---
 
 # Template variables with @let and #ref

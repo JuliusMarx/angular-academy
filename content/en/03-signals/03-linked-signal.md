@@ -16,6 +16,17 @@ quiz:
       - It is recalculated with the computation function
       - It throws an error
     answer: 2
+exercise:
+  example: ex-linked-signal
+  title: Reset the selection
+  task: |-
+    The starter project has a bug: when you switch the category, an item from the old category stays selected.
+
+    Replace `selected` with a `linkedSignal()` that jumps to the first item of the new category when the category changes – and can still be changed by clicking.
+  checks:
+    can-select: Clicking **Banana** selects Banana
+    resets-on-category: 'After switching to **Vegetables**, **Carrot** is selected'
+    select-after-reset: Afterwards you can still select by clicking
 ---
 
 # Dependent state with linkedSignal()

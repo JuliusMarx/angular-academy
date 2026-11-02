@@ -12,6 +12,18 @@ quiz:
   - question: Wie bindest du in der Eltern-Komponente auf das Output rated?
     options: ['[rated]="onRated()"', '(rated)="onRated($event)"', '{{ rated }}', '[(rated)]="rating"']
     answer: 1
+exercise:
+  example: ex-outputs
+  title: Likes nach oben melden
+  task: |-
+    Der Like-Button zählt seine Klicks, aber der Beitrag erfährt nichts davon.
+
+    1. Gib `LikeButton` ein Output `liked`, das die neue Anzahl Likes schickt.
+    2. Löse es in `like()` aus.
+    3. Höre in `app.ts` darauf und speichere den Wert in `likes`.
+  checks:
+    parent-updates: Nach einem Klick zeigt der Beitrag **1 likes**
+    sends-count: Nach drei Klicks zeigt er **3 likes**
 ---
 
 # Ereignisse melden mit output()

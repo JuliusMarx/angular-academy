@@ -74,3 +74,50 @@ Text mit `Code`, Tabellen und Codeblöcken (```ts, ```html, ```bash …).
 - Die Einbettung braucht Cross-Origin-Isolation (`Cross-Origin-Opener-Policy: same-origin`, `Cross-Origin-Embedder-Policy: credentialless`), gesetzt in `netlify.toml` und für `npm start` in `angular.json`. Externe Ressourcen auf der Plattform selbst (Bilder, Skripte) werden deshalb ohne Cookies geladen.
 - Jede Lektion muss in allen Sprachen existieren, sonst bricht `npm run content` ab.
 - Frontmatter-Werte mit ` #`, `: `, `{`, `[` oder Backticks am Anfang in Anführungszeichen setzen, sonst liest YAML sie falsch (` #` startet z. B. einen Kommentar).
+
+## Eine Übung schreiben
+
+Eine Übung ist ein Beispielprojekt mit Startcode, Prüfungen und Lösung:
+
+```
+examples/ex-<name>/
+  meta.json                  # { "exercise": true, "openFile": "…" }
+  src/app/…                  # Startcode mit TODO-Kommentaren
+  src/exercise/checks.ts     # Prüfungen (siehe unten)
+  solution/src/app/…         # Lösung – wird auf der Seite angezeigt, nicht ins Projekt kopiert
+```
+
+Beim Bauen bekommt jede Übung zusätzlich das Prüf-Kit aus `examples/_exercise-kit/` und startet mit `ng serve --no-hmr`. So lädt die Vorschau nach jedem Speichern neu, führt die Prüfungen gegen die laufende App aus und meldet das Ergebnis per `postMessage` an die Kursseite.
+
+```ts
+// src/exercise/checks.ts
+import { Check } from './check-kit';
+
+export const exercise = 'ex-<name>';
+
+export const checks: Check[] = [
+  {
+    id: 'squared-updates',
+    run: async (t) => {
+      await t.click(t.button('+'));
+      t.expectText('#squared', '1');
+    },
+  },
+];
+```
+
+In der Lektion verweist das Frontmatter auf die Übung und beschriftet jede Prüfung:
+
+```yaml
+exercise:
+  example: ex-<name>
+  title: Quadrat und Reset
+  task: |
+    Markdown mit der Aufgabe …
+  checks:
+    squared-updates: Nach **+** zeigt es 1
+```
+
+`npm run content` bricht ab, wenn Prüf-IDs in `checks.ts` und Frontmatter nicht übereinstimmen.
+
+**Vor dem Commit prüfen:** Der Startcode muss mindestens eine Prüfung verfehlen und die Lösung alle bestehen.

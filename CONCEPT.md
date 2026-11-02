@@ -36,7 +36,7 @@ Eine interaktive Lernplattform für Angular im Stil von W3Schools: kurze, gut st
 1. **Lektionen**: Markdown-Inhalte mit Syntax-Highlighting, Hinweis-/Warnboxen und Copy-Button.
 2. **Try it yourself**: Öffnet das passende Beispielprojekt eingebettet in StackBlitz (Editor + Vorschau). Jedes Beispiel ist ein kleines, eigenständiges Angular-Projekt.
 3. **Quiz**: Multiple Choice / Lückentext am Ende jeder Lektion, wird sofort ausgewertet.
-4. **Übungen** (Phase 2): Starter-Code mit Aufgabe, Lösung wird über versteckte Tests im WebContainer geprüft.
+4. **Übungen**: Starter-Code mit Aufgabe. Ein Prüf-Kit läuft nach jedem Speichern in der Vorschau, prüft das Verhalten der App und meldet das Ergebnis per `postMessage` an die Kursseite (Checkliste, „Gelöst“, Lösung anzeigen).
 5. **Fortschritt**: Abgeschlossene Lektionen, Quiz-Ergebnisse und die zuletzt besuchte Lektion werden lokal gespeichert, dazu Fortschrittsbalken pro Kapitel.
 6. **Suche**: Volltextsuche über alle Lektionen (clientseitig, z. B. mit MiniSearch).
 7. **Sprachumschalter** DE/EN und Dark Mode.

@@ -24,6 +24,13 @@ quiz:
       - In an injection context, e.g. the constructor or a field initializer
       - Only in main.ts
     answer: 2
+exercise:
+  example: ex-effect
+  title: Auto-save a draft
+  task: 'The text in the input shouldn''t get lost. In the constructor, create an `effect()` that saves the draft with `localStorage.setItem(''draft'', …)` whenever it changes.'
+  checks:
+    saves-draft: Typed text ends up in localStorage under the key `draft`
+    saves-changes: Later changes are saved as well
 ---
 
 # Side effects with effect()

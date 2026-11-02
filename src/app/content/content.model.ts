@@ -35,6 +35,22 @@ export interface TocEntry {
   text: string;
 }
 
+export interface ExerciseCheck {
+  /** Matches the id in the exercise project's checks.ts. */
+  id: string;
+  /** Inline HTML rendered from Markdown at build time. */
+  label: string;
+}
+
+export interface Exercise {
+  /** Id of the exercise project in examples/. */
+  example: string;
+  title: string;
+  /** HTML rendered from Markdown at build time. */
+  task: string;
+  checks: ExerciseCheck[];
+}
+
 export interface Lesson {
   id: string;
   title: string;
@@ -42,10 +58,26 @@ export interface Lesson {
   toc: TocEntry[];
   segments: LessonSegment[];
   quiz: QuizQuestion[];
+  exercise?: Exercise;
+}
+
+export interface SolutionFile {
+  path: string;
+  /** Highlighted HTML rendered at build time. */
+  html: string;
 }
 
 export interface Example {
   id: string;
   openFile: string;
   files: Record<string, string>;
+  /** Only for exercises. */
+  solution?: SolutionFile[];
+}
+
+/** Message the exercise check kit (examples/_exercise-kit) posts to the course page. */
+export interface ExerciseResultsMessage {
+  type: 'angular-academy:exercise-results';
+  exercise: string;
+  results: { id: string; passed: boolean; message?: string }[];
 }

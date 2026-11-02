@@ -21,6 +21,19 @@ quiz:
       - It is a syntax error
       - It sets an HTML attribute, but not the input
     answer: 1
+exercise:
+  example: ex-inputs
+  title: A price tag
+  task: |-
+    The `PriceTag` component still shows `? ?`.
+
+    1. Give it a required input `amount` (number) and an input `currency` with the default `EUR`.
+    2. Show the amount with two decimals and the currency, e.g. `12.50 EUR`.
+    3. In `app.ts`, pass the amount `12.5` to the first tag, and `4.9` with the currency `USD` to the second.
+  checks:
+    shows-amount: The first tag shows the amount with two decimals
+    default-currency: 'Without a currency it is **EUR**: `12.50 EUR`'
+    custom-currency: The second tag shows `4.90 USD`
 ---
 
 # Passing data with input()

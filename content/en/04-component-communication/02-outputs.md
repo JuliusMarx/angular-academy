@@ -12,6 +12,18 @@ quiz:
   - question: How do you bind to the output rated in the parent component?
     options: ['[rated]="onRated()"', '(rated)="onRated($event)"', '{{ rated }}', '[(rated)]="rating"']
     answer: 1
+exercise:
+  example: ex-outputs
+  title: Report likes upwards
+  task: |-
+    The like button counts its clicks, but the post never hears about them.
+
+    1. Give `LikeButton` an output `liked` that sends the new number of likes.
+    2. Emit it in `like()`.
+    3. Listen to it in `app.ts` and store the value in `likes`.
+  checks:
+    parent-updates: After one click the post shows **1 likes**
+    sends-count: After three clicks it shows **3 likes**
 ---
 
 # Reporting events with output()

@@ -19,6 +19,18 @@ quiz:
       - Um Fehler zu unterdrücken
       - Um das Ergebnis zu cachen
     answer: 1
+exercise:
+  example: ex-resource
+  title: Einen Nutzer laden
+  task: |-
+    `fetchUser()` in `user-api.ts` simuliert eine langsame Server-Anfrage.
+
+    1. Lege eine `resource()` an, die mit `fetchUser()` den Nutzer zu `userId()` lädt – auch wenn sich die ID ändert.
+    2. Zeige während des Ladens `<p id="loading">Loading …</p>`, bei einem Fehler `<p id="error">` mit der Fehlermeldung und sonst `<h2 id="name">` mit dem Namen.
+  checks:
+    shows-loading: Während des Ladens ist `<p id="loading">` zu sehen
+    shows-user: Der Name des gewählten Nutzers erscheint in `<h2 id="name">`
+    shows-error: Für **User 99** erscheint die Fehlermeldung in `<p id="error">`
 ---
 
 # Asynchrone Daten mit resource()

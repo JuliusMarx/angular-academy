@@ -13,8 +13,8 @@ type State = 'idle' | 'loading' | 'ready' | 'error';
   template: `
     @if (state() === 'idle' || state() === 'error') {
       <div class="teaser">
-        <button type="button" class="button" (click)="open()">{{ text().tryIt }}</button>
-        <p>{{ state() === 'error' ? text().tryItError : text().tryItHint }}</p>
+        <button type="button" class="button" (click)="open()">{{ label() ?? text().tryIt }}</button>
+        <p>{{ state() === 'error' ? text().tryItError : (hint() ?? text().tryItHint) }}</p>
       </div>
     }
     @if (state() === 'loading') {
@@ -82,6 +82,9 @@ export class TryIt {
 
   readonly example = input.required<string>();
   readonly lang = input.required<Lang>();
+  /** Overrides for the button text and hint, e.g. for exercises. */
+  readonly label = input<string>();
+  readonly hint = input<string>();
 
   protected readonly text = computed(() => UI_TEXT[this.lang()]);
   protected readonly state = signal<State>('idle');

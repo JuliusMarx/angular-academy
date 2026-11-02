@@ -17,6 +17,19 @@ quiz:
       - It calls isEmpty() on click
       - Nothing, this is not valid syntax
     answer: 1
+exercise:
+  example: ex-bindings
+  title: A personal greeting
+  task: |-
+    Connect the input, the heading and the button to the signal `name`:
+
+    1. The heading shows `Hello, <name>!` using the name from the signal.
+    2. The input shows the name (`[value]`) and writes changes back (`(input)`).
+    3. **Clear** empties the name and is disabled while no name is entered.
+  checks:
+    greeting-updates: 'Typing changes the greeting, e.g. to **Hello, Ada!**'
+    clear-empties: '**Clear** empties the input and the greeting'
+    clear-disabled: '**Clear** is disabled when the name is empty'
 ---
 
 # Interpolation & bindings

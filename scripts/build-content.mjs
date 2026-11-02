@@ -101,23 +101,64 @@ async function readExampleFiles(dir, base = dir) {
   const files = {};
   for (const entry of await readdir(dir, { withFileTypes: true })) {
     const path = join(dir, entry.name);
-    if (entry.isDirectory()) Object.assign(files, await readExampleFiles(path, base));
-    else if (entry.name !== 'meta.json') files[relative(base, path).replace(/\\/g, '/')] = await readFile(path, 'utf8');
+    // solution/ of an exercise is shown on the course page, not shipped in the project.
+    if (entry.isDirectory() && !(dir === base && entry.name === 'solution')) {
+      Object.assign(files, await readExampleFiles(path, base));
+    } else if (entry.isFile() && entry.name !== 'meta.json') {
+      files[relative(base, path).replace(/\\/g, '/')] = await readFile(path, 'utf8');
+    }
   }
   return files;
 }
 
+const CODE_LANG = { ts: 'angular-ts', html: 'angular-html', css: 'css', scss: 'scss', json: 'json' };
+
+/** Highlighted solution files of an exercise, rendered at build time. */
+async function renderSolution(dir) {
+  if (!existsSync(dir)) return [];
+  const files = await readExampleFiles(dir);
+  return Object.entries(files).map(([path, code]) => ({
+    path,
+    html: highlighter.codeToHtml(code, {
+      lang: CODE_LANG[path.split('.').pop()] ?? 'text',
+      themes: { light: 'github-light-default', dark: 'github-dark-default' },
+      defaultColor: false,
+    }),
+  }));
+}
+
+/**
+ * Exercise projects additionally get the check kit (examples/_exercise-kit) and start without
+ * HMR, so every save reloads the preview and re-runs the checks.
+ */
+function withExerciseKit(files, kitFiles) {
+  const pkg = JSON.parse(files['package.json']);
+  pkg.scripts.start = 'ng serve --no-hmr';
+  return { ...files, ...kitFiles, 'package.json': JSON.stringify(pkg, null, 2) + '\n' };
+}
+
 async function buildExamples() {
   const baseFiles = await readExampleFiles(join(EXAMPLES_DIR, '_base'));
+  const kitFiles = await readExampleFiles(join(EXAMPLES_DIR, '_exercise-kit'));
   const ids = await sortedDirs(EXAMPLES_DIR);
+  /** exercise id → check ids declared in its checks.ts */
+  const exercises = new Map();
   await mkdir(join(OUT_DIR, 'examples'), { recursive: true });
   for (const id of ids) {
     const dir = join(EXAMPLES_DIR, id);
     const meta = existsSync(join(dir, 'meta.json')) ? JSON.parse(await readFile(join(dir, 'meta.json'), 'utf8')) : {};
+    const ownFiles = { ...baseFiles, ...(await readExampleFiles(dir)) };
+    if (meta.exercise) {
+      const checks = ownFiles['src/exercise/checks.ts'];
+      if (!checks) throw new Error(`examples/${id}: exercises need src/exercise/checks.ts`);
+      if (!checks.includes(`exercise = '${id}'`)) throw new Error(`examples/${id}: checks.ts must export exercise = '${id}'`);
+      exercises.set(id, [...checks.matchAll(/\bid: '([\w-]+)'/g)].map((m) => m[1]));
+    }
     const example = {
       id,
       openFile: meta.openFile ?? 'src/app/app.ts',
-      files: { ...baseFiles, ...(await readExampleFiles(dir)) },
+      files: meta.exercise ? withExerciseKit(ownFiles, kitFiles) : ownFiles,
+      ...(meta.exercise ? { solution: await renderSolution(join(dir, 'solution')) } : {}),
     };
     await writeTs(join(OUT_DIR, 'examples', `${id}.ts`), `export default ${JSON.stringify(example, null, 2)} satisfies Example;`, "import type { Example } from '../../content.model';");
   }
@@ -127,10 +168,10 @@ async function buildExamples() {
     `export const exampleLoaders: Record<string, () => Promise<Example>> = {\n${loaders}\n};`,
     "import type { Example } from '../content.model';",
   );
-  return new Set(ids);
+  return { exampleIds: new Set(ids), exercises };
 }
 
-async function buildLessons(exampleIds) {
+async function buildLessons(exampleIds, exercises) {
   const curriculum = {};
   const loaders = [];
   for (const lang of LANGS) {
@@ -161,6 +202,7 @@ async function buildLessons(exampleIds) {
             ...q,
             explanation: q.explanation && marked.parseInline(q.explanation),
           })),
+          ...(data.exercise ? { exercise: buildExercise(data.exercise, exercises, relative(ROOT, path), lang) } : {}),
         };
         const out = join(OUT_DIR, 'lessons', lang, chapterSlug, `${lessonSlug}.ts`);
         await mkdir(join(out, '..'), { recursive: true });
@@ -193,6 +235,24 @@ function assertNoYamlComments(raw, data, file) {
   }
 }
 
+/** Validates the "exercise:" frontmatter against the exercise project and renders its texts. */
+function buildExercise(def, exercises, file, lang) {
+  const checkIds = exercises.get(def.example);
+  if (!checkIds) throw new Error(`${file}: "${def.example}" is not an exercise (meta.json needs "exercise": true)`);
+  const labels = def.checks ?? {};
+  const missing = checkIds.filter((id) => !labels[id]);
+  const unknown = Object.keys(labels).filter((id) => !checkIds.includes(id));
+  if (missing.length || unknown.length) {
+    throw new Error(`${file}: exercise checks out of sync – missing labels: [${missing}], unknown: [${unknown}]`);
+  }
+  return {
+    example: def.example,
+    title: def.title,
+    task: localize(renderCallouts(marked.parse(def.task ?? '')), lang),
+    checks: checkIds.map((id) => ({ id, label: marked.parseInline(labels[id]) })),
+  };
+}
+
 /** The language switch keeps the URL, so every lesson must exist in every language. */
 function assertSameStructure(curriculum) {
   const idsOf = (lang) => curriculum[lang].flatMap((c) => c.lessons.map((l) => l.id)).join('\n');
@@ -210,6 +270,6 @@ async function writeTs(path, body, imports) {
 
 await rm(OUT_DIR, { recursive: true, force: true });
 await mkdir(OUT_DIR, { recursive: true });
-const exampleIds = await buildExamples();
-const lessonCount = await buildLessons(exampleIds);
-console.log(`Content built: ${lessonCount} lessons, ${exampleIds.size} examples.`);
+const { exampleIds, exercises } = await buildExamples();
+const lessonCount = await buildLessons(exampleIds, exercises);
+console.log(`Content built: ${lessonCount} lessons, ${exampleIds.size} examples (${exercises.size} exercises).`);

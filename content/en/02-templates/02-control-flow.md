@@ -9,6 +9,18 @@ quiz:
   - question: Which block does @for show when the list is empty?
     options: ["@else", "@default", "@empty", "@none"]
     answer: 2
+exercise:
+  example: ex-control-flow
+  title: A task list
+  task: |-
+    The list `<ul id="tasks">` is still empty. Fill it:
+
+    1. Use `@for` to render one `<li>` with its title per task. Don't forget `track`.
+    2. When the list is empty, show `<li class="empty">No tasks</li>` – using `@empty`.
+  checks:
+    renders-list: The three tasks appear as list items
+    add-works: After **Add** there is a fourth task in the list
+    empty-state: 'After **Clear**, **No tasks** appears'
 ---
 
 # Control flow with @if, @for and @switch

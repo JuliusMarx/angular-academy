@@ -24,6 +24,18 @@ quiz:
       - Nur im Entwicklungsmodus
       - Nie, er ist nur ein Kommentar
     answer: 1
+exercise:
+  example: ex-projection
+  title: Ein Hinweis mit Titel
+  task: |-
+    Die Alerts in `app.ts` übergeben Inhalte, aber `Alert` zeigt sie noch nicht an.
+
+    1. Projiziere Elemente mit dem Attribut `alert-title` in den Titelbereich. Ist keins vorhanden, zeige den Fallback-Text **Note**.
+    2. Projiziere alles andere in den Textbereich.
+  checks:
+    title-slot: Der erste Alert zeigt **Heads up!** im Titelbereich
+    body-slot: Der Text steht im Textbereich – und der Titel nicht noch einmal
+    fallback-title: Der zweite Alert zeigt den Fallback-Titel **Note**
 ---
 
 # Inhalte projizieren mit ng-content

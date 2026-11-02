@@ -16,6 +16,25 @@ quiz:
       - Every second
     answer: 1
     explanation: For objects and arrays the reference counts – a pure pipe doesn't notice an array changed with `push()`.
+exercise:
+  example: ex-custom-pipe
+  title: Readable file sizes
+  task: |-
+    The download list shows raw byte counts. Write a pipe `fileSize` in `file-size.pipe.ts` and use it in the size column:
+
+    | Input | Output |
+    |---|---|
+    | `512` | `512 B` |
+    | `1536` | `1.5 KB` |
+    | `1024` | `1 KB` |
+    | `1048576` | `1 MB` |
+    | `1610612736` | `1.5 GB` |
+
+    At most one decimal, and no trailing `.0`.
+  checks:
+    bytes: '`512` becomes `512 B`'
+    kilobytes: '`1536` becomes `1.5 KB`, `1024` becomes `1 KB`'
+    larger-units: 'MB and GB are right too: `1 MB`, `1.5 GB`'
 ---
 
 # Writing custom pipes

@@ -46,6 +46,19 @@ const de = {
   readingTime: (minutes: number) => `${minutes} Min. Lesezeit`,
   onThisPage: 'Auf dieser Seite',
   skipToContent: 'Zum Inhalt springen',
+  exercise: 'Übung',
+  startExercise: 'Übung starten ▶',
+  exerciseHint: 'Öffnet das Startprojekt im Editor. Nach jedem Speichern prüft die Vorschau deine Lösung – die Haken unten setzen sich von selbst.',
+  checks: 'Prüfungen',
+  checkPassed: 'erfüllt',
+  checkFailed: 'noch nicht erfüllt',
+  checkPending: 'noch nicht geprüft',
+  checksWaiting: 'Starte die Übung – die Ergebnisse erscheinen, sobald die Vorschau geladen ist.',
+  checksPassed: (passed: number, total: number) => `${passed} von ${total} Prüfungen erfüllt`,
+  exerciseAllPassed: 'Alle Prüfungen erfüllt – Übung gelöst!',
+  exerciseSolved: 'Gelöst',
+  showSolution: 'Lösung anzeigen',
+  hideSolution: 'Lösung ausblenden',
 };
 
 export type UiText = typeof de;
@@ -96,6 +109,19 @@ const en: UiText = {
   readingTime: (minutes) => `${minutes} min read`,
   onThisPage: 'On this page',
   skipToContent: 'Skip to content',
+  exercise: 'Exercise',
+  startExercise: 'Start exercise ▶',
+  exerciseHint: 'Opens the starter project in the editor. After every save the preview checks your solution – the ticks below fill in by themselves.',
+  checks: 'Checks',
+  checkPassed: 'passed',
+  checkFailed: 'not passed yet',
+  checkPending: 'not checked yet',
+  checksWaiting: 'Start the exercise – results appear as soon as the preview has loaded.',
+  checksPassed: (passed, total) => `${passed} of ${total} checks passed`,
+  exerciseAllPassed: 'All checks passed – exercise solved!',
+  exerciseSolved: 'Solved',
+  showSolution: 'Show solution',
+  hideSolution: 'Hide solution',
 };
 
 export const UI_TEXT: Record<Lang, UiText> = { de, en };

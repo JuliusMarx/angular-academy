@@ -19,6 +19,18 @@ quiz:
       - To suppress errors
       - To cache the result
     answer: 1
+exercise:
+  example: ex-resource
+  title: Load a user
+  task: |-
+    `fetchUser()` in `user-api.ts` simulates a slow server request.
+
+    1. Create a `resource()` that loads the user for `userId()` with `fetchUser()` – also when the id changes.
+    2. While loading, show `<p id="loading">Loading …</p>`; on error, `<p id="error">` with the error message; otherwise `<h2 id="name">` with the name.
+  checks:
+    shows-loading: 'While loading, `<p id="loading">` is visible'
+    shows-user: The selected user's name appears in `<h2 id="name">`
+    shows-error: For **User 99** the error message appears in `<p id="error">`
 ---
 
 # Async data with resource()

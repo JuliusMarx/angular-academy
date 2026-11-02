@@ -21,6 +21,19 @@ quiz:
       - Es ist ein Syntaxfehler
       - Es setzt ein HTML-Attribut, aber nicht das Input
     answer: 1
+exercise:
+  example: ex-inputs
+  title: Ein Preisschild
+  task: |-
+    Die Komponente `PriceTag` zeigt noch `? ?`.
+
+    1. Gib ihr ein Pflicht-Input `amount` (Zahl) und ein Input `currency` mit dem Standardwert `EUR`.
+    2. Zeige den Betrag mit zwei Nachkommastellen und die Währung an, z. B. `12.50 EUR`.
+    3. Übergib in `app.ts` dem ersten Schild den Betrag `12.5`, dem zweiten `4.9` und die Währung `USD`.
+  checks:
+    shows-amount: Das erste Schild zeigt den Betrag mit zwei Nachkommastellen
+    default-currency: 'Ohne Angabe ist die Währung **EUR**: `12.50 EUR`'
+    custom-currency: Das zweite Schild zeigt `4.90 USD`
 ---
 
 # Daten übergeben mit input()

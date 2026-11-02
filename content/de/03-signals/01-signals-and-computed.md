@@ -14,6 +14,18 @@ quiz:
       - Es funktioniert nur im Template
     answer: 2
     explanation: computed() ist schreibgeschützt, lazy und gecacht. Es rechnet nur neu, wenn sich seine Abhängigkeiten ändern.
+exercise:
+  example: ex-signals-counter
+  title: Quadrat und Reset
+  task: |
+    Der Zähler im Startprojekt funktioniert schon. Erweitere ihn:
+
+    1. Lege ein `computed()`-Signal `squared` an, das das Quadrat von `count` berechnet, und zeige es in einem Element mit `id="squared"` an – zum Beispiel `<p id="squared">Squared: …</p>`.
+    2. Füge einen Button mit dem Text **Reset** hinzu, der den Zähler auf 0 zurücksetzt.
+  checks:
+    squared-shown: Ein Element mit `id="squared"` zeigt das Quadrat an
+    squared-updates: Nach dreimal **+** zeigt es 9
+    reset: "**Reset** setzt Zähler und Quadrat auf 0"
 ---
 
 # signal() und computed()

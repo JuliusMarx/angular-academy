@@ -16,6 +16,18 @@ quiz:
   - question: Welches Ereignis erzeugt model() automatisch für eine Eigenschaft checked?
     options: [checked, changeChecked, checkedChange, onChecked]
     answer: 2
+exercise:
+  example: ex-model
+  title: Ein Zwei-Wege-Zähler
+  task: |-
+    Der Stepper bekommt seinen Wert per Input, kann ihn aber nicht ändern.
+
+    1. Mache aus `value` in `stepper.ts` ein `model()` und ändere den Wert in `change()`.
+    2. Binde den Stepper in `app.ts` mit `[(value)]` an `guests`.
+  checks:
+    child-changes: '**+** erhöht den Wert im Stepper'
+    parent-sees-change: Die Eltern-Komponente sieht den neuen Wert
+    parent-sets-value: '**Set to 5** ändert den Stepper, und **−** wirkt danach auch in der Eltern-Komponente'
 ---
 
 # Zwei-Wege-Bindung mit model()

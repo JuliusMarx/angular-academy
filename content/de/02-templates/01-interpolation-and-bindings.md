@@ -17,6 +17,19 @@ quiz:
       - Es ruft bei einem Klick isEmpty() auf
       - Gar nichts, das ist keine gültige Syntax
     answer: 1
+exercise:
+  example: ex-bindings
+  title: Eine persönliche Begrüßung
+  task: |-
+    Verbinde Eingabefeld, Überschrift und Button mit dem Signal `name`:
+
+    1. Die Überschrift zeigt `Hello, <Name>!` mit dem Namen aus dem Signal.
+    2. Das Eingabefeld zeigt den Namen an (`[value]`) und schreibt Änderungen zurück (`(input)`).
+    3. **Clear** leert den Namen und ist deaktiviert, solange kein Name eingegeben ist.
+  checks:
+    greeting-updates: 'Tippen ändert die Begrüßung, z. B. zu **Hello, Ada!**'
+    clear-empties: '**Clear** leert Eingabefeld und Begrüßung'
+    clear-disabled: '**Clear** ist bei leerem Namen deaktiviert'
 ---
 
 # Interpolation & Bindings

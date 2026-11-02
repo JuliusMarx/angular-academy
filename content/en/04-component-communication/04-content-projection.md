@@ -24,6 +24,18 @@ quiz:
       - Only in development mode
       - Never, it's just a comment
     answer: 1
+exercise:
+  example: ex-projection
+  title: An alert with a title
+  task: |-
+    The alerts in `app.ts` pass content, but `Alert` doesn't show it yet.
+
+    1. Project elements with the attribute `alert-title` into the title area. If there is none, show the fallback text **Note**.
+    2. Project everything else into the body area.
+  checks:
+    title-slot: The first alert shows **Heads up!** in the title area
+    body-slot: The text is in the body area – and the title is not repeated there
+    fallback-title: The second alert shows the fallback title **Note**
 ---
 
 # Projecting content with ng-content

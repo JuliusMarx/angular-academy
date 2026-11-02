@@ -16,6 +16,25 @@ quiz:
       - Jede Sekunde
     answer: 1
     explanation: Bei Objekten und Arrays zählt die Referenz – ein geändertes Array mit `push()` erkennt ein pures Pipe nicht.
+exercise:
+  example: ex-custom-pipe
+  title: Dateigrößen lesbar machen
+  task: |-
+    Die Download-Liste zeigt rohe Byte-Zahlen. Schreib ein Pipe `fileSize` in `file-size.pipe.ts` und verwende es in der Größen-Spalte:
+
+    | Eingabe | Ausgabe |
+    |---|---|
+    | `512` | `512 B` |
+    | `1536` | `1.5 KB` |
+    | `1024` | `1 KB` |
+    | `1048576` | `1 MB` |
+    | `1610612736` | `1.5 GB` |
+
+    Höchstens eine Nachkommastelle, und kein `.0` am Ende.
+  checks:
+    bytes: '`512` wird zu `512 B`'
+    kilobytes: '`1536` wird zu `1.5 KB`, `1024` zu `1 KB`'
+    larger-units: 'Auch MB und GB stimmen: `1 MB`, `1.5 GB`'
 ---
 
 # Eigene Pipes schreiben

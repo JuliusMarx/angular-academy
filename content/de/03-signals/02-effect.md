@@ -24,6 +24,13 @@ quiz:
       - In einem Injection Context, z. B. im Konstruktor oder als Feld-Initialisierung
       - Nur in main.ts
     answer: 2
+exercise:
+  example: ex-effect
+  title: Entwurf automatisch speichern
+  task: 'Der Text im Eingabefeld soll nicht verloren gehen. Lege im Konstruktor einen `effect()` an, der den Entwurf bei jeder Änderung mit `localStorage.setItem(''draft'', …)` speichert.'
+  checks:
+    saves-draft: Getippter Text landet unter dem Schlüssel `draft` im localStorage
+    saves-changes: Auch spätere Änderungen werden gespeichert
 ---
 
 # Nebeneffekte mit effect()

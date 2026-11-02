@@ -37,6 +37,15 @@ describe('ProgressService', () => {
     expect(service.progress().quizResults['a/one'].score).toBe(2);
   });
 
+  it('tracks solved exercises and accepts older exports without them', () => {
+    service.markExerciseSolved('a/one');
+    expect(service.solvedExercises().has('a/one')).toBe(true);
+
+    expect(service.importJson('{"version":1,"completedLessons":["a/two"],"quizResults":{}}')).toBe(true);
+    expect(service.solvedExercises().size).toBe(0);
+    expect(service.isCompleted('a/two')).toBe(true);
+  });
+
   it('rejects invalid imports', () => {
     expect(service.importJson('not json')).toBe(false);
     expect(service.importJson('{"version":2}')).toBe(false);

@@ -14,6 +14,19 @@ quiz:
       - Sie in index.html einbinden
     answer: 2
     explanation: Komponenten sind standalone. Du importierst sie über das `imports`-Array dort, wo du sie brauchst.
+exercise:
+  example: ex-first-component
+  title: Ein Team-Abzeichen
+  task: |-
+    Baue deine erste eigene Komponente:
+
+    1. Mache in `user-badge.ts` aus der Klasse `UserBadge` eine Komponente mit dem Selektor `app-user-badge`. Ihr Template: `<span class="badge">Angular Fan</span>`.
+    2. Importiere `UserBadge` in `app.ts`.
+    3. Zeige das Abzeichen unter beiden Namen an.
+  checks:
+    component-exists: Auf der Seite gibt es ein `<app-user-badge>`
+    used-twice: Das Abzeichen wird genau zweimal verwendet
+    shows-text: Jedes Abzeichen zeigt **Angular Fan** in einem `<span class="badge">`
 ---
 
 # Deine erste Komponente

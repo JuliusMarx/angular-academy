@@ -16,6 +16,18 @@ quiz:
   - question: Which event does model() create automatically for a property named checked?
     options: [checked, changeChecked, checkedChange, onChecked]
     answer: 2
+exercise:
+  example: ex-model
+  title: A two-way stepper
+  task: |-
+    The stepper gets its value through an input but can't change it.
+
+    1. In `stepper.ts`, turn `value` into a `model()` and change the value in `change()`.
+    2. In `app.ts`, bind the stepper to `guests` with `[(value)]`.
+  checks:
+    child-changes: '**+** increases the value in the stepper'
+    parent-sees-change: The parent sees the new value
+    parent-sets-value: '**Set to 5** changes the stepper, and **−** then also reaches the parent'
 ---
 
 # Two-way binding with model()
