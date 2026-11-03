@@ -114,7 +114,7 @@ Ein `ProgressService` kapselt den Zugriff (Signal-basiert), sodass ein Backend s
 - Quiz-Komponente + Fortschritt
 - **Kapitel 1–3** komplett auf DE und EN
 
-### Phase 2 – Ausbau
+### Phase 2 – Ausbau (abgeschlossen)
 - Übungen mit automatischer Prüfung
 - Suche
 - Kapitel 4–8
