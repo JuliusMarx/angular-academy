@@ -38,7 +38,7 @@ Eine interaktive Lernplattform für Angular im Stil von W3Schools: kurze, gut st
 3. **Quiz**: Multiple Choice / Lückentext am Ende jeder Lektion, wird sofort ausgewertet.
 4. **Übungen**: Starter-Code mit Aufgabe. Ein Prüf-Kit läuft nach jedem Speichern in der Vorschau, prüft das Verhalten der App und meldet das Ergebnis per `postMessage` an die Kursseite (Checkliste, „Gelöst“, Lösung anzeigen).
 5. **Fortschritt**: Abgeschlossene Lektionen, Quiz-Ergebnisse und die zuletzt besuchte Lektion werden lokal gespeichert, dazu Fortschrittsbalken pro Kapitel.
-6. **Suche**: Volltextsuche über alle Lektionen (clientseitig, z. B. mit MiniSearch).
+6. **Suche**: Volltextsuche über alle Lektionsabschnitte und Übungen (MiniSearch, Index beim Build erzeugt und erst beim ersten Öffnen geladen). Öffnen per Button, Strg+K/⌘K oder /; Treffer springen direkt zum passenden Abschnitt.
 7. **Sprachumschalter** DE/EN und Dark Mode.
 
 ## 4. Lehrplan (Entwurf)

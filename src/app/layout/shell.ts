@@ -1,19 +1,23 @@
 import { DOCUMENT, ViewportScroller } from '@angular/common';
-import { afterNextRender, Component, computed, effect, inject, Injector, input, signal } from '@angular/core';
+import { afterNextRender, Component, computed, effect, inject, Injector, input, signal, viewChild } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter, map, pairwise, startWith } from 'rxjs';
 import { Lang } from '../content/content.model';
 import { UI_TEXT } from '../core/ui-text';
 import { Header } from './header';
+import { SearchDialog } from './search-dialog';
 import { Sidebar } from './sidebar';
 
 @Component({
   selector: 'app-shell',
-  imports: [RouterOutlet, Header, Sidebar],
+  imports: [RouterOutlet, Header, SearchDialog, Sidebar],
   templateUrl: './shell.html',
   styleUrl: './shell.scss',
-  host: { '(document:keydown.escape)': 'closeMenu()' },
+  host: {
+    '(document:keydown.escape)': 'closeMenu()',
+    '(document:keydown)': 'onShortcut($event)',
+  },
 })
 export default class Shell {
   private readonly router = inject(Router);
@@ -22,6 +26,7 @@ export default class Shell {
   readonly lang = input.required<Lang>();
   protected readonly text = computed(() => UI_TEXT[this.lang()]);
   protected readonly menuOpen = signal(false);
+  private readonly searchDialog = viewChild.required(SearchDialog);
   /** Matches the breakpoint in shell.scss below which the sidebar becomes a slide-in menu. */
   protected readonly isMobile = signal(false);
 
@@ -62,6 +67,17 @@ export default class Shell {
       }
     });
     this.moveFocusOnNavigation();
+  }
+
+  /** Ctrl+K / ⌘K anywhere, or "/" when not typing, opens the search. */
+  protected onShortcut(event: KeyboardEvent): void {
+    const target = event.target as HTMLElement | null;
+    const typing = !!target?.closest('input, textarea, select, [contenteditable="true"]');
+    const ctrlK = (event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k';
+    if (ctrlK || (event.key === '/' && !typing)) {
+      event.preventDefault();
+      this.searchDialog().open();
+    }
   }
 
   protected skipToContent(event: Event): void {

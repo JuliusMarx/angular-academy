@@ -59,6 +59,15 @@ const de = {
   exerciseSolved: 'Gelöst',
   showSolution: 'Lösung anzeigen',
   hideSolution: 'Lösung ausblenden',
+  search: 'Suchen',
+  searchShortcut: 'Strg K',
+  searchPlaceholder: 'Lektionen durchsuchen …',
+  searchResults: 'Suchergebnisse',
+  searchHint: 'Suche nach Begriffen wie „linkedSignal“, „Provider“ oder „track“.',
+  searchKeys: '↑ ↓ zum Auswählen · Enter zum Öffnen · Esc zum Schließen',
+  searchNoResults: (query: string) => `Keine Treffer für „${query}“.`,
+  searchResultCount: (count: number) => `${count} ${count === 1 ? 'Treffer' : 'Treffer'}`,
+  close: 'Schließen',
 };
 
 export type UiText = typeof de;
@@ -122,6 +131,15 @@ const en: UiText = {
   exerciseSolved: 'Solved',
   showSolution: 'Show solution',
   hideSolution: 'Hide solution',
+  search: 'Search',
+  searchShortcut: 'Ctrl K',
+  searchPlaceholder: 'Search lessons …',
+  searchResults: 'Search results',
+  searchHint: 'Search for terms like "linkedSignal", "provider" or "track".',
+  searchKeys: '↑ ↓ to select · Enter to open · Esc to close',
+  searchNoResults: (query) => `No results for "${query}".`,
+  searchResultCount: (count) => `${count} ${count === 1 ? 'result' : 'results'}`,
+  close: 'Close',
 };
 
 export const UI_TEXT: Record<Lang, UiText> = { de, en };

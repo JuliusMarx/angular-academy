@@ -1,7 +1,8 @@
 <!-- Handled in code: with <base href="/">, a plain "#main" link would navigate to the start page. -->
 <a class="skip-link" href="#main" (click)="skipToContent($event)">{{ text().skipToContent }}</a>
 
-<app-header [lang]="lang()" [url]="url()" [(menuOpen)]="menuOpen" />
+<app-header [lang]="lang()" [url]="url()" [(menuOpen)]="menuOpen" (searchRequested)="searchDialog.open()" />
+<app-search-dialog #searchDialog [lang]="lang()" />
 
 <div class="layout">
   <!-- inert keeps the off-screen mobile menu out of the tab order and away from screen readers. -->

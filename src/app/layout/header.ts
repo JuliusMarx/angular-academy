@@ -1,5 +1,5 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component, computed, inject, input, model } from '@angular/core';
+import { Component, computed, inject, input, model, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Lang, LANGS } from '../content/content.model';
 import { ThemeService } from '../core/theme.service';
@@ -25,6 +25,12 @@ import { UI_TEXT } from '../core/ui-text';
       <img class="logo" ngSrc="logo.svg" width="32" height="32" alt="" priority />
       <span>{{ text().appName }}</span>
     </a>
+
+    <button type="button" class="search-button" [attr.aria-keyshortcuts]="'Control+K /'" (click)="searchRequested.emit()">
+      <span aria-hidden="true">⌕</span>
+      <span class="label">{{ text().search }}</span>
+      <kbd aria-hidden="true">{{ text().searchShortcut }}</kbd>
+    </button>
 
     <nav class="actions" [attr.aria-label]="text().language">
       @for (l of langs; track l) {
@@ -65,9 +71,15 @@ import { UI_TEXT } from '../core/ui-text';
       color: var(--text);
       text-decoration: none;
     }
-    @media (max-width: 380px) {
+    /* Phones: logo only, so search, language and theme still fit – the name stays for screen readers. */
+    @media (max-width: 480px) {
       .brand span:last-child {
-        font-size: 0.95rem;
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
       }
     }
     .logo {
@@ -103,6 +115,48 @@ import { UI_TEXT } from '../core/ui-text';
         display: inline-grid;
       }
     }
+    .search-button {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-left: auto;
+      padding: 0.35rem 0.6rem;
+      border: 1px solid var(--border-strong);
+      border-radius: 0.5rem;
+      background: var(--bg);
+      color: var(--text-muted);
+      font: inherit;
+      font-size: 0.9rem;
+      cursor: pointer;
+      &:hover {
+        border-color: var(--accent);
+        color: var(--text);
+      }
+      kbd {
+        padding: 0 0.35rem;
+        border: 1px solid var(--border);
+        border-radius: 0.3rem;
+        font-family: inherit;
+        font-size: 0.75rem;
+      }
+    }
+    .search-button + .actions {
+      margin-left: 0;
+    }
+    /* Narrow screens: icon only – the label stays available to screen readers. */
+    @media (max-width: 600px) {
+      .search-button .label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+      .search-button kbd {
+        display: none;
+      }
+    }
   `,
 })
 export class Header {
@@ -112,6 +166,7 @@ export class Header {
   readonly lang = input.required<Lang>();
   readonly url = input.required<string>();
   readonly menuOpen = model(false);
+  readonly searchRequested = output<void>();
 
   protected readonly text = computed(() => UI_TEXT[this.lang()]);
 

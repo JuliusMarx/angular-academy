@@ -180,6 +180,7 @@ async function buildExamples() {
 async function buildLessons(exampleIds, exercises) {
   const curriculum = {};
   const loaders = [];
+  const searchDocs = Object.fromEntries(LANGS.map((l) => [l, []]));
   for (const lang of LANGS) {
     curriculum[lang] = [];
     const langDir = join(CONTENT_DIR, lang);
@@ -216,11 +217,27 @@ async function buildLessons(exampleIds, exercises) {
         await mkdir(join(out, '..'), { recursive: true });
         await writeTs(out, `export default ${JSON.stringify(lesson, null, 2)} satisfies Lesson;`, "import type { Lesson } from '../../../../content.model';");
         loaders.push(`  '${lang}/${id}': () => import('./lessons/${lang}/${id}').then((m) => m.default),`);
+        searchDocs[lang].push(...searchDocsFor(lesson, chapter));
       }
       curriculum[lang].push(chapter);
     }
   }
   assertSameStructure(curriculum);
+  await mkdir(join(OUT_DIR, 'search'), { recursive: true });
+  for (const lang of LANGS) {
+    await writeTs(
+      join(OUT_DIR, 'search', `${lang}.ts`),
+      `export default ${JSON.stringify(searchDocs[lang])} satisfies SearchDoc[];`,
+      "import type { SearchDoc } from '../../content.model';",
+    );
+  }
+  await writeTs(
+    join(OUT_DIR, 'search.ts'),
+    `export const searchLoaders: Record<Lang, () => Promise<SearchDoc[]>> = {\n` +
+      LANGS.map((l) => `  ${l}: () => import('./search/${l}').then((m) => m.default),`).join('\n') +
+      '\n};',
+    "import type { Lang, SearchDoc } from '../content.model';",
+  );
   await writeTs(
     join(OUT_DIR, 'curriculum.ts'),
     `export const curriculum: Record<Lang, Chapter[]> = ${JSON.stringify(curriculum, null, 2)};\n\n` +
@@ -241,6 +258,45 @@ function assertNoYamlComments(raw, data, file) {
       throw new Error(`${file}: "${value} #…" was cut off by YAML – put the value in quotes.`);
     }
   }
+}
+
+const toPlainText = (html) =>
+  html
+    .replace(/<button[^>]*data-copy[^>]*>.*?<\/button>/g, '')
+    // Block ends become spaces; inline tags (e.g. the many <span>s of highlighted code) vanish.
+    .replace(/<\/(p|li|h\d|td|th|pre|div|tr|blockquote)>|<br\s*\/?>/g, ' ')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'")
+    // Shiki writes some characters as numeric entities, e.g. "&#x3C;" for "<".
+    .replace(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
+    .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(Number(dec)))
+    .replace(/&amp;/g, '&')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+/**
+ * One search document per lesson section (split at h2), plus one for the exercise – so a hit
+ * can link straight to the matching heading.
+ */
+function searchDocsFor(lesson, chapter) {
+  const html = lesson.segments.filter((s) => s.type === 'html').map((s) => s.html).join('\n');
+  const parts = html.replace(/<h1>.*?<\/h1>/s, '').split(/<h2 id="([^"]+)">(.*?)<\/h2>/s);
+  const base = { lesson: lesson.id, lessonTitle: lesson.title, chapter: chapter.title };
+  const docs = [{ ...base, id: `${lesson.id}#`, anchor: '', heading: '', text: toPlainText(parts[0]) }];
+  for (let i = 1; i < parts.length; i += 3) {
+    docs.push({ ...base, id: `${lesson.id}#${parts[i]}`, anchor: parts[i], heading: toPlainText(parts[i + 1]), text: toPlainText(parts[i + 2] ?? '') });
+  }
+  if (lesson.exercise) {
+    docs.push({
+      ...base,
+      id: `${lesson.id}#exercise-title`,
+      anchor: 'exercise-title',
+      heading: lesson.exercise.title,
+      text: toPlainText(lesson.exercise.task),
+      exercise: true,
+    });
+  }
+  return docs;
 }
 
 /** Validates the "exercise:" frontmatter against the exercise project and renders its texts. */

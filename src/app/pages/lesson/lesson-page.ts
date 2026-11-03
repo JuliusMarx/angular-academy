@@ -1,6 +1,8 @@
-import { Component, computed, effect, inject, input, resource } from '@angular/core';
+import { DOCUMENT, ViewportScroller } from '@angular/common';
+import { afterNextRender, Component, computed, effect, inject, Injector, input, resource } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Title } from '@angular/platform-browser';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Lang } from '../../content/content.model';
 import { ContentService } from '../../content/content.service';
 import { ProgressService } from '../../core/progress.service';
@@ -21,6 +23,7 @@ import { TryIt } from './try-it';
 export default class LessonPage {
   private readonly content = inject(ContentService);
   private readonly title = inject(Title);
+  private readonly document = inject(DOCUMENT);
   protected readonly progress = inject(ProgressService);
 
   readonly lang = input.required<Lang>();
@@ -53,6 +56,26 @@ export default class LessonPage {
       this.title.setTitle(lesson ? `${lesson.title} – ${this.text().appName}` : this.text().appName);
     });
     effect(() => this.progress.visit(this.lessonId()));
+
+    // Coming from another lesson (e.g. a search hit), the router scrolls to #anchor before the
+    // lazily loaded lesson is rendered – so scroll (and move focus) once it is.
+    const fragment = toSignal(inject(ActivatedRoute).fragment);
+    const scroller = inject(ViewportScroller);
+    const injector = inject(Injector);
+    effect(() => {
+      const id = fragment();
+      if (!this.data.value() || !id) return;
+      afterNextRender(
+        () => {
+          const heading = this.document.getElementById(id);
+          if (!heading) return;
+          scroller.scrollToAnchor(id);
+          if (!heading.hasAttribute('tabindex')) heading.setAttribute('tabindex', '-1');
+          heading.focus({ preventScroll: true });
+        },
+        { injector },
+      );
+    });
   }
 
   protected toggleDone(): void {

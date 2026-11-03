@@ -76,6 +76,20 @@ export interface Example {
   solution?: SolutionFile[];
 }
 
+/** One searchable lesson section, generated at build time. */
+export interface SearchDoc {
+  /** "<lesson id>#<anchor>" – unique. */
+  id: string;
+  lesson: string;
+  lessonTitle: string;
+  chapter: string;
+  /** h2 id to jump to; empty for the lesson intro. */
+  anchor: string;
+  heading: string;
+  text: string;
+  exercise?: true;
+}
+
 /** Message the exercise check kit (examples/_exercise-kit) posts to the course page. */
 export interface ExerciseResultsMessage {
   type: 'angular-academy:exercise-results';
