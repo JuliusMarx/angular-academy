@@ -199,6 +199,7 @@ async function buildLessons(exampleIds, exercises) {
         chapter.lessons.push({ id, slug: lessonSlug, title: data.title, minutes: data.minutes ?? 5 });
         headings = [];
         const segments = renderSegments(content, exampleIds, relative(ROOT, path), lang);
+        assertRenderable(segments, data, relative(ROOT, path));
         const lesson = {
           id,
           title: data.title,
@@ -258,6 +259,16 @@ function assertNoYamlComments(raw, data, file) {
       throw new Error(`${file}: "${value} #…" was cut off by YAML – put the value in quotes.`);
     }
   }
+}
+
+/** Catches markup that renders badly: empty table header cells (an axe violation) and bold in quiz texts. */
+function assertRenderable(segments, data, file) {
+  if (/<th[^>]*><\/th>/.test(JSON.stringify(segments))) {
+    throw new Error(`${file}: a table has an empty header cell – give the first column a heading.`);
+  }
+  const quizTexts = (data.quiz ?? []).flatMap((q) => [q.question, ...q.options]);
+  const bold = quizTexts.find((text) => String(text).replace(/`[^`]*`/g, '').includes('**'));
+  if (bold) throw new Error(`${file}: quiz texts only support inline code, not **bold**: "${bold}"`);
 }
 
 const toPlainText = (html) =>

@@ -8,8 +8,8 @@ quiz:
   - question: "Why must `{ path: '**' }` be the last route?"
     options:
       - Because Angular throws an error otherwise
-      - Because the router takes the first matching route – and ** matches everything
-      - Because ** is only allowed at the end
+      - Because the router takes the first matching route – and `**` matches everything
+      - Because `**` is only allowed at the end
       - It doesn't matter, the order is irrelevant
     answer: 1
   - question: Why `routerLink` instead of `href`?
