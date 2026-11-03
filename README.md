@@ -123,3 +123,13 @@ exercise:
 `npm run content` bricht ab, wenn Prüf-IDs in `checks.ts` und Frontmatter nicht übereinstimmen.
 
 **Vor dem Commit prüfen:** Der Startcode muss mindestens eine Prüfung verfehlen und die Lösung alle bestehen.
+
+### Test-Beispiele und Test-Übungen
+
+Mit `"kit": "test"` in `meta.json` startet die Vorschau nicht die App, sondern führt die Specs aus (`examples/_test-kit/`). Ein kleiner Runner stellt `describe`, `it`, `expect`, `beforeEach`/`afterEach` und `vi.fn()`/`vi.spyOn()` bereit und nutzt Angulars echtes `TestBed`. Die Specs sehen daher aus wie in einem CLI-Projekt mit Vitest. Welche Spec-Dateien laufen, steht in `src/specs.ts` des Beispiels.
+
+Test-Übungen (`"kit": "test", "exercise": true`) prüfen die Tests der Lernenden per **Mutationstest** (`examples/_test-exercise-kit/`):
+
+- `t.runTests()` lässt die Tests gegen den echten Code laufen. Sie sollen alle bestehen.
+- `t.expectCaught([[Original, Mutant]], 'Meldung')` lässt sie gegen eine absichtlich kaputte Variante aus `src/exercise/mutants.ts` laufen. Mindestens ein Test muss dann fehlschlagen.
+- Services werden per `TestBed.overrideProvider` ersetzt, Komponenten über `TestBed.createComponent`. Komponenten-Mutanten brauchen ein eigenes `@Component` mit statisch auswertbarem Template.

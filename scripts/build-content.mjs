@@ -146,6 +146,9 @@ function withExerciseKit(files, kitFiles) {
 async function buildExamples() {
   const baseFiles = await readExampleFiles(join(EXAMPLES_DIR, '_base'));
   const kitFiles = await readExampleFiles(join(EXAMPLES_DIR, '_exercise-kit'));
+  // Test examples ("kit": "test") run their specs in the preview instead of the app.
+  const testKitFiles = await readExampleFiles(join(EXAMPLES_DIR, '_test-kit'));
+  const testExerciseKitFiles = await readExampleFiles(join(EXAMPLES_DIR, '_test-exercise-kit'));
   const ids = await sortedDirs(EXAMPLES_DIR);
   /** exercise id → check ids declared in its checks.ts */
   const exercises = new Map();
@@ -153,7 +156,8 @@ async function buildExamples() {
   for (const id of ids) {
     const dir = join(EXAMPLES_DIR, id);
     const meta = existsSync(join(dir, 'meta.json')) ? JSON.parse(await readFile(join(dir, 'meta.json'), 'utf8')) : {};
-    const ownFiles = { ...baseFiles, ...(await readExampleFiles(dir)) };
+    const isTest = meta.kit === 'test';
+    const ownFiles = { ...baseFiles, ...(isTest ? testKitFiles : {}), ...(await readExampleFiles(dir)) };
     if (meta.exercise) {
       const checks = ownFiles['src/exercise/checks.ts'];
       if (!checks) throw new Error(`examples/${id}: exercises need src/exercise/checks.ts`);
@@ -163,7 +167,7 @@ async function buildExamples() {
     const example = {
       id,
       openFile: meta.openFile ?? 'src/app/app.ts',
-      files: meta.exercise ? withExerciseKit(ownFiles, kitFiles) : ownFiles,
+      files: meta.exercise ? withExerciseKit(ownFiles, isTest ? testExerciseKitFiles : kitFiles) : ownFiles,
       ...(meta.exercise ? { solution: await renderSolution(join(dir, 'solution')) } : {}),
     };
     await writeTs(join(OUT_DIR, 'examples', `${id}.ts`), `export default ${JSON.stringify(example, null, 2)} satisfies Example;`, "import type { Example } from '../../content.model';");
