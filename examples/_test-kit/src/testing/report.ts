@@ -1,5 +1,10 @@
 // Shows the test results in the preview, like the output of `ng test` in the terminal.
-import { RunResult } from './mini-test';
+/** The parts of a test run the report shows – the same for unit tests and UI tests. */
+export interface RunResult {
+  results: { name: string; passed: boolean; error?: string }[];
+  passed: number;
+  failed: number;
+}
 
 export function renderReport(run: RunResult, target: Element = document.body): void {
   const section = document.createElement('section');

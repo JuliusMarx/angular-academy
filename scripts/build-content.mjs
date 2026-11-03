@@ -149,6 +149,16 @@ async function buildExamples() {
   // Test examples ("kit": "test") run their specs in the preview instead of the app.
   const testKitFiles = await readExampleFiles(join(EXAMPLES_DIR, '_test-kit'));
   const testExerciseKitFiles = await readExampleFiles(join(EXAMPLES_DIR, '_test-exercise-kit'));
+  // UI test examples ("kit": "e2e") run Playwright-style tests against the app in a frame.
+  const e2eKitFiles = {
+    'src/testing/report.ts': testKitFiles['src/testing/report.ts'],
+    ...(await readExampleFiles(join(EXAMPLES_DIR, '_e2e-kit'))),
+  };
+  const e2eExerciseKitFiles = await readExampleFiles(join(EXAMPLES_DIR, '_e2e-exercise-kit'));
+  const kits = {
+    test: { files: testKitFiles, exercise: testExerciseKitFiles },
+    e2e: { files: e2eKitFiles, exercise: e2eExerciseKitFiles },
+  };
   const ids = await sortedDirs(EXAMPLES_DIR);
   /** exercise id → check ids declared in its checks.ts */
   const exercises = new Map();
@@ -156,8 +166,9 @@ async function buildExamples() {
   for (const id of ids) {
     const dir = join(EXAMPLES_DIR, id);
     const meta = existsSync(join(dir, 'meta.json')) ? JSON.parse(await readFile(join(dir, 'meta.json'), 'utf8')) : {};
-    const isTest = meta.kit === 'test';
-    const ownFiles = { ...baseFiles, ...(isTest ? testKitFiles : {}), ...(await readExampleFiles(dir)) };
+    const kit = meta.kit ? kits[meta.kit] : undefined;
+    if (meta.kit && !kit) throw new Error(`examples/${id}: unknown kit "${meta.kit}"`);
+    const ownFiles = { ...baseFiles, ...kit?.files, ...(await readExampleFiles(dir)) };
     if (meta.exercise) {
       const checks = ownFiles['src/exercise/checks.ts'];
       if (!checks) throw new Error(`examples/${id}: exercises need src/exercise/checks.ts`);
@@ -167,7 +178,7 @@ async function buildExamples() {
     const example = {
       id,
       openFile: meta.openFile ?? 'src/app/app.ts',
-      files: meta.exercise ? withExerciseKit(ownFiles, isTest ? testExerciseKitFiles : kitFiles) : ownFiles,
+      files: meta.exercise ? withExerciseKit(ownFiles, kit?.exercise ?? kitFiles) : ownFiles,
       ...(meta.exercise ? { solution: await renderSolution(join(dir, 'solution')) } : {}),
     };
     await writeTs(join(OUT_DIR, 'examples', `${id}.ts`), `export default ${JSON.stringify(example, null, 2)} satisfies Example;`, "import type { Example } from '../../content.model';");

@@ -133,3 +133,9 @@ Test-Übungen (`"kit": "test", "exercise": true`) prüfen die Tests der Lernende
 - `t.runTests()` lässt die Tests gegen den echten Code laufen. Sie sollen alle bestehen.
 - `t.expectCaught([[Original, Mutant]], 'Meldung')` lässt sie gegen eine absichtlich kaputte Variante aus `src/exercise/mutants.ts` laufen. Mindestens ein Test muss dann fehlschlagen.
 - Services werden per `TestBed.overrideProvider` ersetzt, Komponenten über `TestBed.createComponent`. Komponenten-Mutanten brauchen ein eigenes `@Component` mit statisch auswertbarem Template.
+
+### UI-Test-Beispiele und -Übungen (Playwright)
+
+Mit `"kit": "e2e"` führt die Vorschau Playwright-Tests aus `e2e/*.spec.ts` aus (`examples/_e2e-kit/`). `@playwright/test` ist per `paths` in der `tsconfig.json` auf einen kleinen Nachbau (`src/testing/playwright.ts`) umgeleitet: `test`, `test.describe`/`beforeEach`, `page.goto`, die `getBy…`-Locators, Aktionen (`click`, `fill`, `press`, `check`) und die wichtigsten `expect`-Assertions mit automatischem Warten (1,5 s). Jeder Test öffnet die App frisch in einem iframe. Am `window.name` des Frames erkennt `main.ts`, dass es die App starten soll statt der Tests. Welche Specs laufen, steht in `src/specs.ts`.
+
+Übungen (`"kit": "e2e", "exercise": true`, `examples/_e2e-exercise-kit/`) arbeiten ebenfalls mit Mutanten: `t.expectCaught('NameDesMutanten', 'Meldung')` startet im Frame statt `App` die gleichnamige Root-Komponente aus `src/exercise/mutants.ts` und bricht beim ersten fehlschlagenden Test ab.
