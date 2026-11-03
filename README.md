@@ -71,6 +71,7 @@ Text mit `Code`, Tabellen und Codeblöcken (```ts, ```html, ```bash …).
 - Ordner- und Dateinamen bestimmen URL und Reihenfolge (`02-templates/01-interpolation.md` → `/de/templates/interpolation`). Sie müssen in allen Sprachen gleich sein.
 - `::tryit{id}` bettet das Beispiel aus `examples/<id>/` als echtes Angular-Projekt (StackBlitz) ein.
 - Die Beispiele laufen auf **Angular 21** (`examples/_base/package.json`), weil die Build-Toolchain von Angular 22 (rolldown/oxc) in StackBlitz-WebContainern nicht startet. Vor einem Upgrade in StackBlitz testen.
+- Daten für HTTP-Beispiele liegen als JSON in `examples/<id>/public/` (z. B. `public/api/products.json` → `GET /api/products.json`). Der Dev-Server liefert sie aus, fehlende Dateien ergeben 404. Für alles, was ein statischer Server nicht kann (Header prüfen, POST), einen Fake-Backend-Interceptor verwenden, siehe `examples/ex-interceptor`.
 - Die Einbettung braucht Cross-Origin-Isolation (`Cross-Origin-Opener-Policy: same-origin`, `Cross-Origin-Embedder-Policy: credentialless`), gesetzt in `netlify.toml` und für `npm start` in `angular.json`. Externe Ressourcen auf der Plattform selbst (Bilder, Skripte) werden deshalb ohne Cookies geladen.
 - Jede Lektion muss in allen Sprachen existieren, sonst bricht `npm run content` ab.
 - Frontmatter-Werte mit ` #`, `: `, `{`, `[` oder Backticks am Anfang in Anführungszeichen setzen, sonst liest YAML sie falsch (` #` startet z. B. einen Kommentar).
