@@ -120,7 +120,7 @@ Ein `ProgressService` kapselt den Zugriff (Signal-basiert), sodass ein Backend s
 - Kapitel 4–8
 
 ### Phase 3 – Vertiefung
-- Kapitel 9–12
+- Kapitel 9–12 (erledigt)
 - Optional: Login + Cloud-Sync (z. B. Supabase), Abschlusszertifikat
 - Optional: Mehr Interaktivität (Schritt-für-Schritt-Tutorials im Editor)
 

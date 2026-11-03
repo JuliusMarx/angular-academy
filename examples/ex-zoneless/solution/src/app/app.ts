@@ -1,0 +1,32 @@
+import { Component, signal } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <h1>Launch</h1>
+
+    <p>Countdown: <strong id="countdown">{{ countdown() }}</strong></p>
+    @if (countdown() === 0) {
+      <p id="liftoff">🚀 Liftoff!</p>
+    }
+
+    <button type="button" (click)="loadWeather()">Check the weather</button>
+    <p id="weather">{{ weather() }}</p>
+  `,
+})
+export class App {
+  protected readonly countdown = signal(10);
+  protected readonly weather = signal('Unknown');
+
+  constructor() {
+    const timer = setInterval(() => {
+      this.countdown.update((n) => n - 1);
+      if (this.countdown() === 0) clearInterval(timer);
+    }, 100);
+  }
+
+  protected loadWeather(): void {
+    this.weather.set('Loading …');
+    setTimeout(() => this.weather.set('Clear skies'), 300);
+  }
+}
