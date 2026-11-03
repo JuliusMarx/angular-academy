@@ -2,6 +2,7 @@
 // After every save the app reloads, runs the checks in ./checks.ts against the running app
 // and reports the results to the course page.
 import { ApplicationRef } from '@angular/core';
+import { Router } from '@angular/router';
 
 export interface Check {
   /** Matches the label shown on the course page. */
@@ -63,6 +64,17 @@ export class TestKit {
     input.dispatchEvent(new Event('input', { bubbles: true }));
     input.dispatchEvent(new Event('change', { bubbles: true }));
     await this.settle();
+  }
+
+  /** Navigates like typing the URL into the address bar (runs guards, redirects, resolvers). */
+  async navigate(url: string): Promise<void> {
+    await this.appRef.injector.get(Router).navigateByUrl(url);
+    await this.settle();
+  }
+
+  /** The current router URL, e.g. "/products/2?sort=price". */
+  url(): string {
+    return this.appRef.injector.get(Router).url;
   }
 
   /** Waits until Angular has updated the page (and pending async work is done). */
