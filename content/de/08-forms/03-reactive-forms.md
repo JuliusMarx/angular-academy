@@ -88,7 +88,7 @@ Die dritte Variante steckt das Formular ganz ins Template, mit `ngModel` aus dem
 <input name="name" [(ngModel)]="name" required />
 ```
 
-Das ist für sehr kleine Formulare schnell geschrieben. Validierung und Typen lassen sich aber schlechter kontrollieren. Für neuen Code solltest du sie nicht mehr verwenden.
+Das ist für sehr kleine Formulare schnell geschrieben. Validierung und Typen lassen sich aber schlechter kontrollieren. Für neuen Code sind Signal Forms die bessere Wahl.
 
 ## Welche Variante wann?
 
@@ -97,7 +97,7 @@ Das ist für sehr kleine Formulare schnell geschrieben. Validierung und Typen la
 | Daten liegen in | einem Signal | `FormGroup`-Objekten | Komponenten-Feldern |
 | Regeln stehen in | einer Schema-Funktion | dem Code (`Validators`) | Template-Attributen |
 | Zustand als | Signals | Eigenschaften und Observables | Eigenschaften |
-| Für neuen Code | **erste Wahl** | wenn das Projekt sie schon nutzt | nicht mehr empfohlen |
+| Für neuen Code | **erste Wahl** | wenn das Projekt sie schon nutzt | meist nicht die erste Wahl |
 
 > [!TIP]
 > Bestehende Reactive Forms musst du nicht sofort umbauen. Beide Varianten können in einem Projekt nebeneinander existieren. Neue Formulare schreibst du mit Signal Forms.

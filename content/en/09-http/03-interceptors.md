@@ -62,7 +62,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 You register interceptors with `provideHttpClient()`:
 
 ```ts
-provideHttpClient(withFetch(), withInterceptors([loggingInterceptor, authInterceptor]));
+provideHttpClient(withInterceptors([loggingInterceptor, authInterceptor]));
 ```
 
 The **order** matters: the request runs through the list from left to right, and the response comes back in reverse.

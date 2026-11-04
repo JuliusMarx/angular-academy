@@ -62,7 +62,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 Registriert werden Interceptors bei `provideHttpClient()`:
 
 ```ts
-provideHttpClient(withFetch(), withInterceptors([loggingInterceptor, authInterceptor]));
+provideHttpClient(withInterceptors([loggingInterceptor, authInterceptor]));
 ```
 
 Die **Reihenfolge** zählt: Die Anfrage läuft von links nach rechts durch die Liste, die Antwort in umgekehrter Richtung zurück.

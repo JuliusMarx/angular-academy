@@ -66,10 +66,11 @@ export default defineConfig({
   testDir: './e2e',
   use: { baseURL: 'http://localhost:4200' },
   webServer: { command: 'npm run start', url: 'http://localhost:4200' },
+  projects: [/* chromium, firefox, webkit */],
 });
 ```
 
-`npx playwright test` then starts the dev server, runs all tests in all browsers and stops the server again.
+`npx playwright test` then starts the dev server, runs all tests in all configured browsers (`projects`) and stops the server again.
 
 > [!NOTE]
 > `ng e2e` also offers to set up an E2E tool the first time you run it, for example Playwright or Cypress.
@@ -148,7 +149,7 @@ test('shows an error when loading fails', async ({ page }) => {
 
 - `npx playwright test --ui` opens **UI mode**: run tests one by one and look at every step with a screenshot.
 - `npx playwright codegen localhost:4200` opens a browser and records your clicks as test code.
-- `npx playwright show-report` shows the report of the last run, with errors and *traces* of failed tests.
+- `npx playwright show-report` shows the report of the last run, with the errors. If recording is turned on (`trace` in the config), it also contains *traces* of the failed tests, step by step.
 
 > [!TIP]
 > Use UI tests for the most important paths through the app: signing in, searching, ordering. Special cases like every single validation rule are faster to check in unit and component tests.

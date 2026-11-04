@@ -49,7 +49,7 @@ Die wichtigsten Dateien in einem neuen Projekt:
 | `src/index.html` | Die HTML-Seite, in die Angular die App rendert |
 | `src/app/app.ts` | Die Wurzelkomponente deiner App |
 | `src/app/app.config.ts` | Globale Konfiguration (Router, HTTP, …) |
-| `src/styles.scss` | Globale Styles |
+| `src/styles.css` | Globale Styles (oder `.scss`, je nach Projekt) |
 | `angular.json` | Konfiguration der Angular CLI |
 
 > [!TIP]

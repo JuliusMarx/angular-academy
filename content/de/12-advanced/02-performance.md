@@ -34,7 +34,7 @@ exercise:
   checks:
     filter-works: Der Filter zeigt weiterhin die passenden Produkte
     no-needless-filtering: "Klicks auf ❤ lösen kein neues Filtern aus"
-    track-by-id: Ein neues Produkt oben erzeugt die vorhandenen Elemente nicht neu
+    track-by-id: Ein neues Produkt oben lässt die vorhandenen Elemente bei ihren Produkten
 ---
 
 # Performance
@@ -63,7 +63,7 @@ Klicke im Beispiel auf ❤: Der Zähler „The filter ran … times“ bleibt st
 
 `track` sagt Angular, woran es ein Element der Liste wiedererkennt. Mit einer stabilen ID wie `track p.id` werden bei Änderungen nur die betroffenen DOM-Elemente erzeugt oder entfernt. Die anderen bleiben, samt Fokus, Eingaben und laufenden Animationen.
 
-Mit `track $index` erkennt Angular Elemente nur an ihrer **Position**. Fügst du oben etwas ein, bekommt jedes Element neuen Inhalt, und das DOM wird unnötig umgebaut.
+Mit `track $index` erkennt Angular Elemente nur an ihrer **Position**. Fügst du oben etwas ein, bekommt jedes Element den Inhalt seines Nachbarn: Angular aktualisiert unnötig das ganze DOM, und Fokus oder Eingaben hängen plötzlich am falschen Eintrag.
 
 > [!TIP]
 > Nimm `track item.id` (oder einen anderen eindeutigen Schlüssel). `$index` passt nur für Listen, die sich nie umsortieren, etwa feste Menüpunkte.

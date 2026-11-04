@@ -107,7 +107,7 @@ Auch das ganze Formular hat einen Zustand: `signupForm().valid()` ist nur dann `
 
 ## Absenden
 
-`submit()` führt deine Aktion aus, aber nur, wenn das Formular gültig ist. Vorher markiert es alle Felder als `touched`, damit Fehlermeldungen erscheinen:
+`submit()` führt deine Aktion aus, aber nur, wenn das Formular gültig ist. Vorher markiert es alle bearbeitbaren Felder als `touched`, damit Fehlermeldungen erscheinen:
 
 ```ts
 protected onSubmit(event: Event): void {

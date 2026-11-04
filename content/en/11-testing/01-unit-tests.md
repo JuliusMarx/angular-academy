@@ -77,7 +77,7 @@ The most important matchers:
 
 | Matcher | Checks |
 |---|---|
-| `toBe(x)` | identity (`===`), for numbers, strings and booleans |
+| `toBe(x)` | identity (`Object.is`, almost like `===`), for numbers, strings and booleans |
 | `toEqual(x)` | same content, for objects and arrays |
 | `toBeTruthy()` / `toBeFalsy()` | truthiness |
 | `toContain(x)` | array or string contains `x` |

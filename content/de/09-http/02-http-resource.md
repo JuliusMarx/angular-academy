@@ -56,7 +56,7 @@ protected readonly product = httpResource<Product>(() => `/api/products/${this.i
 
 Die Funktion liest `id()`. Ändert sich die ID, sendet Angular automatisch eine neue Anfrage. Ist eine ältere Anfrage noch unterwegs, wird sie abgebrochen, damit keine veraltete Antwort die neue überschreibt.
 
-`httpResource` braucht wie `HttpClient` `provideHttpClient()` in der App-Konfiguration. Auch Interceptors gelten für beide.
+`httpResource` nutzt intern `HttpClient` und braucht wie dieser kein Setup. Interceptors, die du mit `provideHttpClient(withInterceptors(…))` registrierst, gelten deshalb auch hier.
 
 ## Den Zustand anzeigen
 

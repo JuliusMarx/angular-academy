@@ -77,7 +77,7 @@ Die wichtigsten Matcher:
 
 | Matcher | Prüft |
 |---|---|
-| `toBe(x)` | Identität (`===`), für Zahlen, Strings und Booleans |
+| `toBe(x)` | Identität (`Object.is`, fast wie `===`), für Zahlen, Strings und Booleans |
 | `toEqual(x)` | gleicher Inhalt, für Objekte und Arrays |
 | `toBeTruthy()` / `toBeFalsy()` | Wahrheitswert |
 | `toContain(x)` | Array oder String enthält `x` |

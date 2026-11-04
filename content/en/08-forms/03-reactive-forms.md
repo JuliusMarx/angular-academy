@@ -88,7 +88,7 @@ The third approach puts the whole form into the template, using `ngModel` from `
 <input name="name" [(ngModel)]="name" required />
 ```
 
-That is quick to write for very small forms, but validation and types are harder to control. Don't use it for new code.
+That is quick to write for very small forms, but validation and types are harder to control. For new code, Signal Forms are the better choice.
 
 ## Which one when?
 
@@ -97,7 +97,7 @@ That is quick to write for very small forms, but validation and types are harder
 | Data lives in | a signal | `FormGroup` objects | component fields |
 | Rules live in | a schema function | code (`Validators`) | template attributes |
 | State as | signals | properties and observables | properties |
-| For new code | **first choice** | when the project already uses them | no longer recommended |
+| For new code | **first choice** | when the project already uses them | usually not the first choice |
 
 > [!TIP]
 > You don't have to rewrite existing Reactive Forms right away. Both approaches can live side by side in one project. Write new forms with Signal Forms.

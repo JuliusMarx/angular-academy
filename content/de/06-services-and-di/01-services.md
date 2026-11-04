@@ -63,7 +63,7 @@ export class CartService {
 - `asReadonly()` gibt das Signal nur lesend heraus. Ändern geht nur über die Methoden des Service – so bleibt nachvollziehbar, wer was ändert.
 
 > [!NOTE]
-> Ab Angular 22 gibt es dafür die Kurzform `@Service()`. Sie bedeutet dasselbe wie `@Injectable({ providedIn: 'root' })`. Die Live-Beispiele laufen auf Angular 21 und verwenden deshalb die längere Schreibweise.
+> Ab Angular 22 gibt es dafür die Kurzform `@Service()`. Sie stellt den Service wie `@Injectable({ providedIn: 'root' })` einmal für die ganze App bereit, unterstützt aber nur `inject()` und keine Konstruktor-Parameter. Die Live-Beispiele laufen auf Angular 21 und verwenden deshalb die längere Schreibweise.
 
 ## Einen Service verwenden
 
@@ -87,7 +87,7 @@ Eine zweite Komponente, die ebenfalls `inject(CartService)` aufruft, bekommt **d
 
 ## Wo inject() erlaubt ist
 
-`inject()` funktioniert nur in einem **Injection Context**: als Feld-Initialisierung oder im Konstruktor von Komponenten, Direktiven, Pipes und Services.
+`inject()` funktioniert nur in einem **Injection Context**. In Klassen heißt das: als Feld-Initialisierung oder im Konstruktor von Komponenten, Direktiven, Pipes und Services. Außerdem ruft Angular unter anderem Provider-Factories, Guards und Interceptors in einem Injection Context auf.
 
 ```ts
 export class CartSummary {

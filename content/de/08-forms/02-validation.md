@@ -98,7 +98,7 @@ Weil `valueOf()` ein Signal liest, prüft Angular die Regel automatisch neu, sob
 
 ## Absenden mit Prüfung
 
-`submit()` markiert alle Felder als `touched`, damit jetzt alle Fehler sichtbar werden. Die Aktion läuft nur, wenn das Formular gültig ist. Solange sie läuft, ist `submitting()` `true`. Damit kannst du den Button sperren und doppeltes Absenden verhindern:
+`submit()` markiert alle bearbeitbaren Felder als `touched`, damit jetzt alle Fehler sichtbar werden. Die Aktion läuft nur, wenn das Formular gültig ist. Solange sie läuft, ist `submitting()` `true`. Damit kannst du den Button sperren und doppeltes Absenden verhindern:
 
 ```html
 <button type="submit" [disabled]="reg().submitting()">

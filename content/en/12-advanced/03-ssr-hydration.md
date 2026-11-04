@@ -97,4 +97,4 @@ The second reason for these functions applies even without SSR: the component's 
 ::tryit{render-hooks}
 
 > [!WARNING]
-> Server and browser must produce the **same** HTML on the first render. If you show `Date.now()` or a random number directly in the template, the two differ and Angular warns about a *hydration mismatch*. Set such values in `afterNextRender()` instead.
+> Server and browser must produce the **same** HTML on the first render. If you show the current time or a random number, the two differ: the page visibly jumps once the browser takes over. If even the structure depends on it, such as an `@if` on a random number, hydration fails with an error (*hydration mismatch*). Set such values in `afterNextRender()` instead.

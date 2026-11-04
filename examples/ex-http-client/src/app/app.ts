@@ -21,7 +21,7 @@ import { Todo, TodoService } from './todo.service';
 export class App {
   private readonly todoService = inject(TodoService);
 
-  // TODO 3: replace this with toSignal(this.todoService.getAll(), { initialValue: [] })
+  // TODO 2: replace this with toSignal(this.todoService.getAll(), { initialValue: [] })
   protected readonly todos = signal<Todo[]>([]);
 
   protected readonly openCount = computed(() => this.todos().filter((t) => !t.done).length);

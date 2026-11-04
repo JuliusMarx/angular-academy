@@ -34,7 +34,7 @@ exercise:
   checks:
     filter-works: The filter still shows the matching products
     no-needless-filtering: "Clicks on ❤ don't run the filter again"
-    track-by-id: A new product at the top doesn't recreate the existing elements
+    track-by-id: A new product at the top keeps the existing elements with their products
 ---
 
 # Performance
@@ -63,7 +63,7 @@ Click ❤ in the example: the counter "The filter ran … times" stays the same.
 
 `track` tells Angular how to recognize an element of the list. With a stable ID like `track p.id`, only the affected DOM elements are created or removed when the list changes. The others stay, including focus, input and running animations.
 
-With `track $index`, Angular only recognizes elements by their **position**. If you insert something at the top, every element gets new content and the DOM is rebuilt unnecessarily.
+With `track $index`, Angular only recognizes elements by their **position**. If you insert something at the top, every element gets its neighbor's content: Angular updates the whole DOM unnecessarily, and focus or input suddenly sticks to the wrong entry.
 
 > [!TIP]
 > Use `track item.id` (or another unique key). `$index` only fits lists that never reorder, such as fixed menu items.

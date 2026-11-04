@@ -9,7 +9,7 @@ export interface Todo {
 
 @Injectable({ providedIn: 'root' })
 export class TodoService {
-  // TODO 2: inject HttpClient and load the list from '/api/todos.json'
+  // TODO 1: inject HttpClient and load the list from '/api/todos.json'
   getAll(): Observable<Todo[]> {
     return of([]);
   }

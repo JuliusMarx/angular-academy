@@ -49,7 +49,7 @@ The most important files in a new project:
 | `src/index.html` | The HTML page Angular renders the app into |
 | `src/app/app.ts` | The root component of your app |
 | `src/app/app.config.ts` | Global configuration (router, HTTP, …) |
-| `src/styles.scss` | Global styles |
+| `src/styles.css` | Global styles (or `.scss`, depending on the project) |
 | `angular.json` | Angular CLI configuration |
 
 > [!TIP]

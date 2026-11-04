@@ -2,13 +2,14 @@
 title: HttpClient
 minutes: 8
 quiz:
-  - question: What do you need to do before you can inject `HttpClient`?
+  - question: What do you need `provideHttpClient()` for in current Angular versions?
     options:
-      - Nothing, it is always available
-      - "Add `provideHttpClient()` to the app's providers"
-      - "Import `HttpClientModule` in every component"
-      - Install a package from npm
+      - Without it, `HttpClient` can't be injected
+      - To configure `HttpClient`, for example with interceptors
+      - To import `HttpClientModule` in every component
+      - To install the npm package
     answer: 1
+    explanation: "Since Angular 21, `HttpClient` can be injected without any setup. You only need `provideHttpClient()` when you want to customize it."
   - question: "When does `this.http.get('/api/todos')` send the request?"
     options:
       - Right away when `get()` is called
@@ -30,9 +31,8 @@ exercise:
   task: |-
     The todo list is empty. Load it from `/api/todos.json`.
 
-    1. Add `provideHttpClient(withFetch())` in `app.config.ts`.
-    2. Inject `HttpClient` in `TodoService` and load the list with `get<Todo[]>()`.
-    3. In the component, turn the observable into a signal with `toSignal()` (with `initialValue: []`).
+    1. Inject `HttpClient` in `TodoService` and load the list with `get<Todo[]>()`.
+    2. In the component, turn the observable into a signal with `toSignal()` (with `initialValue: []`).
   checks:
     loads-todos: The list shows three todos
     shows-titles: The first entry is “Buy milk”
@@ -48,17 +48,20 @@ So far all data came straight from the code. In real applications it lives on a 
 
 ## Setup
 
-`HttpClient` is a service you have to provide first, once for the whole app:
+Nothing to do: since Angular 21, you can inject `HttpClient` anywhere without any setup. Only when you want to customize it, for example with interceptors, do you call `provideHttpClient()` in the app config:
 
 ```ts
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideHttpClient(withFetch())],
+  providers: [provideHttpClient(withInterceptors([authInterceptor]))],
 };
 ```
 
-`withFetch()` sends requests through the browser's modern `fetch` API. It is the recommended option, especially with server-side rendering.
+Older projects and tutorials always add `provideHttpClient()`. That does no harm, but it isn't needed anymore.
+
+> [!NOTE]
+> Since Angular 22, `HttpClient` sends requests through the browser's `fetch` API. In Angular 21, where the live examples run, `XMLHttpRequest` is still the default. There, `provideHttpClient(withFetch())` switches to `fetch`. In Angular 22, `withFetch()` is unnecessary and deprecated.
 
 ## Loading data
 

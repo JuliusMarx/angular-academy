@@ -98,7 +98,7 @@ Because `valueOf()` reads a signal, Angular re-runs the rule automatically whene
 
 ## Submitting with validation
 
-`submit()` marks all fields as `touched`, so all errors become visible. The action only runs when the form is valid. While it runs, `submitting()` is `true`. Use that to disable the button and prevent double submits:
+`submit()` marks all interactive fields as `touched`, so all errors become visible. The action only runs when the form is valid. While it runs, `submitting()` is `true`. Use that to disable the button and prevent double submits:
 
 ```html
 <button type="submit" [disabled]="reg().submitting()">

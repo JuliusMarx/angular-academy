@@ -55,7 +55,7 @@ When a component asks for a service, Angular searches from the bottom up: first 
 @Component({
   selector: 'app-own-counter',
   providers: [CounterService],
-  template: `{{ counter.count() }}`,
+  template: `{{ counter.count() }} <ng-content />`,
 })
 export class OwnCounter {
   protected readonly counter = inject(CounterService);

@@ -107,7 +107,7 @@ The whole form has a state too: `signupForm().valid()` is only `true` when every
 
 ## Submitting
 
-`submit()` runs your action, but only if the form is valid. Before that it marks all fields as `touched`, so error messages appear:
+`submit()` runs your action, but only if the form is valid. Before that it marks all interactive fields as `touched`, so error messages appear:
 
 ```ts
 protected onSubmit(event: Event): void {

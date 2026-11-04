@@ -66,10 +66,11 @@ export default defineConfig({
   testDir: './e2e',
   use: { baseURL: 'http://localhost:4200' },
   webServer: { command: 'npm run start', url: 'http://localhost:4200' },
+  projects: [/* chromium, firefox, webkit */],
 });
 ```
 
-`npx playwright test` startet dann den Dev-Server, führt alle Tests in allen Browsern aus und beendet den Server wieder.
+`npx playwright test` startet dann den Dev-Server, führt alle Tests in allen eingetragenen Browsern (`projects`) aus und beendet den Server wieder.
 
 > [!NOTE]
 > Auch `ng e2e` bietet beim ersten Aufruf an, ein E2E-Werkzeug einzurichten, zum Beispiel Playwright oder Cypress.
@@ -148,7 +149,7 @@ test('shows an error when loading fails', async ({ page }) => {
 
 - `npx playwright test --ui` öffnet den **UI-Modus**: Tests einzeln starten und jeden Schritt mit Bildschirmfoto ansehen.
 - `npx playwright codegen localhost:4200` öffnet einen Browser und schreibt deine Klicks als Testcode mit.
-- `npx playwright show-report` zeigt den Bericht des letzten Laufs, mit Fehlern und Spuren (*Traces*) fehlgeschlagener Tests.
+- `npx playwright show-report` zeigt den Bericht des letzten Laufs, mit den Fehlern. Ist das Aufzeichnen eingeschaltet (`trace` in der Konfiguration), enthält er auch Spuren (*Traces*) der fehlgeschlagenen Tests, Schritt für Schritt.
 
 > [!TIP]
 > Teste mit UI-Tests die wichtigsten Wege durch die App: anmelden, etwas suchen, bestellen. Sonderfälle wie jede einzelne Validierungsregel prüfst du schneller in Unit- und Komponententests.

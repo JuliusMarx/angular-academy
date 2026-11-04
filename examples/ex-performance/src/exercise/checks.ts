@@ -28,7 +28,7 @@ export const checks: Check[] = [
       t.expect(keyboard, 'Keyboard should be in the list');
       await t.click(t.button('Add product at the top'));
       const after = t.$$('li').find((li) => li.textContent?.includes('Keyboard'));
-      t.expect(after === keyboard, 'Adding at the top recreated the Keyboard element – track by the id, not the position');
+      t.expect(after === keyboard, 'Adding at the top moved the Keyboard product into a different element – track by the id, not the position');
     },
   },
 ];

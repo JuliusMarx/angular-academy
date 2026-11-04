@@ -97,4 +97,4 @@ Der zweite Grund für diese Funktionen gilt auch ohne SSR: Erst **nach** dem Ren
 ::tryit{render-hooks}
 
 > [!WARNING]
-> Server und Browser müssen beim ersten Rendern **dasselbe** HTML erzeugen. Zeigst du etwa im Template direkt `Date.now()` oder eine Zufallszahl an, unterscheiden sich beide, und Angular warnt vor einem *Hydration Mismatch*. Solche Werte setzt du erst in `afterNextRender()`.
+> Server und Browser müssen beim ersten Rendern **dasselbe** HTML erzeugen. Zeigst du etwa die aktuelle Uhrzeit oder eine Zufallszahl an, unterscheiden sich beide: Die Seite springt sichtbar um, sobald der Browser übernimmt. Hängt sogar die Struktur davon ab, etwa ein `@if` auf eine Zufallszahl, bricht die Hydration mit einem Fehler ab (*Hydration Mismatch*). Solche Werte setzt du erst in `afterNextRender()`.
