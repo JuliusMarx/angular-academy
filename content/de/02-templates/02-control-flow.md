@@ -1,6 +1,22 @@
 ---
 title: Control Flow mit @if, @for und @switch
 minutes: 8
+summary: |-
+  - Control-Flow-Blöcke beginnen mit `@` und sind eingebaut. Du musst nichts importieren.
+  - `@if` / `@else if` / `@else` zeigt Inhalte bedingt an; mit `as` speicherst du das Ergebnis der Bedingung in einer Variable.
+  - `@for` gibt Listen aus. `track` ist Pflicht und sollte eine eindeutige ID sein.
+  - `@empty` erscheint, wenn die Liste leer ist; in der Schleife gibt es `$index`, `$first`, `$last`, `$even` und `$odd`.
+  - `@switch` mit `@case` und `@default` unterscheidet mehrere Fälle.
+
+  ```html
+  @for (todo of todos(); track todo.id) {
+    <li>{{ $index + 1 }}. {{ todo.title }}</li>
+  } @empty {
+    <li>Keine Aufgaben vorhanden.</li>
+  }
+  ```
+
+  > [!WARNING] Verwende `track $index` nur, wenn die Einträge keine eindeutige ID haben. Sonst wird beim Sortieren oder Löschen mehr neu gerendert als nötig.
 quiz:
   - question: Was ist bei @for Pflicht?
     options: ["Ein @empty-Block", "Ein track-Ausdruck", "Ein Index ($index)", "Eine Sortierung"]

@@ -1,6 +1,21 @@
 ---
 title: Die Angular CLI
 minutes: 6
+summary: |-
+  - Alle CLI-Befehle beginnen mit `ng`: `ng new`, `ng serve`, `ng generate`, `ng build`, `ng test`, `ng add`, `ng update`.
+  - `ng serve` (bzw. `npm start`) startet den Entwicklungsserver mit automatischem Neuladen.
+  - `ng g c user-card` legt eine Komponente mit `.ts`, `.html`, `.css` und `.spec.ts` an; mit `--dry-run` siehst du vorher, was erzeugt würde.
+  - Genauso erzeugst du Services, Direktiven, Pipes und Guards (`ng g service`, `ng g directive`, …).
+  - `ng build` baut eine optimierte Produktionsversion in den Ordner `dist/`.
+  - `ng update` aktualisiert Angular und passt deinen Code per Migrationen an.
+
+  ```bash
+  ng g c user-card --dry-run
+  ng build
+  ng update @angular/core @angular/cli
+  ```
+
+  > [!TIP] Aktualisiere immer nur um eine Hauptversion auf einmal, zum Beispiel von 21 auf 22.
 quiz:
   - question: Welcher Befehl erzeugt eine neue Komponente namens user-card?
     options: [ng new user-card, ng generate component user-card, ng create user-card, ng add user-card]

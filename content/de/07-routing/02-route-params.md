@@ -1,6 +1,20 @@
 ---
 title: Parameter und Query-Parameter
 minutes: 9
+summary: |-
+  - Ein Doppelpunkt markiert einen Route-Parameter: `products/:id` passt auf `/products/1`, `/products/2` usw.
+  - Mit `provideRouter(routes, withComponentInputBinding())` kommen Route- und Query-Parameter als Inputs an. Der Input-Name muss zum Parameter passen (`:id` → `id`).
+  - URLs bestehen aus Text: `transform: numberAttribute` macht aus dem Parameter eine Zahl.
+  - Wechselt nur der Parameter, bleibt die Komponente bestehen und nur das Input ändert sich – mit `computed()` passt sich die Anzeige automatisch an.
+  - `[routerLink]="['/products', p.id]"` setzt die URL aus einem Array zusammen, `[queryParams]` hängt Query-Parameter wie `?sort=price` an.
+  - Aus dem Code navigierst du mit `inject(Router)` und `router.navigate(['/products'])`.
+
+  ```ts
+  export class ProductDetail {
+    readonly id = input.required({ transform: numberAttribute });
+    protected readonly product = computed(() => PRODUCTS.find((p) => p.id === this.id()));
+  }
+  ```
 quiz:
   - question: "Welche URL passt auf die Route `products/:id`?"
     options: ["/products", "/products/42", "/products?id=42", "/products/42/edit"]

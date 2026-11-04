@@ -1,6 +1,25 @@
 ---
 title: Validation
 minutes: 9
+summary: |-
+  - The rules live in a schema function, the second argument of `form()`. It receives `path` with all fields.
+  - Built-in rules: `required`, `email`, `min`/`max`, `minLength`/`maxLength`, `pattern` – each with an optional `message`.
+  - `errors()` returns errors with `kind` and `message`. Only show them once the field is `touched()`.
+  - You write custom rules with `validate()`: return an error object or `undefined`. `valueOf()` reads another field.
+  - `submit()` makes all errors visible, `submitting()` is `true` while the action runs – use it to disable the button.
+
+  ```ts
+  protected readonly reg = form(this.model, (path) => {
+    required(path.email);
+    email(path.email, { message: 'That is not a valid email address.' });
+    minLength(path.password, 8);
+    validate(path.confirm, ({ value, valueOf }) =>
+      value() !== valueOf(path.password) ? { kind: 'mismatch' } : undefined,
+    );
+  });
+  ```
+
+  > [!WARNING] `minLength`, `email` and `pattern` don't check empty values. Required fields also need `required()`.
 quiz:
   - question: Where do you define the rules with Signal Forms?
     options:

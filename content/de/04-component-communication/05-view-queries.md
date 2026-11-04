@@ -1,6 +1,23 @@
 ---
 title: Kind-Elemente abfragen mit viewChild()
 minutes: 8
+summary: |-
+  - `viewChild('search')` greift auf ein Element mit `#search` im eigenen Template zu und liefert ein Signal.
+  - Bei HTML-Elementen bekommst du eine `ElementRef`, das DOM-Element steckt in `nativeElement`. Mit einer Komponenten-Klasse bekommst du die Instanz.
+  - Ohne `.required` ist der Wert `undefined`, solange das Element nicht existiert.
+  - `viewChildren()` liefert alle Treffer als Liste und aktualisiert sich, wenn `@for` Einträge ändert.
+  - Für projizierte Inhalte gibt es `contentChild()` und `contentChildren()`.
+  - Nutze Queries sparsam – Inputs, Outputs und Bindings sind meist einfacher.
+
+  ```ts
+  private readonly search = viewChild.required<ElementRef<HTMLInputElement>>('search');
+
+  constructor() {
+    afterNextRender(() => this.search().nativeElement.focus());
+  }
+  ```
+
+  > [!WARNING] Die Query ist erst nach dem Rendern gefüllt, im Konstruktor ist sie noch leer. Greife in `afterNextRender()`, in Event-Handlern oder in einem `effect()` darauf zu.
 quiz:
   - question: "Was liefert viewChild('search') für <input #search />?"
     options:

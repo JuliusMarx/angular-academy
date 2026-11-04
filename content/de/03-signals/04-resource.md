@@ -1,6 +1,21 @@
 ---
 title: Asynchrone Daten mit resource()
 minutes: 9
+summary: |-
+  - `resource()` lädt Daten asynchron und stellt das Ergebnis als Signals bereit.
+  - `params` ist reaktiv: Ändert sich ein Signal darin, lädt die Resource automatisch neu. Gibt es `undefined` zurück, bleibt sie im Status `'idle'`.
+  - `loader` holt die Daten und bekommt `params` und ein `abortSignal`, mit dem veraltete Anfragen abgebrochen werden.
+  - Zustand: `value()`, `hasValue()`, `isLoading()`, `error()` und `status()`.
+  - `reload()` lädt neu, `set(…)` überschreibt den Wert lokal (Status `'local'`).
+  - Für HTTP gibt es `httpResource()`, aufgebaut auf dem `HttpClient`.
+
+  ```ts
+  protected readonly user = resource({
+    params: () => ({ id: this.userId() }),
+    loader: ({ params, abortSignal }) =>
+      fetch(`/api/users/${params.id}`, { signal: abortSignal }).then((r) => r.json()),
+  });
+  ```
 quiz:
   - question: Was passiert, wenn sich ein Signal ändert, das in params gelesen wird?
     options:

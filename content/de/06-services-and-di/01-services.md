@@ -1,6 +1,27 @@
 ---
 title: Services und inject()
 minutes: 9
+summary: |-
+  - Ein Service bündelt Zustand und Logik, die mehrere Komponenten brauchen. Angular erzeugt und verteilt ihn per Dependency Injection.
+  - `@Injectable({ providedIn: 'root' })` meldet ihn beim Root-Injector an: genau eine Instanz für die ganze App.
+  - Ab Angular 22 gibt es die Kurzform `@Service()` (nur `inject()`, keine Konstruktor-Parameter). Die Live-Beispiele auf Angular 21 nutzen noch `@Injectable`.
+  - `inject(CartService)` holt den Service – alle Komponenten bekommen dieselbe Instanz.
+  - Mit `asReadonly()` gibst du Signals nur lesend heraus, Änderungen laufen über die Methoden des Service.
+  - `inject()` geht nur im Injection Context: als Feld-Initialisierung oder im Konstruktor, nicht in Methoden (`NG0203`).
+
+  ```ts
+  @Injectable({ providedIn: 'root' })
+  export class CartService {
+    private readonly items = signal<Product[]>([]);
+    readonly products = this.items.asReadonly();
+
+    add(product: Product): void {
+      this.items.update((items) => [...items, product]);
+    }
+  }
+  ```
+
+  > [!TIP] Schreib nie `new CartService()` – sonst hast du eine zweite, unabhängige Instanz.
 quiz:
   - question: "Was bewirkt `providedIn: 'root'`?"
     options:

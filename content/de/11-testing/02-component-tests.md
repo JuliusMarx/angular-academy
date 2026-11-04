@@ -1,6 +1,23 @@
 ---
 title: Komponenten testen
 minutes: 9
+summary: |-
+  - `TestBed.createComponent()` rendert die Komponente und gibt eine **Fixture** zurück.
+  - `fixture.nativeElement` ist das DOM-Element, `fixture.componentInstance` die Klasseninstanz, `fixture.componentRef` der Zugriff von außen.
+  - Teste, was der Nutzer sieht (das DOM), nicht die inneren Felder der Klasse.
+  - Nach einem Klick wartest du mit `await fixture.whenStable()`, bis Angular das DOM aktualisiert hat.
+  - Inputs setzt du mit `fixture.componentRef.setInput()`, Outputs abonnierst du mit einer `vi.fn()`.
+  - Finde Elemente über ihren Text oder ihr `aria-label`, nicht über ihre Position.
+
+  ```ts
+  it('counts up on click', async () => {
+    button('+').click();
+    await fixture.whenStable();
+    expect(element.querySelector('output')?.textContent).toBe('1');
+  });
+  ```
+
+  > [!WARNING] Ohne `await fixture.whenStable()` siehst du noch das alte DOM, und der Test schlägt fehl, obwohl die Komponente richtig arbeitet.
 quiz:
   - question: "Was liefert `TestBed.createComponent(Counter)`?"
     options:

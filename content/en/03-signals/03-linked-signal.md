@@ -1,6 +1,22 @@
 ---
 title: Dependent state with linkedSignal()
 minutes: 7
+summary: |-
+  - `linkedSignal()` is a writable signal that resets when its source changes.
+  - Unlike `computed()`, you can change it with `set()` and `update()`; no need for `signal()` plus `effect()`.
+  - Short form: `linkedSignal(() => options()[0])` jumps to the first entry when `options` changes.
+  - Long form with `source` and `computation`: the function receives the new source value and `previous`.
+  - `previous.source` is the old source, `previous.value` the old value (even after `set()`). On the first call, `previous` is `undefined`.
+
+  ```ts
+  protected readonly size = linkedSignal<string, string>({
+    source: this.product,
+    computation: (product, previous) => {
+      const sizes = SIZES[product];
+      return previous && sizes.includes(previous.value) ? previous.value : sizes[0];
+    },
+  });
+  ```
 quiz:
   - question: How does linkedSignal() differ from computed()?
     options:

@@ -1,6 +1,22 @@
 ---
 title: Interceptors und Fehlerbehandlung
 minutes: 9
+summary: |-
+  - Ein Interceptor (`HttpInterceptorFn`) ist eine Funktion, die jede Anfrage `req` sieht und sie mit `next(req)` weiterreicht.
+  - Anfragen sind unveränderlich: `req.clone({ setHeaders: … })` erzeugt eine geänderte Kopie. `inject()` funktioniert im Interceptor.
+  - Registriert wird mit `provideHttpClient(withInterceptors([…]))`. Die Anfrage läuft von links nach rechts, die Antwort zurück.
+  - Bei Fehlern bekommst du einen `HttpErrorResponse`: `status` `0` heißt keine Antwort, `4xx` Fehler der Anfrage, `5xx` Fehler auf dem Server.
+  - `catchError` fängt Fehler ab, `retry` lohnt sich bei `0` und `5xx`. Ein Fehler-Interceptor gibt den Fehler mit `throwError` weiter.
+  - Bei `httpResource` brauchst du kein `catchError`, der Fehler landet in `error()`.
+
+  ```ts
+  export const authInterceptor: HttpInterceptorFn = (req, next) => {
+    if (!req.url.startsWith('/api/')) return next(req);
+    return next(req.clone({ setHeaders: { Authorization: `Bearer ${inject(Auth).token()}` } }));
+  };
+  ```
+
+  > [!WARNING] Hängst du den Token an jede Anfrage, bekommen ihn auch fremde Server. Schick ihn nur an die eigene API.
 quiz:
   - question: Warum ruft ein Interceptor `req.clone(...)` auf, statt `req` direkt zu ändern?
     options:

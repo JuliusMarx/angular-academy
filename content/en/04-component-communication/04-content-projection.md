@@ -1,6 +1,24 @@
 ---
 title: Projecting content with ng-content
 minutes: 8
+summary: |-
+  - With content projection you pass a component whole markup instead of just data.
+  - `<ng-content />` is a placeholder for everything between the component's opening and closing tag.
+  - With `select` (attribute, element or CSS class) you distribute content across several slots. Everything else ends up in the `<ng-content />` without `select`.
+  - Content between `<ng-content>` and `</ng-content>` is a fallback if nothing was passed for that slot.
+  - Projected elements belong to the parent component's template – that's why its styles apply.
+
+  ```html
+  <section>
+    <header><ng-content select="[card-title]" /></header>
+    <div class="body"><ng-content /></div>
+    <footer>
+      <ng-content select="[card-footer]"><small>No actions</small></ng-content>
+    </footer>
+  </section>
+  ```
+
+  > [!WARNING] `<ng-content>` can't be rendered conditionally or multiple times. Inside `@if` or `@for` it shows the content at most once, and the content is always created.
 quiz:
   - question: Where does projected content end up if it matches no select?
     options:

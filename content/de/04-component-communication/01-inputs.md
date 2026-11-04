@@ -1,6 +1,19 @@
 ---
 title: Daten übergeben mit input()
 minutes: 8
+summary: |-
+  - `input()` erzeugt ein schreibgeschütztes Signal. Die Kind-Komponente liest es mit `name()`, der Wert gehört der Eltern-Komponente.
+  - `[name]="ausdruck"` übergibt einen Ausdruck, `name="Notebook"` ohne Klammern einen festen String.
+  - `input(0)` setzt einen Standardwert, `input.required<string>()` macht das Input zur Pflicht. Fehlt es, kompiliert das Template nicht (`NG8008`).
+  - `transform: numberAttribute` bzw. `booleanAttribute` wandelt String-Attribute in Zahlen bzw. Booleans um.
+  - Mit `alias` heißt das Input im Template anders als in der Klasse.
+  - Daten fließen bei Inputs nur von oben nach unten.
+
+  ```ts
+  readonly name = input.required<string>();
+  readonly price = input(0, { transform: numberAttribute });
+  readonly soldOut = input(false, { transform: booleanAttribute });
+  ```
 quiz:
   - question: Was passiert, wenn ein mit input.required() deklariertes Input im Template fehlt?
     options:

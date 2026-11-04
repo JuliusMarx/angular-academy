@@ -1,6 +1,21 @@
 ---
 title: Routes and navigation
 minutes: 9
+summary: |-
+  - A route connects a `path` (no leading slash, `''` is the start page) with a `component`. `title` sets the tab title.
+  - `redirectTo` redirects, `**` matches every URL. The router takes the first matching route, so `**` goes last.
+  - You register the routes with `provideRouter(routes)` in `app.config.ts`.
+  - `<router-outlet />` is the placeholder for the current route's component. Everything outside it stays in place.
+  - `routerLink` instead of `href` switches pages without reloading, `routerLinkActive="active"` marks the active link.
+  - The start-page link needs `[routerLinkActiveOptions]="{ exact: true }"`, otherwise it is always active.
+
+  ```ts
+  export const routes: Routes = [
+    { path: '', component: Home, title: 'Home' },
+    { path: 'team', redirectTo: 'about' },
+    { path: '**', component: NotFound },
+  ];
+  ```
 quiz:
   - question: Where does Angular display the component of the current route?
     options: ["In app.ts", "In the `<router-outlet>`", "In the `<body>`", "In an `@if` block"]

@@ -1,6 +1,22 @@
 ---
 title: Side effects with effect()
 minutes: 8
+summary: |-
+  - `effect()` reacts to changes with side effects, e.g. saving, logging or updating a library outside of Angular.
+  - An effect runs at least once, remembers the signals it read and runs again when one of them changes. Angular batches multiple changes.
+  - `onCleanup` cleans up timers or subscriptions before the effect runs again or the component is destroyed.
+  - `effect()` needs an injection context: the constructor or a field. Angular stops effects automatically with the component.
+  - `untracked(() => this.user())` reads a signal without depending on it.
+
+  ```ts
+  constructor() {
+    effect(() => {
+      localStorage.setItem('note', this.note());
+    });
+  }
+  ```
+
+  > [!WARNING] Don't derive signals with `effect()`. Instead of `effect(() => this.total.set(this.a() + this.b()))`, write `total = computed(() => this.a() + this.b())`.
 quiz:
   - question: When does an effect() run again?
     options:

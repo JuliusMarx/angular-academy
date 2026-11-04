@@ -1,6 +1,20 @@
 ---
 title: Change detection and zoneless
 minutes: 8
+summary: |-
+  - In the past, **Zone.js** watched all asynchronous functions and Angular then checked the whole app. New apps run **without Zone.js**.
+  - Zoneless only updates when there is a reason: a changed signal in the template, an event with an Angular handler, a changed input or `markForCheck()`.
+  - If you change a plain field in a timer or callback, Angular doesn't notice.
+  - `ChangeDetectionStrategy.OnPush` only checks a component on changed inputs, signals it reads or events inside it. Since Angular 22 it is the default.
+  - Rule of thumb: everything that changes and is displayed belongs in a signal.
+
+  ```ts
+  protected plainCount = 0;
+  protected readonly signalCount = signal(0);
+
+  setTimeout(() => this.plainCount++, 1000);                     // page stays stale
+  setTimeout(() => this.signalCount.update((n) => n + 1), 1000); // page updates
+  ```
 quiz:
   - question: "A plain field is changed in a `setTimeout`. What happens in a zoneless app?"
     options:

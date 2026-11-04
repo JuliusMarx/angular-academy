@@ -1,6 +1,25 @@
 ---
 title: Observables
 minutes: 8
+summary: |-
+  - An observable delivers values over time: `next(value)` any number of times, then at most one `error()` or `complete()`.
+  - It does nothing until someone calls `subscribe()`. The `$` at the end of the name is a convention for observables.
+  - Usually you get observables ready-made: from `HttpClient`, `interval(1000)`, `of(1, 2, 3)` or `fromEvent()`.
+  - `subscribe()` returns a `Subscription`, `unsubscribe()` ends it.
+  - A `Subject` is an observable you push values into yourself. For state, use a signal today instead of a `BehaviorSubject`.
+  - Signals for state ("what is true right now?"), observables for events over time ("what is happening?").
+
+  ```ts
+  start(): void {
+    this.subscription = interval(1000).subscribe(() => this.seconds.update((s) => s + 1));
+  }
+
+  stop(): void {
+    this.subscription?.unsubscribe();
+  }
+  ```
+
+  > [!WARNING] Endless observables like `interval()`, events or subjects keep running even after the component is gone. Unsubscribe at the latest with `inject(DestroyRef).onDestroy(…)`, or you get a memory leak.
 quiz:
   - question: What is the most important difference between a signal and an observable?
     options:

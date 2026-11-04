@@ -1,6 +1,19 @@
 ---
 title: Interpolation & Bindings
 minutes: 8
+summary: |-
+  - `{{ wert }}` gibt einen Wert als Text aus (Interpolation, Klasse → Template).
+  - `[eigenschaft]="wert"` bindet eine DOM-Eigenschaft an einen Ausdruck und aktualisiert sie automatisch (Property-Binding).
+  - `(ereignis)="handler()"` reagiert auf Ereignisse, `$event` liefert das DOM-Ereignis (Event-Binding, Template → Klasse).
+  - Für Klassen und Styles gibt es `[class.active]` und `[style.color]`.
+  - Signals liest du im Template durch Aufrufen: `{{ name() }}`. Komplexe Logik gehört in die Klasse.
+  - `[value]` plus `(input)` ergibt einen Datenfluss in beide Richtungen.
+
+  ```html
+  <h1>Hallo, {{ name() }}!</h1>
+  <input [value]="name()" (input)="onInput($event)" />
+  <button [disabled]="name() === ''" (click)="name.set('')">Leeren</button>
+  ```
 quiz:
   - question: Wie zeigst du den Wert des Signals title im Template an?
     options: ["{{ title }}", "{{ title() }}", "[title]", "(title)"]

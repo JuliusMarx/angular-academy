@@ -1,6 +1,19 @@
 ---
 title: Werte formatieren mit eingebauten Pipes
 minutes: 9
+summary: |-
+  - Pipes formatieren Werte direkt im Template mit `|`. Parameter hängst du mit Doppelpunkten an: `{{ wert | pipe: param1 : param2 }}`.
+  - Pipes sind standalone – importiere die, die du brauchst, z. B. `CurrencyPipe` und `DatePipe` aus `@angular/common`.
+  - Wichtige Pipes: `date`, `currency`, `number` (`'1.1-2'`), `percent`, `uppercase`/`lowercase`, `json`, `keyvalue`, `async`.
+  - Standard ist US-Englisch. Für deutsche Formate rufst du einmal `registerLocaleData(localeDe)` auf und gibst `'de'` als letzten Parameter an – oder setzt app-weit `{ provide: LOCALE_ID, useValue: 'de' }`.
+  - `async` abonniert ein Observable oder Promise und beendet das Abo automatisch.
+  - `keyvalue` sortiert die Schlüssel alphabetisch, `json` behält die Reihenfolge und ist vor allem zum Debuggen da.
+
+  ```ts
+  registerLocaleData(localeDe);
+  // {{ order.total | currency: 'EUR' : 'symbol' : undefined : 'de' }}  → 1.234,50 €
+  // {{ seconds$ | async }}
+  ```
 quiz:
   - question: "Was gibt {{ 1234.5 | currency: 'EUR' }} mit der Standard-Locale en-US aus?"
     options: ["1.234,50 €", "€1,234.50", "EUR 1234.5", "1234,50 EUR"]

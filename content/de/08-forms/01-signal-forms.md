@@ -1,6 +1,22 @@
 ---
 title: Signal Forms
 minutes: 8
+summary: |-
+  - Signal Forms (`@angular/forms/signals`) gibt es seit Angular 21, stabil sind sie seit Angular 22.
+  - Das Model ist ein normales Signal. `form(this.model)` macht daraus einen typisierten Feldbaum mit denselben Feldern.
+  - `[formField]="signupForm.name"` (Direktive `FormField`) bindet ein Eingabeelement in beide Richtungen: Eingaben landen im Model, `model.set(...)` aktualisiert die Felder.
+  - Ein Feld aufgerufen liefert seinen Zustand als Signals: `value()`, `touched()`, `dirty()`, `valid()`/`invalid()`, `errors()`.
+  - `submit()` führt deine Aktion nur bei gültigem Formular aus und markiert vorher alle Felder als `touched`.
+  - Die Daten stehen immer im Model: `this.model()` ist der aktuelle Stand.
+
+  ```ts
+  protected readonly model = signal<Signup>({ name: '', email: '', weekly: false });
+  protected readonly signupForm = form(this.model);
+  ```
+
+  ```html
+  <input [formField]="signupForm.name" />
+  ```
 quiz:
   - question: Woher bekommt `form()` seine Werte?
     options:

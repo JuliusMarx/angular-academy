@@ -1,6 +1,20 @@
 ---
 title: Reusing templates with ng-template
 minutes: 9
+summary: |-
+  - An `<ng-template>` isn't displayed right away – it's a blueprint that you render once, several times or not at all.
+  - `NgTemplateOutlet` from `@angular/common` renders a template, e.g. on an `<ng-container>`, which creates no DOM element itself.
+  - You pass values as a context: `let-text` gets `$implicit`, `let-color="color"` gets the key `color`.
+  - A component gets a template written between its tags with `contentChild(TemplateRef)`.
+  - Start with `<ng-content>`. `<ng-template>` pays off when you need content several times, conditionally or with data from the component.
+
+  ```html
+  <ng-template #badge let-text let-color="color">
+    <span [style.background]="color">{{ text }}</span>
+  </ng-template>
+
+  <ng-container *ngTemplateOutlet="badge; context: { $implicit: 'new', color: 'pink' }" />
+  ```
 quiz:
   - question: What happens to the content of an <ng-template> if you do nothing else?
     options:

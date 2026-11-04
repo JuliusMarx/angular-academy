@@ -1,6 +1,27 @@
 ---
 title: Writing custom pipes
 minutes: 8
+summary: |-
+  - A custom pipe is a class with `@Pipe({ name: '…' })` that implements `PipeTransform`.
+  - `transform()` receives the value before the `|` and returns the result. You pass further parameters with colons: `truncate: 40 : ' [more]'`.
+  - Pipes can be chained: the result of one is the input of the next.
+  - Regular pipes are pure: `transform()` only runs again when the input value or a parameter changes. For objects and arrays, the reference counts.
+  - `pure: false` runs on every change detection – you almost never need it.
+  - If you work with signals, a `computed()` is often the better choice. Pipes pay off for formatting that many components need.
+
+  ```ts
+  @Pipe({ name: 'truncate' })
+  export class TruncatePipe implements PipeTransform {
+    transform(value: string, max = 30, suffix = '…'): string {
+      if (value.length <= max) return value;
+      const cut = value.slice(0, max);
+      const lastSpace = cut.lastIndexOf(' ');
+      return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut) + suffix;
+    }
+  }
+  ```
+
+  > [!WARNING] `this.items().push(item)` keeps the reference – a pure pipe notices nothing. Create a new array with `update((list) => [...list, item])`.
 quiz:
   - question: Which method does a pipe have to implement?
     options: [format, transform, pipe, render]
@@ -77,7 +98,8 @@ export class TruncatePipe implements PipeTransform {
   transform(value: string, max = 30, suffix = '…'): string {
     if (value.length <= max) return value;
     const cut = value.slice(0, max);
-    return cut.slice(0, cut.lastIndexOf(' ')) + suffix;
+    const lastSpace = cut.lastIndexOf(' ');
+    return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut) + suffix;
   }
 }
 ```

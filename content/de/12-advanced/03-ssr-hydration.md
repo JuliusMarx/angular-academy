@@ -1,6 +1,22 @@
 ---
 title: SSR und Hydration
 minutes: 9
+summary: |-
+  - Mit SSR rendert Angular die Seite auf dem Server, der Browser zeigt fertiges HTML sofort an. Prerendering (SSG) rendert einmal beim Build.
+  - `ng new my-app --ssr` oder `ng add @angular/ssr`. Den `RenderMode` pro Route legst du in `app.routes.server.ts` fest.
+  - **Hydration** (`provideClientHydration()`) übernimmt das Server-HTML, statt es neu zu rendern. `@defer (hydrate on viewport)` hydriert inkrementell.
+  - Auf dem Server gibt es kein `window`, `document` oder `localStorage`. Browser-Code gehört in `afterNextRender()` oder `afterRenderEffect()`.
+  - Auch ohne SSR gibt es die Elemente einer Komponente erst nach dem Rendern im DOM.
+
+  ```ts
+  constructor() {
+    afterNextRender(() => {
+      this.theme.set(localStorage.getItem('theme') ?? 'light');
+    });
+  }
+  ```
+
+  > [!WARNING] Server und Browser müssen beim ersten Rendern dasselbe HTML erzeugen. Uhrzeit oder Zufallszahlen setzt du erst in `afterNextRender()`, sonst droht ein *Hydration Mismatch*.
 quiz:
   - question: Was ist der Vorteil von Server-Side Rendering?
     options:

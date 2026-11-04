@@ -1,6 +1,23 @@
 ---
 title: Deine erste Komponente
 minutes: 7
+summary: |-
+  - Eine Komponente besteht aus TypeScript-Klasse, Template und optional Styles.
+  - Der Decorator `@Component` macht aus einer Klasse eine Komponente.
+  - `selector` ist der HTML-Tag (`<app-greeting />`), `template` bzw. `templateUrl` das HTML, `styles` das CSS.
+  - Styles sind automatisch gekapselt und gelten nur für diese Komponente.
+  - Willst du eine Komponente in einer anderen verwenden, trägst du sie in deren `imports`-Array ein. So entsteht ein Komponentenbaum.
+
+  ```ts
+  @Component({
+    selector: 'app-root',
+    imports: [Greeting],
+    template: `<app-greeting />`,
+  })
+  export class App {}
+  ```
+
+  > [!WARNING] Fehlt der Eintrag in `imports`, meldet Angular *"'app-greeting' is not a known element"*.
 quiz:
   - question: Woran erkennt Angular, wo eine Komponente im HTML verwendet wird?
     options: [Am Klassennamen, Am selector, Am Dateinamen, An der templateUrl]

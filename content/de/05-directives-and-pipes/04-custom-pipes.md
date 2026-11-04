@@ -1,6 +1,27 @@
 ---
 title: Eigene Pipes schreiben
 minutes: 8
+summary: |-
+  - Ein eigenes Pipe ist eine Klasse mit `@Pipe({ name: '…' })`, die `PipeTransform` implementiert.
+  - `transform()` bekommt den Wert vor dem `|` und gibt das Ergebnis zurück. Weitere Parameter übergibst du mit Doppelpunkten: `truncate: 40 : ' [mehr]'`.
+  - Pipes lassen sich verketten: Das Ergebnis des einen ist die Eingabe des nächsten.
+  - Normale Pipes sind pur: `transform()` läuft nur neu, wenn sich Eingabewert oder Parameter ändern. Bei Objekten und Arrays zählt die Referenz.
+  - `pure: false` läuft bei jeder Änderungserkennung – brauchst du fast nie.
+  - Arbeitest du mit Signals, ist ein `computed()` oft die bessere Wahl. Pipes lohnen sich für Formatierungen, die viele Komponenten brauchen.
+
+  ```ts
+  @Pipe({ name: 'truncate' })
+  export class TruncatePipe implements PipeTransform {
+    transform(value: string, max = 30, suffix = '…'): string {
+      if (value.length <= max) return value;
+      const cut = value.slice(0, max);
+      const lastSpace = cut.lastIndexOf(' ');
+      return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut) + suffix;
+    }
+  }
+  ```
+
+  > [!WARNING] `this.items().push(neu)` behält die Referenz – ein pures Pipe merkt nichts. Erzeuge ein neues Array mit `update((list) => [...list, neu])`.
 quiz:
   - question: Welche Methode muss ein Pipe implementieren?
     options: [format, transform, pipe, render]
@@ -77,7 +98,8 @@ export class TruncatePipe implements PipeTransform {
   transform(value: string, max = 30, suffix = '…'): string {
     if (value.length <= max) return value;
     const cut = value.slice(0, max);
-    return cut.slice(0, cut.lastIndexOf(' ')) + suffix;
+    const lastSpace = cut.lastIndexOf(' ');
+    return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut) + suffix;
   }
 }
 ```

@@ -1,6 +1,23 @@
 ---
 title: Provider und Injection Tokens
 minutes: 10
+summary: |-
+  - Ein Provider ist eine Regel: „Wer *X* anfordert, bekommt *Y*.“ Du trägst ihn in `providers` in `app.config.ts` ein.
+  - Provider-Arten: `useClass`, `useValue`, `useFactory`, `useExisting` – und die Kurzform `Y` für `{ provide: Y, useClass: Y }`.
+  - Für Werte ohne Klasse (Strings, Konfigurationsobjekte) legst du ein `InjectionToken` an. Eine `factory` liefert einen Standardwert.
+  - Abstrakte Klassen wie `Logger` eignen sich gut als Token: Die Komponente fragt nach dem Vertrag, die Konfiguration bestimmt die Implementierung.
+  - Stellt niemand etwas bereit, startet die App nicht (`NG0201`). `inject(X, { optional: true })` liefert dann `null`.
+
+  ```ts
+  export const APP_SETTINGS = new InjectionToken<AppSettings>('APP_SETTINGS', {
+    providedIn: 'root',
+    factory: () => ({ appName: 'Standard-App', maxItems: 3 }),
+  });
+
+  providers: [
+    { provide: Logger, useClass: MemoryLogger },
+  ],
+  ```
 quiz:
   - question: "Was bewirkt `{ provide: Logger, useClass: MemoryLogger }`?"
     options:

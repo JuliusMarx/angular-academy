@@ -1,6 +1,24 @@
 ---
 title: Architektur
 minutes: 9
+summary: |-
+  - Ordne Dateien nach **Feature** (`products/`, `cart/`), nicht nach technischem Typ. Nach `shared/` kommt nur, was mehrere Features wirklich brauchen.
+  - Präsentationale Komponenten bekommen Daten über `input()`, melden Aktionen über `output()` und kennen keine Services.
+  - Container injizieren Services und reichen die Daten nach unten weiter.
+  - Gemeinsamer Zustand gehört in einen Service mit Signals (*Store*): das Signal `private`, Änderungen nur über Methoden, nach außen `computed()`.
+  - Für sehr große Apps gibt es Bibliotheken wie **NgRx SignalStore** mit demselben Prinzip.
+
+  ```ts
+  @Injectable({ providedIn: 'root' })
+  export class CartStore {
+    private readonly items = signal<Product[]>([]);
+    readonly count = computed(() => this.items().length);
+
+    add(product: Product): void {
+      this.items.update((items) => [...items, product]);
+    }
+  }
+  ```
 quiz:
   - question: Was zeichnet eine präsentationale Komponente aus?
     options:

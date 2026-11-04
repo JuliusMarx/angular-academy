@@ -1,6 +1,19 @@
 ---
 title: Interpolation & bindings
 minutes: 8
+summary: |-
+  - `{{ value }}` outputs a value as text (interpolation, class → template).
+  - `[property]="value"` binds a DOM property to an expression and updates it automatically (property binding).
+  - `(event)="handler()"` reacts to events, `$event` gives you the DOM event (event binding, template → class).
+  - Classes and styles have `[class.active]` and `[style.color]`.
+  - You read signals in the template by calling them: `{{ name() }}`. Complex logic belongs in the class.
+  - `[value]` plus `(input)` gives you data flow in both directions.
+
+  ```html
+  <h1>Hello, {{ name() }}!</h1>
+  <input [value]="name()" (input)="onInput($event)" />
+  <button [disabled]="name() === ''" (click)="name.set('')">Clear</button>
+  ```
 quiz:
   - question: How do you display the value of the signal title in a template?
     options: ["{{ title }}", "{{ title() }}", "[title]", "(title)"]

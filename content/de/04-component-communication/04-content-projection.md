@@ -1,6 +1,24 @@
 ---
 title: Inhalte projizieren mit ng-content
 minutes: 8
+summary: |-
+  - Mit Content Projection übergibst du einer Komponente ganzes Markup statt nur Daten.
+  - `<ng-content />` ist ein Platzhalter für alles zwischen dem öffnenden und schließenden Tag der Komponente.
+  - Mit `select` (Attribut, Element oder CSS-Klasse) verteilst du Inhalte auf mehrere Slots. Alles Übrige landet im `<ng-content />` ohne `select`.
+  - Inhalt zwischen `<ng-content>` und `</ng-content>` ist ein Fallback, falls für den Slot nichts übergeben wurde.
+  - Projizierte Elemente gehören zum Template der Eltern-Komponente – deshalb gelten deren Styles.
+
+  ```html
+  <section>
+    <header><ng-content select="[card-title]" /></header>
+    <div class="body"><ng-content /></div>
+    <footer>
+      <ng-content select="[card-footer]"><small>Keine Aktionen</small></ng-content>
+    </footer>
+  </section>
+  ```
+
+  > [!WARNING] `<ng-content>` kann nicht bedingt oder mehrfach gerendert werden. In `@if` oder `@for` zeigt es den Inhalt höchstens einmal, erzeugt wird er immer.
 quiz:
   - question: Wo landet projizierter Inhalt, der zu keinem select passt?
     options:

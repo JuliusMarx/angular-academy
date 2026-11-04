@@ -1,6 +1,25 @@
 ---
 title: HttpClient
 minutes: 8
+summary: |-
+  - Since Angular 21 you can inject `HttpClient` without any setup. You only need `provideHttpClient()` to configure it, for example with `withInterceptors()`.
+  - Requests belong in a service. `get<Product[]>()` only tells TypeScript the type – nothing checks the response.
+  - The result is a cold observable: the request only goes out on subscribe. HTTP observables complete by themselves afterwards.
+  - `toSignal()` subscribes for you and turns it into a signal (`initialValue` until the response, otherwise `undefined`). For actions such as clicks, use `subscribe()`.
+  - For changes there are `post`, `put`, `patch` and `delete`. Pass query parameters and headers as options (`params`, `headers`).
+
+  ```ts
+  export class ProductService {
+    private readonly http = inject(HttpClient);
+    getAll(): Observable<Product[]> {
+      return this.http.get<Product[]>('/api/products.json');
+    }
+  }
+
+  protected readonly products = toSignal(this.productService.getAll(), { initialValue: [] });
+  ```
+
+  > [!WARNING] `post()` and `delete()` also only send on `subscribe()`. A forgotten `subscribe()` is a common reason why "nothing happens".
 quiz:
   - question: What do you need `provideHttpClient()` for in current Angular versions?
     options:
@@ -112,7 +131,7 @@ protected countInStock(): void {
 
 ## Sending data
 
-For changes there are `post`, `put`, `patch` and `delete`. The second parameter is the body, and `HttpClient` converts it to JSON:
+For changes there are `post`, `put`, `patch` and `delete`. For `post`, `put` and `patch` the second parameter is the body, and `HttpClient` converts it to JSON. `delete` has no body, only the URL:
 
 ```ts
 create(product: NewProduct): Observable<Product> {

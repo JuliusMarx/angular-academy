@@ -1,6 +1,23 @@
 ---
 title: Operators
 minutes: 9
+summary: |-
+  - You chain operators with `pipe()`. `pipe()` returns a **new** observable, the original stays unchanged.
+  - `map` and `filter` work like on arrays, `tap()` passes values through unchanged, handy for peeking.
+  - Controlling time: `debounceTime(ms)` waits for a pause, plus `throttleTime(ms)`, `distinctUntilChanged()`, `delay(ms)`, `take(n)`.
+  - `switchMap` cancels the old inner observable as soon as a new value arrives. Ideal for searches.
+  - `mergeMap` runs in parallel, `concatMap` waits in order, `exhaustMap` ignores new values while one is running.
+  - An error ends the stream: catch it with `catchError` **inside** `switchMap`.
+
+  ```ts
+  query$.pipe(
+    map((q) => q.trim()),
+    filter((q) => q.length >= 2),
+    debounceTime(300),
+    distinctUntilChanged(),
+    switchMap((q) => this.countries.search(q).pipe(catchError(() => of([])))),
+  );
+  ```
 quiz:
   - question: "What does `debounceTime(300)` do?"
     options:

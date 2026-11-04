@@ -1,6 +1,26 @@
 ---
 title: Reactive Forms
 minutes: 8
+summary: |-
+  - Bei Reactive Forms ist jedes Feld ein `FormControl`, mehrere bilden ein `FormGroup` – am bequemsten mit `inject(FormBuilder)`.
+  - Jeder Eintrag ist `[Startwert, Validatoren]`. Mit `fb.nonNullable.group()` setzt `reset()` auf die Startwerte statt auf `null`.
+  - `[formGroup]` verbindet das `<form>`, `formControlName` jedes Eingabefeld. `ReactiveFormsModule` gehört in die `imports`.
+  - `(ngSubmit)` verhindert das Neuladen selbst. Fehlernamen sind kleingeschrieben: `required`, `email`, `minlength`.
+  - `value`, `valid` und `touched` sind keine Signals, Änderungen kommen als Observables (`valueChanges`, `statusChanges`).
+  - Für neuen Code sind Signal Forms die erste Wahl. Reactive Forms und Template-driven Forms (`ngModel`) findest du in bestehenden Projekten.
+
+  ```ts
+  protected readonly contact = this.fb.nonNullable.group({
+    name: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+  });
+  ```
+
+  ```html
+  <form [formGroup]="contact" (ngSubmit)="send()">
+    <input formControlName="name" />
+  </form>
+  ```
 quiz:
   - question: Welche Direktive verbindet ein `<input>` mit einem Control in einem `FormGroup`?
     options: ["formControlName", "[formField]", "ngModel", "[control]"]

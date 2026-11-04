@@ -33,7 +33,7 @@ npx netlify-cli dev --offline --dir dist/angular-academy/browser
 ```
 content/<sprache>/<NN-kapitel>/
   _chapter.md              # Kapitel-Titel und -Beschreibung (Frontmatter)
-  <NN-lektion>.md          # Lektion: Markdown + Frontmatter (title, minutes, quiz)
+  <NN-lektion>.md          # Lektion: Markdown + Frontmatter (title, minutes, summary, quiz)
 examples/
   _base/                   # Gemeinsames Angular-Projekt für alle Live-Beispiele
   <beispiel-id>/           # Dateien, die _base überschreiben/ergänzen (+ optional meta.json)
@@ -51,6 +51,8 @@ src/app/
 ---
 title: Meine Lektion
 minutes: 6
+summary: |-               # Pflicht: Kurzfassung für die Ansicht „Kurz“
+  - 4–7 Kernpunkte mit `Code`, danach meist ein kurzer Codeblock
 quiz:
   - question: Frage?
     options: [A, B, C]

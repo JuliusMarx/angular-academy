@@ -1,6 +1,20 @@
 ---
 title: Zwei-Wege-Bindung mit model()
 minutes: 7
+summary: |-
+  - `model()` ist ein beschreibbares Signal: Die Kind-Komponente liest es mit `checked()` und ändert es mit `set()` oder `update()`.
+  - In der Eltern-Komponente bindest du es zweiseitig mit `[(checked)]="giftWrap"` („Banane in der Box“).
+  - Bei `[( )]` übergibst du das Signal selbst – `giftWrap`, nicht `giftWrap()`.
+  - `model()` erzeugt automatisch das Output *Name* + `Change`, z. B. `checkedChange`.
+  - Wie bei Inputs gibt es `model.required<T>()`. Grenzen prüfst du in der Logik der Komponente, nicht nur per `[disabled]`.
+
+  ```ts
+  // Kind
+  readonly checked = model(false);
+  // Eltern
+  protected readonly giftWrap = signal(false);
+  // <app-toggle-switch [(checked)]="giftWrap" />
+  ```
 quiz:
   - question: Was unterscheidet model() von input()?
     options:

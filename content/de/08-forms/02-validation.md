@@ -1,6 +1,25 @@
 ---
 title: Validierung
 minutes: 9
+summary: |-
+  - Die Regeln stehen in einer Schema-Funktion, dem zweiten Argument von `form()`. Sie bekommt `path` mit allen Feldern.
+  - Eingebaute Regeln: `required`, `email`, `min`/`max`, `minLength`/`maxLength`, `pattern` – jeweils mit optionaler `message`.
+  - `errors()` liefert Fehler mit `kind` und `message`. Zeig sie erst, wenn das Feld `touched()` ist.
+  - Eigene Regeln schreibst du mit `validate()`: Fehler-Objekt zurückgeben oder `undefined`. `valueOf()` liest ein anderes Feld.
+  - `submit()` macht alle Fehler sichtbar, `submitting()` ist `true`, solange die Aktion läuft – damit sperrst du den Button.
+
+  ```ts
+  protected readonly reg = form(this.model, (path) => {
+    required(path.email);
+    email(path.email, { message: 'Das ist keine gültige E-Mail-Adresse.' });
+    minLength(path.password, 8);
+    validate(path.confirm, ({ value, valueOf }) =>
+      value() !== valueOf(path.password) ? { kind: 'mismatch' } : undefined,
+    );
+  });
+  ```
+
+  > [!WARNING] `minLength`, `email` und `pattern` prüfen leere Werte nicht. Für Pflichtfelder brauchst du zusätzlich `required()`.
 quiz:
   - question: Wo legst du bei Signal Forms die Regeln fest?
     options:

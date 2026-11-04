@@ -1,6 +1,23 @@
 ---
 title: HTTP testen
 minutes: 8
+summary: |-
+  - Im Test brauchst du keinen echten Server: `provideHttpClientTesting()` fängt jede Anfrage ab. Es muss **nach** `provideHttpClient()` stehen.
+  - Über den `HttpTestingController` erwartest und beantwortest du Anfragen.
+  - `expectOne(url)` schlägt fehl, wenn es nicht genau eine passende Anfrage gibt. Für Parameter übergibst du eine Funktion.
+  - `req.flush(daten)` liefert die Antwort, `req.request` zeigt Methode, Body, Header und Parameter.
+  - Serverfehler simulierst du mit `flush('…', { status: 500, statusText: '…' })`.
+  - `http.verify()` in `afterEach` lässt den Test fehlschlagen, wenn eine unerwartete Anfrage offen geblieben ist.
+
+  ```ts
+  service.names().subscribe((n) => (names = n));
+
+  const req = http.expectOne('/api/users');
+  expect(req.request.method).toBe('GET');
+  req.flush([{ id: 1, name: 'Grace' }, { id: 2, name: 'Ada' }]);
+
+  expect(names).toEqual(['Ada', 'Grace']);
+  ```
 quiz:
   - question: "Was macht `provideHttpClientTesting()`?"
     options:

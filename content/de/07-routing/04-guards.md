@@ -1,6 +1,21 @@
 ---
 title: Guards und Resolver
 minutes: 9
+summary: |-
+  - Ein Guard ist eine Funktion (`CanActivateFn`): `true` lässt die Navigation weiter, ein `UrlTree` leitet um, `false` bricht nur ab.
+  - Angular ruft Guards in einem Injection Context auf, deshalb funktioniert `inject()`.
+  - Du hängst den Guard mit `canActivate: [authGuard]` an die Route. Weitere Arten: `canActivateChild`, `canDeactivate`, `canMatch`.
+  - Ein Resolver (`ResolveFn`) lädt Daten, bevor die Route aktiviert wird. Mit `withComponentInputBinding()` kommt das Ergebnis als Input unter dem Namen aus `resolve` an.
+  - Während ein Resolver lädt, bleibt die alte Seite stehen – bei langem Laden ist `resource()` in der Komponente oft besser.
+
+  ```ts
+  export const authGuard: CanActivateFn = (_route, state) => {
+    if (inject(AuthService).loggedIn()) return true;
+    return inject(Router).createUrlTree(['/login'], { queryParams: { returnUrl: state.url } });
+  };
+  ```
+
+  > [!WARNING] Ein Guard schützt nur die Oberfläche. Echte Zugriffsrechte muss immer der Server prüfen.
 quiz:
   - question: Was kann ein `CanActivateFn`-Guard zurückgeben, um umzuleiten?
     options: ["false", "Einen UrlTree", "Einen String mit der URL", "null"]

@@ -1,6 +1,23 @@
 ---
 title: Your first component
 minutes: 7
+summary: |-
+  - A component consists of a TypeScript class, a template and optional styles.
+  - The `@Component` decorator turns a class into a component.
+  - `selector` is the HTML tag (`<app-greeting />`), `template` or `templateUrl` the HTML, `styles` the CSS.
+  - Styles are encapsulated automatically and apply to this component only.
+  - To use a component in another one, add it to that component's `imports` array. This builds a component tree.
+
+  ```ts
+  @Component({
+    selector: 'app-root',
+    imports: [Greeting],
+    template: `<app-greeting />`,
+  })
+  export class App {}
+  ```
+
+  > [!WARNING] If the `imports` entry is missing, Angular reports *"'app-greeting' is not a known element"*.
 quiz:
   - question: How does Angular know where a component is used in HTML?
     options: [By its class name, By its selector, By its file name, By its templateUrl]

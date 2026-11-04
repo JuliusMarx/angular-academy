@@ -1,6 +1,22 @@
 ---
 title: Interceptors and error handling
 minutes: 9
+summary: |-
+  - An interceptor (`HttpInterceptorFn`) is a function that sees every request `req` and passes it on with `next(req)`.
+  - Requests are immutable: `req.clone({ setHeaders: … })` creates a changed copy. `inject()` works inside an interceptor.
+  - Register them with `provideHttpClient(withInterceptors([…]))`. The request runs left to right, the response comes back in reverse.
+  - On failure you get an `HttpErrorResponse`: `status` `0` means no response, `4xx` an error in the request, `5xx` an error on the server.
+  - `catchError` catches errors, `retry` pays off for `0` and `5xx`. An error interceptor passes the error on with `throwError`.
+  - With `httpResource` you don't need `catchError`, the error ends up in `error()`.
+
+  ```ts
+  export const authInterceptor: HttpInterceptorFn = (req, next) => {
+    if (!req.url.startsWith('/api/')) return next(req);
+    return next(req.clone({ setHeaders: { Authorization: `Bearer ${inject(Auth).token()}` } }));
+  };
+  ```
+
+  > [!WARNING] If you add the token to every request, foreign servers get it too. Only send it to your own API.
 quiz:
   - question: Why does an interceptor call `req.clone(...)` instead of changing `req` directly?
     options:

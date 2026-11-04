@@ -1,6 +1,21 @@
 ---
 title: signal() and computed()
 minutes: 10
+summary: |-
+  - `signal(0)` creates a signal, `count()` reads its value.
+  - `set(5)` sets a new value, `update((n) => n + 1)` computes it from the old one.
+  - Never change objects or arrays in place, copy them: `list.update((l) => [...l, item])`.
+  - `computed()` derives values from other signals: read-only, cached, only recomputes when something changes.
+  - In the template you read signals with `{{ count() }}`. Angular then updates exactly those places.
+
+  ```ts
+  protected readonly count = signal(0);
+  protected readonly doubled = computed(() => this.count() * 2);
+
+  protected increment(): void {
+    this.count.update((n) => n + 1);
+  }
+  ```
 quiz:
   - question: How do you change a signal's value based on its current value?
     options: ["count = count + 1", "count.set(count + 1)", "count.update(n => n + 1)", "count.mutate(n => n++)"]

@@ -1,6 +1,26 @@
 ---
 title: Connecting signals and RxJS
 minutes: 8
+summary: |-
+  - The package `@angular/core/rxjs-interop` connects signals and observables.
+  - `toSignal(obs$)` turns an observable into a signal and unsubscribes by itself. Without `initialValue` it is `undefined` at first.
+  - `toSignal()` needs an injection context: call it when initializing a field, not in a method.
+  - `toObservable(signal)` turns a signal into an observable, so you can use time operators on signals. It emits asynchronously.
+  - `rxResource()` is like `resource()`, except that `stream` returns an observable.
+  - If you must subscribe yourself, `takeUntilDestroyed()` unsubscribes automatically (outside an injection context, pass `this.destroyRef`).
+
+  ```ts
+  protected readonly query = signal('');
+
+  protected readonly results = toSignal(
+    toObservable(this.query).pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((q) => this.countries.search(q)),
+    ),
+    { initialValue: [] },
+  );
+  ```
 quiz:
   - question: "Why don't you need to unsubscribe yourself with `toSignal()`?"
     options:

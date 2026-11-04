@@ -1,6 +1,27 @@
 ---
 title: Custom attribute directives
 minutes: 8
+summary: |-
+  - A directive has no template of its own – it attaches to an existing element and changes its appearance or behavior.
+  - `selector: '[appHighlight]'` matches every element with the attribute `appHighlight`. You import it via `imports`, just like a component.
+  - In the `host` object you bind properties (`'[style.backgroundColor]'`) and events (`'(mouseenter)'`) of the host element – instead of `@HostBinding`/`@HostListener`.
+  - If a binding returns `null`, Angular removes the style again.
+  - An input whose `alias` equals the selector takes the attribute value directly: `<p appHighlight="lightblue">`.
+  - Think of keyboard users: also listen to `focusin` and `focusout`.
+
+  ```ts
+  @Directive({
+    selector: '[appHighlight]',
+    host: {
+      '(mouseenter)': 'active.set(true)',
+      '(mouseleave)': 'active.set(false)',
+      '[style.backgroundColor]': "active() ? 'yellow' : null",
+    },
+  })
+  export class Highlight {
+    protected readonly active = signal(false);
+  }
+  ```
 quiz:
   - question: How does a directive differ from a component?
     options:

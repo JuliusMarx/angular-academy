@@ -1,6 +1,22 @@
 ---
 title: Abhängiger Zustand mit linkedSignal()
 minutes: 7
+summary: |-
+  - `linkedSignal()` ist ein beschreibbares Signal, das sich zurücksetzt, wenn sich seine Quelle ändert.
+  - Anders als `computed()` kannst du es mit `set()` und `update()` ändern; `signal()` plus `effect()` brauchst du dafür nicht.
+  - Kurzform: `linkedSignal(() => options()[0])` springt bei neuen `options` auf den ersten Eintrag.
+  - Ausführliche Form mit `source` und `computation`: Die Funktion bekommt den neuen Quellwert und `previous`.
+  - `previous.source` ist die alte Quelle, `previous.value` der alte Wert (auch nach `set()`). Beim ersten Aufruf ist `previous` `undefined`.
+
+  ```ts
+  protected readonly size = linkedSignal<string, string>({
+    source: this.product,
+    computation: (product, previous) => {
+      const sizes = SIZES[product];
+      return previous && sizes.includes(previous.value) ? previous.value : sizes[0];
+    },
+  });
+  ```
 quiz:
   - question: Was unterscheidet linkedSignal() von computed()?
     options:

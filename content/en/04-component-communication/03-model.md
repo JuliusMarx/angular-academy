@@ -1,6 +1,20 @@
 ---
 title: Two-way binding with model()
 minutes: 7
+summary: |-
+  - `model()` is a writable signal: the child component reads it with `checked()` and changes it with `set()` or `update()`.
+  - In the parent component you bind it two-way with `[(checked)]="giftWrap"` ("banana in a box").
+  - With `[( )]` you pass the signal itself – `giftWrap`, not `giftWrap()`.
+  - `model()` automatically creates the output *name* + `Change`, e.g. `checkedChange`.
+  - Like inputs, there is `model.required<T>()`. Check limits in the component's logic, not just via `[disabled]`.
+
+  ```ts
+  // child
+  readonly checked = model(false);
+  // parent
+  protected readonly giftWrap = signal(false);
+  // <app-toggle-switch [(checked)]="giftWrap" />
+  ```
 quiz:
   - question: How does model() differ from input()?
     options:

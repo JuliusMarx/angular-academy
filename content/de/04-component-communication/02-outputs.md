@@ -1,6 +1,20 @@
 ---
 title: Ereignisse melden mit output()
 minutes: 7
+summary: |-
+  - Mit Outputs meldet eine Kind-Komponente ein Ereignis an die Eltern-Komponente.
+  - `output<number>()` legt den Typ fest, `emit(wert)` löst das Ereignis aus.
+  - Die Eltern-Komponente bindet mit runden Klammern: `(rated)="onRated($event)"`. `$event` ist der Wert aus `emit()`.
+  - Für Ereignisse ohne Wert gibt es `output<void>()` und `emit()` ohne Argument.
+  - Benenne Outputs nach dem, was passiert ist (`rated`, `closed`, `selected`).
+
+  ```ts
+  readonly rated = output<number>();
+  // im Template der Kind-Komponente:
+  // <button (click)="rated.emit(star)">★</button>
+  ```
+
+  > [!WARNING] Gib einem Output keinen Namen, den es auch als DOM-Ereignis gibt (`click`, `change`) – sonst reagiert der Handler auch auf das native Ereignis.
 quiz:
   - question: Wie löst die Kind-Komponente ein Output namens rated aus?
     options: ["this.rated.set(5)", "this.rated(5)", "this.rated.emit(5)", "this.rated.next(5)"]

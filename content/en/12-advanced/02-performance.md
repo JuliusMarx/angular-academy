@@ -1,6 +1,20 @@
 ---
 title: Performance
 minutes: 9
+summary: |-
+  - A method in the template runs on every update. `computed()` remembers its result and only recomputes when its signals change.
+  - In `@for`, use a stable ID like `track item.id`. `track $index` only suits lists that are never reordered.
+  - Lazy routes load whole pages on first visit, `@defer` does the same for parts of a page.
+  - `NgOptimizedImage` (`ngSrc`) loads images lazily, prevents layout jumps via `width`/`height`, and `priority` loads the most important image first.
+  - Measure before optimizing: Angular DevTools (profiler), bundle sizes and budgets from `ng build`, Lighthouse.
+
+  ```html
+  @defer (on viewport) {
+    <app-reviews />
+  } @placeholder {
+    <p>Reviews</p>
+  }
+  ```
 quiz:
   - question: "Why is `computed()` better in a template than a method call like `visible()`?"
     options:

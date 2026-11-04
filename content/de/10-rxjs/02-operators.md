@@ -1,6 +1,23 @@
 ---
 title: Operatoren
 minutes: 9
+summary: |-
+  - Operatoren steckst du mit `pipe()` hintereinander. `pipe()` gibt ein **neues** Observable zurück, das alte bleibt unverändert.
+  - `map` und `filter` funktionieren wie bei Arrays, `tap()` lässt Werte unverändert durch, gut zum Hineinschauen.
+  - Zeit steuern: `debounceTime(ms)` wartet auf eine Pause, `throttleTime(ms)`, `distinctUntilChanged()`, `delay(ms)`, `take(n)`.
+  - `switchMap` bricht das alte innere Observable ab, sobald ein neuer Wert kommt. Ideal für Suchen.
+  - `mergeMap` läuft parallel, `concatMap` wartet der Reihe nach, `exhaustMap` ignoriert neue Werte, solange eins läuft.
+  - Ein Fehler beendet den Strom: Fang ihn mit `catchError` **innerhalb** von `switchMap` ab.
+
+  ```ts
+  query$.pipe(
+    map((q) => q.trim()),
+    filter((q) => q.length >= 2),
+    debounceTime(300),
+    distinctUntilChanged(),
+    switchMap((q) => this.countries.search(q).pipe(catchError(() => of([])))),
+  );
+  ```
 quiz:
   - question: "Was macht `debounceTime(300)`?"
     options:

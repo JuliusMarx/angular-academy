@@ -1,6 +1,24 @@
 ---
 title: Architecture
 minutes: 9
+summary: |-
+  - Organize files by **feature** (`products/`, `cart/`), not by technical type. Only what several features really need goes into `shared/`.
+  - Presentational components get data via `input()`, report actions via `output()` and know no services.
+  - Containers inject services and pass the data down.
+  - Shared state belongs in a service with signals (a *store*): the signal `private`, changes only through methods, `computed()` to the outside.
+  - For very large apps there are libraries like **NgRx SignalStore** built on the same principle.
+
+  ```ts
+  @Injectable({ providedIn: 'root' })
+  export class CartStore {
+    private readonly items = signal<Product[]>([]);
+    readonly count = computed(() => this.items().length);
+
+    add(product: Product): void {
+      this.items.update((items) => [...items, product]);
+    }
+  }
+  ```
 quiz:
   - question: What characterizes a presentational component?
     options:

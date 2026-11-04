@@ -1,6 +1,22 @@
 ---
 title: Unit tests and services
 minutes: 9
+summary: |-
+  - New Angular projects test with **Vitest**. Tests live in `.spec.ts` files next to the code, `ng test` runs them.
+  - `describe` groups tests, `it` is a single test, `expect(value)` checks with a matcher.
+  - `toBe()` for numbers, strings and booleans, `toEqual()` for objects and arrays. `.not` inverts any matcher.
+  - `TestBed.inject(Service)` creates a service just like in the app. The `TestBed` is reset after every test.
+  - You replace dependencies with `{ provide, useValue }` and check calls with `vi.fn()` and `toHaveBeenCalledWith()`.
+
+  ```ts
+  const save = vi.fn();
+  TestBed.configureTestingModule({ providers: [{ provide: Storage, useValue: { save } }] });
+
+  TestBed.inject(Settings).setTheme('dark');
+  expect(save).toHaveBeenCalledWith('theme', 'dark');
+  ```
+
+  > [!TIP] Break a test on purpose. If it doesn't fail, it checks less than you think.
 quiz:
   - question: What is `TestBed.inject(Cart)` good for?
     options:

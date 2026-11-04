@@ -1,6 +1,27 @@
 ---
 title: Services and inject()
 minutes: 9
+summary: |-
+  - A service bundles state and logic that several components need. Angular creates and hands it out via dependency injection.
+  - `@Injectable({ providedIn: 'root' })` registers it with the root injector: exactly one instance for the whole app.
+  - Since Angular 22 there is the shorthand `@Service()` (only `inject()`, no constructor parameters). The live examples on Angular 21 still use `@Injectable`.
+  - `inject(CartService)` gets the service – all components receive the same instance.
+  - With `asReadonly()` you expose signals read-only, changes go through the service's methods.
+  - `inject()` only works in an injection context: as a field initializer or in the constructor, not in methods (`NG0203`).
+
+  ```ts
+  @Injectable({ providedIn: 'root' })
+  export class CartService {
+    private readonly items = signal<Product[]>([]);
+    readonly products = this.items.asReadonly();
+
+    add(product: Product): void {
+      this.items.update((items) => [...items, product]);
+    }
+  }
+  ```
+
+  > [!TIP] Never write `new CartService()` – you'd get a second, independent instance.
 quiz:
   - question: "What does `providedIn: 'root'` do?"
     options:

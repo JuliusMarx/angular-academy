@@ -1,6 +1,19 @@
 ---
 title: Passing data with input()
 minutes: 8
+summary: |-
+  - `input()` creates a read-only signal. The child component reads it with `name()`, the value belongs to the parent component.
+  - `[name]="expression"` passes an expression, `name="Notebook"` without brackets a fixed string.
+  - `input(0)` sets a default value, `input.required<string>()` makes the input mandatory. If it's missing, the template doesn't compile (`NG8008`).
+  - `transform: numberAttribute` or `booleanAttribute` converts string attributes into numbers or booleans.
+  - With `alias`, the input has a different name in the template than in the class.
+  - With inputs, data only flows from top to bottom.
+
+  ```ts
+  readonly name = input.required<string>();
+  readonly price = input(0, { transform: numberAttribute });
+  readonly soldOut = input(false, { transform: booleanAttribute });
+  ```
 quiz:
   - question: What happens if an input declared with input.required() is missing in the template?
     options:

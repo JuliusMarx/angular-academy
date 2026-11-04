@@ -221,6 +221,7 @@ async function buildLessons(exampleIds, exercises) {
           minutes: data.minutes ?? 5,
           toc: headings.filter((h) => h.depth === 2).map(({ id, text }) => ({ id, text })),
           segments,
+          ...buildSummary(data.summary, relative(ROOT, path), lang),
           quiz: (data.quiz ?? []).map((q) => ({
             ...q,
             question: inlineCode(String(q.question)),
@@ -323,6 +324,19 @@ function searchDocsFor(lesson, chapter) {
     });
   }
   return docs;
+}
+
+/**
+ * "summary:" frontmatter – the short version of a lesson for the quick course: a few key points
+ * and the most important code. Required, so the quick course never has gaps.
+ */
+function buildSummary(summary, file, lang) {
+  if (typeof summary !== 'string' || !summary.trim()) {
+    throw new Error(`${file}: every lesson needs a "summary: |-" block for the quick course.`);
+  }
+  const html = localize(renderCallouts(marked.parse(summary)), lang);
+  const words = toPlainText(html).split(' ').length;
+  return { summary: html, summaryMinutes: Math.max(1, Math.round(words / 150)) };
 }
 
 /** Validates the "exercise:" frontmatter against the exercise project and renders its texts. */

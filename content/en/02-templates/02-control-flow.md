@@ -1,6 +1,22 @@
 ---
 title: Control flow with @if, @for and @switch
 minutes: 8
+summary: |-
+  - Control flow blocks start with `@` and are built in. Nothing to import.
+  - `@if` / `@else if` / `@else` shows content conditionally; `as` stores the result of the condition in a variable.
+  - `@for` renders lists. `track` is required and should be a unique ID.
+  - `@empty` appears when the list is empty; inside the loop you have `$index`, `$first`, `$last`, `$even` and `$odd`.
+  - `@switch` with `@case` and `@default` handles multiple cases.
+
+  ```html
+  @for (todo of todos(); track todo.id) {
+    <li>{{ $index + 1 }}. {{ todo.title }}</li>
+  } @empty {
+    <li>No tasks yet.</li>
+  }
+  ```
+
+  > [!WARNING] Only use `track $index` when items have no unique ID. Otherwise sorting or deleting re-renders more than necessary.
 quiz:
   - question: What is required in @for?
     options: ["An @empty block", "A track expression", "An index ($index)", "A sort order"]

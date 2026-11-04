@@ -1,6 +1,26 @@
 ---
 title: Signals und RxJS verbinden
 minutes: 8
+summary: |-
+  - Das Paket `@angular/core/rxjs-interop` verbindet Signals und Observables.
+  - `toSignal(obs$)` macht aus einem Observable ein Signal und meldet sich selbst ab. Ohne `initialValue` ist es erst `undefined`.
+  - `toSignal()` braucht einen Injection Context: Ruf es beim Initialisieren eines Felds auf, nicht in einer Methode.
+  - `toObservable(signal)` macht aus einem Signal ein Observable, so nutzt du Zeit-Operatoren auf Signals. Es gibt Werte asynchron weiter.
+  - `rxResource()` ist wie `resource()`, nur dass `stream` ein Observable zurückgibt.
+  - Musst du selbst abonnieren, meldet `takeUntilDestroyed()` dich automatisch ab (außerhalb eines Injection Context mit `this.destroyRef`).
+
+  ```ts
+  protected readonly query = signal('');
+
+  protected readonly results = toSignal(
+    toObservable(this.query).pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap((q) => this.countries.search(q)),
+    ),
+    { initialValue: [] },
+  );
+  ```
 quiz:
   - question: "Warum musst du bei `toSignal()` nicht selbst abmelden?"
     options:

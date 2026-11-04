@@ -1,6 +1,26 @@
 ---
 title: httpResource
 minutes: 7
+summary: |-
+  - `httpResource()` ist `resource()` zugeschnitten auf `HttpClient`: Du gibst nur eine Funktion an, die die URL liefert. Stabil seit Angular 22.
+  - Liest die Funktion ein Signal, lädt Angular bei jeder Änderung neu und bricht ältere, noch laufende Anfragen ab.
+  - Wie `HttpClient` braucht sie kein Setup. Interceptors aus `provideHttpClient(withInterceptors(…))` gelten auch hier.
+  - Zustand: `value()`, `hasValue()` (grenzt den Typ ein), `isLoading()`, `error()`. Mit `reload()` lädst du von Hand neu.
+  - Die Funktion kann ein Objekt mit `url`, `params` usw. zurückgeben. Bei `undefined` wird gar nicht geladen.
+  - Zum Lesen nimmst du `httpResource`, zum Ändern (POST, PUT, DELETE) und für Klick-Aktionen weiterhin `HttpClient`.
+
+  ```ts
+  protected readonly id = signal(1);
+  protected readonly product = httpResource<Product>(() => `/api/products/${this.id()}.json`);
+  ```
+
+  ```html
+  @if (product.isLoading()) {
+    <p>Lädt …</p>
+  } @else if (product.hasValue()) {
+    <h2>{{ product.value().name }}</h2>
+  }
+  ```
 quiz:
   - question: "Wann lädt `httpResource(() => '/api/users/' + this.id())` neu?"
     options:

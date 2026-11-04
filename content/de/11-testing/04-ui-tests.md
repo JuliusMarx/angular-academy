@@ -1,6 +1,25 @@
 ---
 title: UI-Tests mit Playwright
 minutes: 10
+summary: |-
+  - UI-Tests (E2E) starten die ganze App in einem echten Browser und bedienen sie wie ein Nutzer. Sie sind langsamer, deshalb nur für die wichtigsten Abläufe.
+  - `npm init playwright@latest` richtet Playwright ein, `npx playwright test` startet Dev-Server und Tests.
+  - Jeder Test bekommt mit `page` einen frischen Browser-Tab. Jede Aktion braucht ein `await`.
+  - Locators wie `getByRole()` und `getByLabel()` finden Elemente wie ein Mensch und prüfen nebenbei die Barrierefreiheit.
+  - Playwright wartet automatisch: vor Aktionen und bei `await expect(locator)`-Assertions (standardmäßig bis zu 5 Sekunden).
+  - `page.route()` fängt Anfragen ab und beantwortet sie selbst, z. B. für Fehlerfälle.
+
+  ```ts
+  test('adds a task', async ({ page }) => {
+    await page.goto('/');
+    await page.getByLabel('New task').fill('Buy milk');
+    await page.getByRole('button', { name: 'Add' }).click();
+
+    await expect(page.getByRole('listitem')).toHaveText(['Buy milk']);
+  });
+  ```
+
+  > [!WARNING] Keine festen Wartezeiten wie `page.waitForTimeout(2000)` und kein `expect(await locator.textContent())`. Nutze immer `await expect(locator).toHaveText(…)`.
 quiz:
   - question: Was unterscheidet einen UI-Test (End-to-End-Test) von einem Komponententest?
     options:

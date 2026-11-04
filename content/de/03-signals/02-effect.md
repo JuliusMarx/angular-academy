@@ -1,6 +1,22 @@
 ---
 title: Nebeneffekte mit effect()
 minutes: 8
+summary: |-
+  - `effect()` reagiert auf Änderungen mit Nebeneffekten, z. B. Speichern, Logging oder eine Bibliothek außerhalb von Angular aktualisieren.
+  - Ein Effect läuft mindestens einmal, merkt sich die gelesenen Signals und läuft erneut, wenn sich eines davon ändert. Mehrere Änderungen fasst Angular zusammen.
+  - Mit `onCleanup` räumst du Timer oder Abos auf, bevor der Effect erneut läuft oder die Komponente zerstört wird.
+  - `effect()` braucht einen Injection Context: im Konstruktor oder als Feld. Angular beendet Effects automatisch mit der Komponente.
+  - Mit `untracked(() => this.user())` liest du ein Signal, ohne davon abhängig zu werden.
+
+  ```ts
+  constructor() {
+    effect(() => {
+      localStorage.setItem('note', this.note());
+    });
+  }
+  ```
+
+  > [!WARNING] Leite mit `effect()` keine Signals ab. Statt `effect(() => this.total.set(this.a() + this.b()))` schreibst du `total = computed(() => this.a() + this.b())`.
 quiz:
   - question: Wann läuft ein effect() erneut?
     options:

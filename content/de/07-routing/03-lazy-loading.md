@@ -1,6 +1,21 @@
 ---
 title: Lazy Loading und Kind-Routen
 minutes: 8
+summary: |-
+  - Mit Lazy Loading lädt Angular den Code einer Route erst beim ersten Besuch – danach nicht noch einmal.
+  - `loadComponent` mit dynamischem `import()` ersetzt `component`. Die Angular CLI legt die Komponente in eine eigene JavaScript-Datei.
+  - Bei `export default` reicht `loadComponent: () => import('./admin/admin')`.
+  - `loadChildren` lädt gleich eine ganze Gruppe von Routen, deren Pfade relativ zum Eltern-Pfad sind.
+  - Mit `children` erscheinen Unterseiten im eigenen `<router-outlet>` der Eltern-Komponente.
+  - Links ohne führenden Schrägstrich (`cart`, `.`) sind relativ zur aktuellen Route.
+
+  ```ts
+  {
+    path: 'admin',
+    loadComponent: () => import('./admin/admin').then((m) => m.Admin),
+  },
+  { path: 'shop', loadChildren: () => import('./shop/shop.routes').then((m) => m.SHOP_ROUTES) },
+  ```
 quiz:
   - question: Wann wird der Code einer Route mit `loadComponent` geladen?
     options:

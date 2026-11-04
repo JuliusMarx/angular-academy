@@ -1,6 +1,24 @@
 ---
 title: Später laden mit @defer
 minutes: 8
+summary: |-
+  - `@defer` lädt einen Teil des Templates erst bei Bedarf; Angular lagert die Komponenten darin in eine eigene JavaScript-Datei aus.
+  - Ohne Trigger lädt Angular den Inhalt, sobald der Browser untätig ist (`on idle`).
+  - `@placeholder` steht da, bis der Trigger auslöst, `@loading` während des Ladens, `@error` bei einem Fehler. `minimum` verhindert Flackern.
+  - Weitere Trigger: `on viewport`, `on interaction`, `on hover`, `on timer(2s)`, `on immediate` und `when bedingung()`.
+  - Mit `prefetch` lädst du den Code schon vorab, zeigst den Inhalt aber erst später an.
+
+  ```html
+  @defer (on viewport) {
+    <app-comments />
+  } @placeholder {
+    <p>Kommentare</p>
+  } @loading (minimum 500ms) {
+    <p>Kommentare werden geladen …</p>
+  }
+  ```
+
+  > [!WARNING] Ausgelagert wird eine Komponente nur, wenn sie in derselben Datei ausschließlich in `@defer`-Blöcken vorkommt, auch nicht in einer `viewChild()`-Abfrage.
 quiz:
   - question: Was passiert mit dem Code einer Komponente, die nur in einem @defer-Block verwendet wird?
     options:

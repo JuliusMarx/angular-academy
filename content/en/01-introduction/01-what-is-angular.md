@@ -1,6 +1,18 @@
 ---
 title: What is Angular?
 minutes: 5
+summary: |-
+  - Angular is a framework by Google that ships everything for a complete app: components, signals, router, forms, `HttpClient`, dependency injection and the Angular CLI.
+  - You write Angular projects in TypeScript.
+  - Create a new project with the CLI; `npm start` runs the app at `http://localhost:4200`.
+  - `src/main.ts` starts the app with `bootstrapApplication()`, `src/app/app.ts` is the root component.
+  - Global configuration (router, HTTP, …) lives in `src/app/app.config.ts`, the CLI configuration in `angular.json`.
+
+  ```bash
+  npx @angular/cli@latest new my-project
+  cd my-project
+  npm start
+  ```
 quiz:
   - question: Which language does Angular use by default?
     options: [JavaScript, TypeScript, Dart, Python]

@@ -58,6 +58,10 @@ export interface Lesson {
   minutes: number;
   toc: TocEntry[];
   segments: LessonSegment[];
+  /** Short version for the quick course: HTML rendered from Markdown at build time. */
+  summary: string;
+  /** Reading time of the summary. */
+  summaryMinutes: number;
   quiz: QuizQuestion[];
   exercise?: Exercise;
 }

@@ -1,6 +1,23 @@
 ---
 title: Providers and injection tokens
 minutes: 10
+summary: |-
+  - A provider is a rule: "Whoever asks for *X* gets *Y*." You add it to `providers` in `app.config.ts`.
+  - Provider kinds: `useClass`, `useValue`, `useFactory`, `useExisting` – and the shorthand `Y` for `{ provide: Y, useClass: Y }`.
+  - For values without a class (strings, configuration objects) you create an `InjectionToken`. A `factory` provides a default value.
+  - Abstract classes like `Logger` make good tokens: the component asks for the contract, the configuration decides the implementation.
+  - If nobody provides something, the app doesn't start (`NG0201`). `inject(X, { optional: true })` then returns `null`.
+
+  ```ts
+  export const APP_SETTINGS = new InjectionToken<AppSettings>('APP_SETTINGS', {
+    providedIn: 'root',
+    factory: () => ({ appName: 'Default app', maxItems: 3 }),
+  });
+
+  providers: [
+    { provide: Logger, useClass: MemoryLogger },
+  ],
+  ```
 quiz:
   - question: "What does `{ provide: Logger, useClass: MemoryLogger }` do?"
     options:

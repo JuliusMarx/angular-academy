@@ -1,6 +1,24 @@
 ---
 title: Lazy loading with @defer
 minutes: 8
+summary: |-
+  - `@defer` loads part of the template only when needed; Angular splits the components inside into a separate JavaScript file.
+  - Without a trigger, Angular loads the content as soon as the browser is idle (`on idle`).
+  - `@placeholder` shows until the trigger fires, `@loading` while loading, `@error` if it fails. `minimum` prevents flickering.
+  - More triggers: `on viewport`, `on interaction`, `on hover`, `on timer(2s)`, `on immediate` and `when condition()`.
+  - `prefetch` loads the code in advance but only shows the content later.
+
+  ```html
+  @defer (on viewport) {
+    <app-comments />
+  } @placeholder {
+    <p>Comments</p>
+  } @loading (minimum 500ms) {
+    <p>Loading comments …</p>
+  }
+  ```
+
+  > [!WARNING] A component is only split out if it is used exclusively inside `@defer` blocks in that file – not in a `viewChild()` query either.
 quiz:
   - question: What happens to the code of a component that is only used inside a @defer block?
     options:

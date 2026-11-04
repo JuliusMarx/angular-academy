@@ -1,6 +1,21 @@
 ---
 title: "Template variables with @let and #ref"
 minutes: 7
+summary: |-
+  - `@let name = expression;` stores a value in the template and updates automatically.
+  - A `@let` variable is available from its declaration onward in the current block and all nested blocks. It is read-only.
+  - Use `@let` for values only the template needs; if the class needs the value too, it belongs in the class as a `computed()`.
+  - `#name` gives an element a name, e.g. `productInput.value` reads the text of an input.
+  - On a component, `#ref` refers to the component instance instead of the DOM element.
+  - Template references only work inside the template; in the class you use `viewChild()`.
+
+  ```html
+  @let total = totalPrice();
+  <p>Total: {{ total }} €</p>
+
+  <input #productInput placeholder="Product name" />
+  <button (click)="add(productInput.value)">Add</button>
+  ```
 quiz:
   - question: How do you declare a local variable in a template?
     options: ["let total = price();", "@let total = price();", "#total = price()", "{{ let total = price() }}"]

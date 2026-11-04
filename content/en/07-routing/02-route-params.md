@@ -1,6 +1,20 @@
 ---
 title: Route and query parameters
 minutes: 9
+summary: |-
+  - A colon marks a route parameter: `products/:id` matches `/products/1`, `/products/2` and so on.
+  - With `provideRouter(routes, withComponentInputBinding())`, route and query parameters arrive as inputs. The input's name must match the parameter (`:id` → `id`).
+  - URLs consist of text: `transform: numberAttribute` turns the parameter into a number.
+  - When only the parameter changes, the component stays and just the input changes – with `computed()`, the view updates automatically.
+  - `[routerLink]="['/products', p.id]"` builds the URL from an array, `[queryParams]` adds query parameters such as `?sort=price`.
+  - To navigate from code, use `inject(Router)` and `router.navigate(['/products'])`.
+
+  ```ts
+  export class ProductDetail {
+    readonly id = input.required({ transform: numberAttribute });
+    protected readonly product = computed(() => PRODUCTS.find((p) => p.id === this.id()));
+  }
+  ```
 quiz:
   - question: "Which URL matches the route `products/:id`?"
     options: ["/products", "/products/42", "/products?id=42", "/products/42/edit"]

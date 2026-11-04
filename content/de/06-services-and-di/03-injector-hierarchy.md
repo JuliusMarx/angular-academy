@@ -1,6 +1,24 @@
 ---
 title: Die Injector-Hierarchie
 minutes: 8
+summary: |-
+  - Es gibt den Root-Injector (`providedIn: 'root'` und `app.config.ts`) und zusätzlich einen Injector für jede Komponente mit eigenen `providers`.
+  - Angular sucht von unten nach oben – Komponente, Eltern, Root. Der erste Treffer gewinnt.
+  - Mit `providers: [CounterService]` im `@Component` bekommt jede Instanz der Komponente ihren eigenen Service.
+  - Kind-Komponenten bekommen die Instanz vom nächsten Provider über ihnen.
+  - Eine Service-Instanz aus den `providers` einer Komponente lebt so lange wie die Komponente und wird mit ihr zerstört.
+  - Faustregel: `providedIn: 'root'` für app-weiten Zustand, Komponenten-`providers` für Zustand eines Bereichs.
+
+  ```ts
+  @Component({
+    selector: 'app-own-counter',
+    providers: [CounterService],
+    template: `{{ counter.count() }} <ng-content />`,
+  })
+  export class OwnCounter {
+    protected readonly counter = inject(CounterService);
+  }
+  ```
 quiz:
   - question: "Was passiert mit `providers: [ScoreService]` im @Component-Decorator?"
     options:

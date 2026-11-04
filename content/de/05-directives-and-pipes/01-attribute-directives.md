@@ -1,6 +1,27 @@
 ---
 title: Eigene Attribut-Direktiven
 minutes: 8
+summary: |-
+  - Eine Direktive hat kein eigenes Template – sie hängt sich an ein vorhandenes Element und verändert Aussehen oder Verhalten.
+  - `selector: '[appHighlight]'` trifft jedes Element mit dem Attribut `appHighlight`. Importiert wird sie über `imports` wie eine Komponente.
+  - Im `host`-Objekt bindest du Eigenschaften (`'[style.backgroundColor]'`) und Ereignisse (`'(mouseenter)'`) des Host-Elements – statt `@HostBinding`/`@HostListener`.
+  - Gibt ein Binding `null` zurück, entfernt Angular den Style wieder.
+  - Ein Input mit `alias` gleich dem Selektor nimmt den Attributwert direkt: `<p appHighlight="lightblue">`.
+  - Denk an Tastatur-Nutzer: Höre auch auf `focusin` und `focusout`.
+
+  ```ts
+  @Directive({
+    selector: '[appHighlight]',
+    host: {
+      '(mouseenter)': 'active.set(true)',
+      '(mouseleave)': 'active.set(false)',
+      '[style.backgroundColor]': "active() ? 'yellow' : null",
+    },
+  })
+  export class Highlight {
+    protected readonly active = signal(false);
+  }
+  ```
 quiz:
   - question: Was unterscheidet eine Direktive von einer Komponente?
     options:

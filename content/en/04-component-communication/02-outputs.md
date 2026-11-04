@@ -1,6 +1,20 @@
 ---
 title: Reporting events with output()
 minutes: 7
+summary: |-
+  - With outputs, a child component reports an event to the parent component.
+  - `output<number>()` defines the type, `emit(value)` triggers the event.
+  - The parent component binds with parentheses: `(rated)="onRated($event)"`. `$event` is the value from `emit()`.
+  - For events without a value there is `output<void>()` and `emit()` without an argument.
+  - Name outputs after what happened (`rated`, `closed`, `selected`).
+
+  ```ts
+  readonly rated = output<number>();
+  // in the child component's template:
+  // <button (click)="rated.emit(star)">★</button>
+  ```
+
+  > [!WARNING] Don't give an output a name that also exists as a DOM event (`click`, `change`) – otherwise the handler also reacts to the native event.
 quiz:
   - question: How does the child component trigger an output named rated?
     options: ["this.rated.set(5)", "this.rated(5)", "this.rated.emit(5)", "this.rated.next(5)"]

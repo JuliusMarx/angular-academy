@@ -1,6 +1,23 @@
 ---
 title: Testing HTTP
 minutes: 8
+summary: |-
+  - Tests don't need a real server: `provideHttpClientTesting()` intercepts every request. It must come **after** `provideHttpClient()`.
+  - With the `HttpTestingController` you expect and answer requests.
+  - `expectOne(url)` fails unless there is exactly one matching request. For parameters, pass a function.
+  - `req.flush(data)` delivers the response, `req.request` shows method, body, headers and parameters.
+  - Simulate server errors with `flush('…', { status: 500, statusText: '…' })`.
+  - `http.verify()` in `afterEach` fails the test if an unexpected request was left open.
+
+  ```ts
+  service.names().subscribe((n) => (names = n));
+
+  const req = http.expectOne('/api/users');
+  expect(req.request.method).toBe('GET');
+  req.flush([{ id: 1, name: 'Grace' }, { id: 2, name: 'Ada' }]);
+
+  expect(names).toEqual(['Ada', 'Grace']);
+  ```
 quiz:
   - question: "What does `provideHttpClientTesting()` do?"
     options:
