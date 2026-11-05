@@ -9,6 +9,8 @@ export interface LessonSummary {
   slug: string;
   title: string;
   minutes: number;
+  /** Reading time of the quick-course summary. */
+  summaryMinutes: number;
 }
 
 export interface Chapter {

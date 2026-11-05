@@ -211,7 +211,6 @@ async function buildLessons(exampleIds, exercises) {
         assertNoYamlComments(raw, data, relative(ROOT, path));
         const lessonSlug = slugOf(file);
         const id = `${chapterSlug}/${lessonSlug}`;
-        chapter.lessons.push({ id, slug: lessonSlug, title: data.title, minutes: data.minutes ?? 5 });
         headings = [];
         const segments = renderSegments(content, exampleIds, relative(ROOT, path), lang);
         assertRenderable(segments, data, relative(ROOT, path));
@@ -230,6 +229,7 @@ async function buildLessons(exampleIds, exercises) {
           })),
           ...(data.exercise ? { exercise: buildExercise(data.exercise, exercises, relative(ROOT, path), lang) } : {}),
         };
+        chapter.lessons.push({ id, slug: lessonSlug, title: data.title, minutes: lesson.minutes, summaryMinutes: lesson.summaryMinutes });
         const out = join(OUT_DIR, 'lessons', lang, chapterSlug, `${lessonSlug}.ts`);
         await mkdir(join(out, '..'), { recursive: true });
         await writeTs(out, `export default ${JSON.stringify(lesson, null, 2)} satisfies Lesson;`, "import type { Lesson } from '../../../../content.model';");
