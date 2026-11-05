@@ -99,6 +99,8 @@ interface Progress {
   version: 1;
   completedLessons: string[];        // Lektions-IDs
   quizResults: Record<string, { score: number; total: number; date: string }>;
+  solvedExercises: string[];         // Lektions-IDs mit gelöster Übung
+  review: Record<string, { box: number; due: string }>; // Wiederholung: "<lektion>#<frage>" → Leitner-Fach und Fälligkeit
   lastLesson?: string;
 }
 ```
