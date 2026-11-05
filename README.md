@@ -20,6 +20,8 @@ npm run e2e        # Plattform-Tests (Playwright) gegen den Build, vorher npm ru
 
 ## Deployment
 
+**Vor dem Veröffentlichen:** Impressum und Datenschutzerklärung (`/de/imprint`, `/de/privacy`) lesen ihre Angaben aus `src/app/core/site.ts` (`operator`). Dort stehen Platzhalter, die ausgefüllt werden müssen. Wer etwas einbaut, das externe Inhalte lädt oder Daten speichert, ergänzt die Datenschutzerklärung (`src/app/pages/legal/privacy-page.html`).
+
 Die Seite läuft auf Netlify. Die Konfiguration steht in [netlify.toml](netlify.toml): Build-Befehl, Ausgabeordner, Node-Version, Weiterleitungen (Startseite je nach Browsersprache auf `/de` oder `/en`) und Header. Jeder Push auf `main` wird automatisch veröffentlicht, Pull Requests bekommen einen Vorschau-Link.
 
 Lokal testen, inklusive der Netlify-Regeln:
