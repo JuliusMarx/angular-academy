@@ -27,7 +27,7 @@
   <p class="placement">
     {{ text().placementTeaser }}
     <a [routerLink]="['/', lang(), 'placement']">{{ text().placementLink }}</a>
-    – {{ text().placementLinkText(lessonCount()) }}
+    – {{ text().placementLinkText(chapters().length) }}
   </p>
 
   @if (startLesson(); as lesson) {

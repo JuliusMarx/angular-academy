@@ -32,7 +32,7 @@ npx netlify-cli dev --offline --dir dist/angular-academy/browser
 
 ```
 content/<sprache>/<NN-kapitel>/
-  _chapter.md              # Kapitel-Titel und -Beschreibung (Frontmatter)
+  _chapter.md              # Kapitel-Titel, -Beschreibung und Frage für den Einstufungstest (Frontmatter)
   <NN-lektion>.md          # Lektion: Markdown + Frontmatter (title, minutes, summary, quiz)
 examples/
   _base/                   # Gemeinsames Angular-Projekt für alle Live-Beispiele
@@ -76,7 +76,7 @@ Text mit `Code`, Tabellen und Codeblöcken (```ts, ```html, ```bash …).
 - Daten für HTTP-Beispiele liegen als JSON in `examples/<id>/public/` (z. B. `public/api/products.json` → `GET /api/products.json`). Der Dev-Server liefert sie aus, fehlende Dateien ergeben 404. Für alles, was ein statischer Server nicht kann (Header prüfen, POST), einen Fake-Backend-Interceptor verwenden, siehe `examples/ex-interceptor`.
 - Die Einbettung braucht Cross-Origin-Isolation (`Cross-Origin-Opener-Policy: same-origin`, `Cross-Origin-Embedder-Policy: credentialless`), gesetzt in `netlify.toml` und für `npm start` in `angular.json`. Externe Ressourcen auf der Plattform selbst (Bilder, Skripte) werden deshalb ohne Cookies geladen.
 - Jede Lektion muss in allen Sprachen existieren, sonst bricht `npm run content` ab.
-- Jede Lektion braucht ein Quiz. Die erste Frage erscheint auch im Einstufungstest (`/de/placement`), sie sollte also den Kern der Lektion abfragen.
+- Der Einstufungstest (`/de/placement`) stellt pro Kapitel eine Quizfrage, ausgewählt in `_chapter.md` mit `placement: { lesson: <lektion>, question: <index> }`. Wer sie richtig beantwortet, kann das ganze Kapitel als erledigt markieren. Die Frage sollte also den Kern des Kapitels abfragen.
 - Tabellen brauchen in jeder Kopfzelle Text (leere Kopfzellen sind ein axe-Fehler). Quiztexte können nur Inline-Code, kein Fett. `npm run content` bricht in beiden Fällen ab.
 - Frontmatter-Werte mit ` #`, `: `, `{`, `[` oder Backticks am Anfang in Anführungszeichen setzen, sonst liest YAML sie falsch (` #` startet z. B. einen Kommentar).
 

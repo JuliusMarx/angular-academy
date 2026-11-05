@@ -205,6 +205,7 @@ async function buildLessons(exampleIds, exercises) {
       const chapterMeta = matter(await readFile(join(langDir, chapterDir, '_chapter.md'), 'utf8')).data;
       const chapter = { slug: chapterSlug, title: chapterMeta.title, description: chapterMeta.description ?? '', lessons: [] };
       const files = (await readdir(join(langDir, chapterDir))).filter((f) => f.endsWith('.md') && !f.startsWith('_')).sort();
+      const quizzes = new Map();
       for (const file of files) {
         const path = join(langDir, chapterDir, file);
         const raw = await readFile(path, 'utf8');
@@ -236,10 +237,9 @@ async function buildLessons(exampleIds, exercises) {
         await writeTs(out, `export default ${JSON.stringify(lesson, null, 2)} satisfies Lesson;`, "import type { Lesson } from '../../../../content.model';");
         loaders.push(`  '${lang}/${id}': () => import('./lessons/${lang}/${id}').then((m) => m.default),`);
         searchDocs[lang].push(...searchDocsFor(lesson, chapter));
-        // The placement test asks the first quiz question of every lesson.
-        if (!lesson.quiz[0]) throw new Error(`${relative(ROOT, path)}: every lesson needs a quiz (its first question is used in the placement test).`);
-        placement[lang].push({ lesson: id, question: lesson.quiz[0] });
+        quizzes.set(lessonSlug, lesson.quiz);
       }
+      placement[lang].push(placementQuestion(chapterMeta.placement, chapter.slug, quizzes, join(lang, chapterDir, '_chapter.md')));
       curriculum[lang].push(chapter);
     }
   }
@@ -349,6 +349,17 @@ function searchDocsFor(lesson, chapter) {
  * "summary:" frontmatter – the short version of a lesson for the quick course: a few key points
  * and the most important code. Required, so the quick course never has gaps.
  */
+/** The placement test asks one quiz question per chapter, picked in _chapter.md. */
+function placementQuestion(def, chapter, quizzes, file) {
+  const question = def && quizzes.get(def.lesson)?.[def.question];
+  if (!question) {
+    throw new Error(
+      `${file}: every chapter needs "placement: { lesson: <lesson slug>, question: <index> }" pointing to an existing quiz question.`,
+    );
+  }
+  return { chapter, lesson: `${chapter}/${def.lesson}`, question };
+}
+
 function buildSummary(summary, file, lang) {
   if (typeof summary !== 'string' || !summary.trim()) {
     throw new Error(`${file}: every lesson needs a "summary: |-" block for the quick course.`);

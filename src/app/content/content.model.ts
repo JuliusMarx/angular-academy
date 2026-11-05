@@ -32,8 +32,10 @@ export interface QuizQuestion {
   explanation?: string;
 }
 
-/** One question of the placement test: the first quiz question of a lesson. */
+/** One question of the placement test: a quiz question that stands for the whole chapter. */
 export interface PlacementQuestion {
+  chapter: string;
+  /** Lesson the question comes from. */
   lesson: string;
   question: QuizQuestion;
 }

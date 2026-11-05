@@ -9,12 +9,11 @@ import {
   input,
   linkedSignal,
   resource,
-  signal,
   viewChild,
 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
-import { Lang, LessonSummary, QuizQuestion } from '../../content/content.model';
+import { Chapter, Lang, QuizQuestion } from '../../content/content.model';
 import { ContentService } from '../../content/content.service';
 import { placementLoaders } from '../../content/generated/placement';
 import { ProgressService } from '../../core/progress.service';
@@ -24,20 +23,13 @@ import { SafeHtmlPipe } from '../../shared/safe-html.pipe';
 /** Answer value for "I don't know". */
 const DONT_KNOW = -1;
 
-interface PlacementLesson extends LessonSummary {
-  chapter: string;
+interface PlacementChapter extends Chapter {
   question: QuizQuestion;
 }
 
-interface PlacementChapter {
-  slug: string;
-  title: string;
-  lessons: PlacementLesson[];
-}
-
 /**
- * Placement test: the first quiz question of every lesson, one chapter per step.
- * Lessons answered correctly can be marked as done, so learners skip what they already know.
+ * Placement test: one quiz question per chapter (picked in _chapter.md). Chapters answered
+ * correctly can be marked as done, so learners skip what they already know.
  */
 @Component({
   selector: 'app-placement-page',
@@ -63,57 +55,37 @@ export default class PlacementPage {
   });
 
   protected readonly chapters = computed<PlacementChapter[]>(() => {
-    const questions = new Map((this.questions.value() ?? []).map((q) => [q.lesson, q.question]));
-    return this.content
-      .chapters(this.lang())
-      .map((chapter) => ({
-        slug: chapter.slug,
-        title: chapter.title,
-        lessons: chapter.lessons.flatMap((lesson) => {
-          const question = questions.get(lesson.id);
-          return question ? [{ ...lesson, chapter: chapter.slug, question }] : [];
-        }),
-      }))
-      .filter((chapter) => chapter.lessons.length > 0);
+    const questions = new Map((this.questions.value() ?? []).map((q) => [q.chapter, q.question]));
+    return this.content.chapters(this.lang()).flatMap((chapter) => {
+      const question = questions.get(chapter.slug);
+      return question ? [{ ...chapter, question }] : [];
+    });
   });
 
-  /** Index of the chapter being asked; everything resets when the language changes. */
-  protected readonly step = linkedSignal({ source: this.lang, computation: () => 0 });
-  /** Selected option per lesson id (DONT_KNOW for "I don't know"). */
+  /** Selected option per chapter slug (DONT_KNOW for "I don't know"); everything resets when the language changes. */
   protected readonly answers = linkedSignal<Lang, Record<string, number>>({ source: this.lang, computation: () => ({}) });
   protected readonly finished = linkedSignal({ source: this.lang, computation: () => false });
   /** Number of lessons marked as done, once the result was applied. */
   protected readonly applied = linkedSignal<Lang, number | null>({ source: this.lang, computation: () => null });
 
-  protected readonly current = computed(() => this.chapters()[this.step()]);
-  protected readonly isLast = computed(() => this.step() >= this.chapters().length - 1);
-
   protected readonly results = computed(() =>
-    this.chapters().map((chapter) => ({
-      ...chapter,
-      lessons: chapter.lessons.map((lesson) => ({ ...lesson, known: this.answers()[lesson.id] === lesson.question.answer })),
-    })),
+    this.chapters().map((chapter) => ({ ...chapter, known: this.answers()[chapter.slug] === chapter.question.answer })),
   );
-  private readonly resultLessons = computed(() => this.results().flatMap((c) => c.lessons));
-  protected readonly knownCount = computed(() => this.resultLessons().filter((l) => l.known).length);
-  protected readonly totalCount = computed(() => this.resultLessons().length);
-  protected readonly firstToLearn = computed(() => this.resultLessons().find((l) => !l.known));
+  protected readonly knownChapters = computed(() => this.results().filter((c) => c.known));
+  protected readonly knownLessons = computed(() => this.knownChapters().flatMap((c) => c.lessons));
+  /** First lesson of the first chapter that is left to learn. */
+  protected readonly firstToLearn = computed(() => {
+    const chapter = this.results().find((c) => !c.known);
+    const lesson = chapter?.lessons[0];
+    return chapter && lesson ? { ...lesson, chapter: chapter.slug } : undefined;
+  });
 
   constructor() {
     effect(() => this.title.setTitle(`${this.text().placement} – ${this.text().appName}`));
   }
 
-  protected select(lessonId: string, option: number): void {
-    this.answers.update((answers) => ({ ...answers, [lessonId]: option }));
-  }
-
-  protected next(): void {
-    if (this.isLast()) {
-      this.finish();
-      return;
-    }
-    this.step.update((step) => step + 1);
-    this.focusHeading();
+  protected select(chapter: string, option: number): void {
+    this.answers.update((answers) => ({ ...answers, [chapter]: option }));
   }
 
   protected finish(): void {
@@ -122,23 +94,22 @@ export default class PlacementPage {
   }
 
   protected apply(): void {
-    const known = this.resultLessons().filter((l) => l.known);
-    for (const lesson of known) this.progress.markCompleted(lesson.id);
+    const lessons = this.knownLessons();
+    for (const lesson of lessons) this.progress.markCompleted(lesson.id);
     // "Continue learning" on the home page then leads to the first lesson that is left.
     const next = this.firstToLearn();
     if (next) this.progress.visit(next.id);
-    this.applied.set(known.length);
+    this.applied.set(lessons.length);
   }
 
   protected restart(): void {
-    this.step.set(0);
     this.answers.set({});
     this.finished.set(false);
     this.applied.set(null);
     this.focusHeading();
   }
 
-  /** Moves focus (and the scroll position) to the new step's heading, for keyboard and screen reader users. */
+  /** Moves focus (and the scroll position) to the new heading, for keyboard and screen reader users. */
   private focusHeading(): void {
     afterNextRender(() => this.heading()?.nativeElement.focus(), { injector: this.injector });
   }
