@@ -196,6 +196,7 @@ async function buildLessons(exampleIds, exercises) {
   const curriculum = {};
   const loaders = [];
   const searchDocs = Object.fromEntries(LANGS.map((l) => [l, []]));
+  const placement = Object.fromEntries(LANGS.map((l) => [l, []]));
   for (const lang of LANGS) {
     curriculum[lang] = [];
     const langDir = join(CONTENT_DIR, lang);
@@ -235,6 +236,9 @@ async function buildLessons(exampleIds, exercises) {
         await writeTs(out, `export default ${JSON.stringify(lesson, null, 2)} satisfies Lesson;`, "import type { Lesson } from '../../../../content.model';");
         loaders.push(`  '${lang}/${id}': () => import('./lessons/${lang}/${id}').then((m) => m.default),`);
         searchDocs[lang].push(...searchDocsFor(lesson, chapter));
+        // The placement test asks the first quiz question of every lesson.
+        if (!lesson.quiz[0]) throw new Error(`${relative(ROOT, path)}: every lesson needs a quiz (its first question is used in the placement test).`);
+        placement[lang].push({ lesson: id, question: lesson.quiz[0] });
       }
       curriculum[lang].push(chapter);
     }
@@ -254,6 +258,21 @@ async function buildLessons(exampleIds, exercises) {
       LANGS.map((l) => `  ${l}: () => import('./search/${l}').then((m) => m.default),`).join('\n') +
       '\n};',
     "import type { Lang, SearchDoc } from '../content.model';",
+  );
+  await mkdir(join(OUT_DIR, 'placement'), { recursive: true });
+  for (const lang of LANGS) {
+    await writeTs(
+      join(OUT_DIR, 'placement', `${lang}.ts`),
+      `export default ${JSON.stringify(placement[lang], null, 2)} satisfies PlacementQuestion[];`,
+      "import type { PlacementQuestion } from '../../content.model';",
+    );
+  }
+  await writeTs(
+    join(OUT_DIR, 'placement.ts'),
+    `export const placementLoaders: Record<Lang, () => Promise<PlacementQuestion[]>> = {\n` +
+      LANGS.map((l) => `  ${l}: () => import('./placement/${l}').then((m) => m.default),`).join('\n') +
+      '\n};',
+    "import type { Lang, PlacementQuestion } from '../content.model';",
   );
   await writeTs(
     join(OUT_DIR, 'curriculum.ts'),

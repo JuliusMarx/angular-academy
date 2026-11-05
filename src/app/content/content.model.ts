@@ -32,6 +32,12 @@ export interface QuizQuestion {
   explanation?: string;
 }
 
+/** One question of the placement test: the first quiz question of a lesson. */
+export interface PlacementQuestion {
+  lesson: string;
+  question: QuizQuestion;
+}
+
 export interface TocEntry {
   /** Anchor id of the h2 heading. */
   id: string;
