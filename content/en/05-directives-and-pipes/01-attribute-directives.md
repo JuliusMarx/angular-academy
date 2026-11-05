@@ -7,7 +7,7 @@ summary: |-
   - In the `host` object you bind properties (`'[style.backgroundColor]'`) and events (`'(mouseenter)'`) of the host element – instead of `@HostBinding`/`@HostListener`.
   - If a binding returns `null`, Angular removes the style again.
   - An input whose `alias` equals the selector takes the attribute value directly: `<p appHighlight="lightblue">`.
-  - Think of keyboard users: also listen to `focusin` and `focusout`.
+  - Think of keyboard users: also listen to `focusin` and `focusout`. They only fire if the host element or an element inside it can take focus.
 
   ```ts
   @Directive({
@@ -15,6 +15,8 @@ summary: |-
     host: {
       '(mouseenter)': 'active.set(true)',
       '(mouseleave)': 'active.set(false)',
+      '(focusin)': 'active.set(true)',
+      '(focusout)': 'active.set(false)',
       '[style.backgroundColor]': "active() ? 'yellow' : null",
     },
   })
@@ -135,7 +137,19 @@ readonly color = input('', { alias: 'appHighlight' });
 
 ## Don't forget accessibility
 
-If a directive only reacts to the mouse, keyboard users miss out. That's why the directive in the example also listens to `focusin` and `focusout` – a button is highlighted when you reach it with Tab, too.
+If a directive only reacts to the mouse, keyboard users miss out. That's why the directive in the example also listens to focus events:
+
+```ts
+host: {
+  '(mouseenter)': 'active.set(true)',
+  '(mouseleave)': 'active.set(false)',
+  '(focusin)': 'active.set(true)',
+  '(focusout)': 'active.set(false)',
+  // …
+},
+```
+
+So a button is highlighted when you reach it with Tab, too. `focusin` and `focusout` only fire on elements that can take focus (buttons, links, form fields), or when such an element sits *inside* the host element. You can't reach the paragraphs in the example with Tab, so only the mouse works there.
 
 > [!WARNING]
 > With `inject(ElementRef)` you get the DOM element and could change it directly. Only do that when `host` bindings can't do the job – direct DOM access bypasses Angular and often doesn't behave as expected during server rendering.

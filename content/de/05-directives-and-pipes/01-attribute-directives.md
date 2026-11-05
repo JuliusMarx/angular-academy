@@ -7,7 +7,7 @@ summary: |-
   - Im `host`-Objekt bindest du Eigenschaften (`'[style.backgroundColor]'`) und Ereignisse (`'(mouseenter)'`) des Host-Elements – statt `@HostBinding`/`@HostListener`.
   - Gibt ein Binding `null` zurück, entfernt Angular den Style wieder.
   - Ein Input mit `alias` gleich dem Selektor nimmt den Attributwert direkt: `<p appHighlight="lightblue">`.
-  - Denk an Tastatur-Nutzer: Höre auch auf `focusin` und `focusout`.
+  - Denk an Tastatur-Nutzer: Höre auch auf `focusin` und `focusout`. Die feuern nur, wenn das Host-Element oder ein Element darin den Fokus bekommen kann.
 
   ```ts
   @Directive({
@@ -15,6 +15,8 @@ summary: |-
     host: {
       '(mouseenter)': 'active.set(true)',
       '(mouseleave)': 'active.set(false)',
+      '(focusin)': 'active.set(true)',
+      '(focusout)': 'active.set(false)',
       '[style.backgroundColor]': "active() ? 'yellow' : null",
     },
   })
@@ -135,7 +137,19 @@ readonly color = input('', { alias: 'appHighlight' });
 
 ## Barrierefreiheit nicht vergessen
 
-Reagiert eine Direktive nur auf die Maus, gehen Tastatur-Nutzer leer aus. Die Direktive im Beispiel hört deshalb auch auf `focusin` und `focusout` – so wird ein Button auch hervorgehoben, wenn man ihn mit Tab erreicht.
+Reagiert eine Direktive nur auf die Maus, gehen Tastatur-Nutzer leer aus. Die Direktive im Beispiel hört deshalb auch auf Fokus-Ereignisse:
+
+```ts
+host: {
+  '(mouseenter)': 'active.set(true)',
+  '(mouseleave)': 'active.set(false)',
+  '(focusin)': 'active.set(true)',
+  '(focusout)': 'active.set(false)',
+  // …
+},
+```
+
+So wird ein Button auch hervorgehoben, wenn man ihn mit Tab erreicht. `focusin` und `focusout` feuern nur bei Elementen, die den Fokus bekommen können (Buttons, Links, Formularfelder), oder wenn ein solches Element *im* Host-Element steckt. Die Absätze im Beispiel erreicht man mit Tab nicht, dort wirkt nur die Maus.
 
 > [!WARNING]
 > Mit `inject(ElementRef)` kommst du an das DOM-Element und könntest es direkt verändern. Nutze das nur, wenn es mit `host`-Bindings nicht geht – direkte DOM-Zugriffe umgehen Angular und verhalten sich beim Server-Rendering oft nicht wie erwartet.

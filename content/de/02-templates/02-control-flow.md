@@ -89,4 +89,4 @@ Mit `as` speicherst du das Ergebnis der Bedingung in einer Variable – praktisc
 ::tryit{control-flow}
 
 > [!TIP]
-> Leere im Beispiel die Liste per Button – und ersetze danach das äußere `@if` durch einen `@empty`-Block.
+> Im Beispiel prüft ein `@if` mit `@else`, ob die Liste leer ist. Leere sie per Button **Remove all**. Ersetze danach `@if` und `@else` durch einen `@empty`-Block in der `@for`-Schleife.

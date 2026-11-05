@@ -89,4 +89,4 @@ With `as` you store the result of the condition in a variable – handy when the
 ::tryit{control-flow}
 
 > [!TIP]
-> Empty the list in the example with the button – then replace the outer `@if` with an `@empty` block.
+> In the example, an `@if` with `@else` checks whether the list is empty. Empty it with the **Remove all** button. Then replace the `@if` and `@else` with an `@empty` block inside the `@for` loop.
