@@ -127,9 +127,3 @@ export class CartStore {
 
 > [!TIP]
 > Für sehr große Apps gibt es Bibliotheken wie **NgRx SignalStore**, die dieses Muster mit fertigen Bausteinen umsetzen. Das Prinzip bleibt dasselbe: Zustand an einer Stelle, Änderungen nur über klar benannte Methoden.
-
-## Geschafft!
-
-Du kennst jetzt die wichtigsten Bausteine von Angular: Komponenten und Templates, Signals, Kommunikation zwischen Komponenten, Direktiven und Pipes, Services und DI, Routing, Formulare, HTTP, RxJS, Testing und die fortgeschrittenen Themen dieses Kapitels.
-
-Der beste nächste Schritt ist ein eigenes Projekt. Starte mit `ng new`, nimm dir eine kleine Idee vor und baue sie Stück für Stück. Wenn du nicht weiterweißt, findest du hier jede Lektion über die Suche wieder (<kbd>Strg</kbd>+<kbd>K</kbd>).

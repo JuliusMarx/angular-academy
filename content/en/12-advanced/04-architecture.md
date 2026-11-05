@@ -127,9 +127,3 @@ export class CartStore {
 
 > [!TIP]
 > For very large apps there are libraries like **NgRx SignalStore** that implement this pattern with ready-made building blocks. The principle stays the same: state in one place, changes only through clearly named methods.
-
-## You made it!
-
-You now know the most important building blocks of Angular: components and templates, signals, component communication, directives and pipes, services and DI, routing, forms, HTTP, RxJS, testing and the advanced topics of this chapter.
-
-The best next step is a project of your own. Start with `ng new`, pick a small idea and build it piece by piece. Whenever you get stuck, the search (<kbd>Ctrl</kbd>+<kbd>K</kbd>) takes you back to any lesson.
