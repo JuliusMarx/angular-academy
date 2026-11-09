@@ -93,7 +93,7 @@ registerLocaleData(localeDe);
 ```
 
 > [!TIP]
-> Soll die ganze App Deutsch formatieren, setze stattdessen einmal den Provider `{ provide: LOCALE_ID, useValue: 'de' }` in der App-Konfiguration. Dann brauchst du den Locale-Parameter nicht mehr.
+> Soll die ganze App Deutsch formatieren, setze stattdessen einmal den Provider `{ provide: LOCALE_ID, useValue: 'de' }` in der App-Konfiguration. Dann brauchst du den Locale-Parameter nicht mehr. `registerLocaleData(localeDe)` bleibt aber nötig, sonst meldet Angular `NG0701: Missing locale data`.
 
 ## async: Observables im Template
 

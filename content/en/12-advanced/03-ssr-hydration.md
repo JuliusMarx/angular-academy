@@ -89,6 +89,8 @@ The HTML from the server is display only at first: buttons don't react yet. Once
 }
 ```
 
+Since Angular 22, incremental hydration is on by default with `provideClientHydration()`. In Angular 21 you need `provideClientHydration(withIncrementalHydration())`.
+
 ## Code that may only run in the browser
 
 On the server there is no `window`, no `document`, no `localStorage` and no element sizes. But constructors, fields and `ngOnInit` run there too. Code that needs the browser therefore belongs in **`afterNextRender()`** or **`afterRenderEffect()`**: both only run in the browser, after rendering.

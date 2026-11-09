@@ -118,7 +118,7 @@ export class App {
 
 Wohin der Fokus genau soll, hängt vom Layout ab: auf `<main>` oder auf die `<h1>` der neuen Seite (dann mit `tabindex="-1"`). Wichtig ist nur, dass er nicht auf `<body>` zurückfällt oder auf dem alten Link bleibt.
 
-Gib außerdem jeder Route einen `title`. Der Router setzt ihn als Seitentitel, und Screenreader lesen ihn vor:
+Gib außerdem jeder Route einen `title`. Der Router setzt ihn als Seitentitel. So unterscheiden sich Tabs und Verlauf, und Screenreader-Nutzer können jederzeit abfragen, wo sie sind. Von selbst angesagt wird ein neuer Titel nach einer Navigation in einer Single-Page-App meist nicht, deshalb braucht es zusätzlich den Fokus:
 
 ```ts
 export const routes: Routes = [

@@ -89,6 +89,8 @@ Mit **inkrementeller Hydration** geht es noch einen Schritt weiter. Teile der Se
 }
 ```
 
+Seit Angular 22 ist inkrementelle Hydration mit `provideClientHydration()` automatisch eingeschaltet. In Angular 21 brauchst du dafür `provideClientHydration(withIncrementalHydration())`.
+
 ## Code, der nur im Browser laufen darf
 
 Auf dem Server gibt es kein `window`, kein `document`, kein `localStorage` und keine Größen von Elementen. Konstruktoren, Felder und `ngOnInit` laufen aber auch dort. Code, der den Browser braucht, gehört deshalb in **`afterNextRender()`** oder **`afterRenderEffect()`**: Beide laufen nur im Browser, und zwar nach dem Rendern.

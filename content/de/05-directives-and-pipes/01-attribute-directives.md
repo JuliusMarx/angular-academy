@@ -64,7 +64,7 @@ exercise:
 
 # Eigene Attribut-Direktiven
 
-Eine **Komponente** bringt ihr eigenes Template mit. Eine **Direktive** hat keins – sie hängt sich an ein vorhandenes Element und verändert dessen Aussehen oder Verhalten. Du kennst schon Direktiven von Angular, etwa `routerLink`. Jetzt schreibst du eine eigene.
+Eine **Komponente** bringt ihr eigenes Template mit. Eine **Direktive** hat keins – sie hängt sich an ein vorhandenes Element und verändert dessen Aussehen oder Verhalten. Angular selbst bringt Direktiven mit, etwa `routerLink` aus dem Router, den du später kennenlernst. Jetzt schreibst du eine eigene.
 
 ## Die einfachste Direktive
 

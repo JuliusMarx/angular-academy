@@ -64,7 +64,7 @@ exercise:
 
 # Custom attribute directives
 
-A **component** brings its own template. A **directive** has none – it attaches to an existing element and changes how it looks or behaves. You already know directives from Angular, such as `routerLink`. Now you'll write your own.
+A **component** brings its own template. A **directive** has none – it attaches to an existing element and changes how it looks or behaves. Angular itself ships directives, such as `routerLink` from the router, which you'll meet later. Now you'll write your own.
 
 ## The simplest directive
 

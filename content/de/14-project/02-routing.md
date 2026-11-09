@@ -43,7 +43,7 @@ quiz:
     options:
       - Weil `<label>` in Angular nicht erlaubt ist
       - Weil `aria-label` besser aussieht
-      - Weil der Titel jetzt ein Link ist – und interaktive Elemente dürfen nicht in einem `<label>` stehen
+      - Weil der Titel jetzt ein Link ist – und weitere interaktive Elemente sollen nicht in einem `<label>` stehen
       - Weil Checkboxen keinen Namen brauchen
     answer: 2
 ---
@@ -132,7 +132,7 @@ Jede Aufgabe verlinkt auf ihre Seite:
 <a [routerLink]="['/tasks', task().id]">{{ task().title }}</a>
 ```
 
-Vorher stand der Titel im `<label>` der Checkbox. Ein Link darf aber nicht in einem `<label>` stehen: Ein Klick wäre dann gleichzeitig „Link öffnen“ und „Checkbox umschalten“. Deshalb bekommt die Checkbox ihren Namen jetzt per `aria-label`, etwa „Done: Plan the project“.
+Vorher stand der Titel im `<label>` der Checkbox. Ein Link sollte aber nicht in einem `<label>` stehen: Ein Klick auf den Titel öffnet dann nur den Link, die Checkbox schaltet er nicht um. Die Beschriftung taugt nicht mehr als Klickfläche, und die Checkbox wird schwerer zu bedienen. Deshalb bekommt die Checkbox ihren Namen jetzt per `aria-label`, etwa „Done: Plan the project“.
 
 ::tryit{project-routing}
 

@@ -118,7 +118,7 @@ export class App {
 
 Where exactly the focus should go depends on your layout: on `<main>` or on the `<h1>` of the new page (then with `tabindex="-1"`). What matters is that it doesn't fall back to `<body>` or stay on the old link.
 
-Also give every route a `title`. The router sets it as the page title, and screen readers read it out:
+Also give every route a `title`. The router sets it as the page title. This keeps tabs and history apart, and screen reader users can query it at any time to find out where they are. Screen readers usually don't announce a new title on their own after navigation in a single-page app, which is why you also need to move focus:
 
 ```ts
 export const routes: Routes = [

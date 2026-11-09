@@ -93,7 +93,7 @@ registerLocaleData(localeDe);
 ```
 
 > [!TIP]
-> If the whole app should use German formats, set the provider `{ provide: LOCALE_ID, useValue: 'de' }` once in the app configuration instead. Then you don't need the locale parameter anymore.
+> If the whole app should use German formats, set the provider `{ provide: LOCALE_ID, useValue: 'de' }` once in the app configuration instead. Then you don't need the locale parameter anymore. You still need `registerLocaleData(localeDe)`, otherwise Angular reports `NG0701: Missing locale data`.
 
 ## async: observables in the template
 
