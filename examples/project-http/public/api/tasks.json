@@ -1,0 +1,8 @@
+[
+  { "id": 1, "title": "Plan the project", "notes": "Pick the features for the first version.", "done": true },
+  { "id": 2, "title": "Build the task list", "notes": "Components, signals and a store service.", "done": true },
+  { "id": 3, "title": "Add a detail page", "notes": "One route per task.", "done": true },
+  { "id": 4, "title": "Add a form", "notes": "Signal Forms with validation.", "done": true },
+  { "id": 5, "title": "Load the tasks from the server", "notes": "httpResource for reading, HttpClient for writing.", "done": false },
+  { "id": 6, "title": "Write a test", "notes": "TestBed and HttpTestingController.", "done": false }
+]
