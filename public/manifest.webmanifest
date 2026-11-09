@@ -1,0 +1,14 @@
+{
+  "name": "Angular Academy",
+  "short_name": "Angular Academy",
+  "description": "Interaktiver Angular-Kurs – auch offline lesbar.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#c2185b",
+  "icons": [
+    { "src": "logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}
