@@ -142,4 +142,4 @@ Im Beispiel laufen UI-Tests mit `getByRole()` gegen eine kleine Shop-Seite. Änd
 
 Du kennst jetzt die wichtigsten Bausteine von Angular: Komponenten und Templates, Signals, Kommunikation zwischen Komponenten, Direktiven und Pipes, Services und DI, Routing, Formulare, HTTP, RxJS, Testing, die fortgeschrittenen Themen und Barrierefreiheit.
 
-Der beste nächste Schritt ist ein eigenes Projekt. Starte mit `ng new`, nimm dir eine kleine Idee vor und baue sie Stück für Stück. Wenn du nicht weiterweißt, findest du hier jede Lektion über die Suche wieder (<kbd>Strg</kbd>+<kbd>K</kbd>).
+Im letzten Kapitel setzt du diese Bausteine zu einem kleinen Projekt zusammen: einer Aufgaben-App mit Routing, Formular, Server und Tests. Danach ist der beste nächste Schritt ein eigenes Projekt. Wenn du nicht weiterweißt, findest du hier jede Lektion über die Suche wieder (<kbd>Strg</kbd>+<kbd>K</kbd>).

@@ -142,4 +142,4 @@ In the example, UI tests with `getByRole()` run against a small shop page. Turn 
 
 You now know the most important building blocks of Angular: components and templates, signals, component communication, directives and pipes, services and DI, routing, forms, HTTP, RxJS, testing, the advanced topics and accessibility.
 
-The best next step is a project of your own. Start with `ng new`, pick a small idea and build it piece by piece. Whenever you get stuck, the search (<kbd>Ctrl</kbd>+<kbd>K</kbd>) takes you back to any lesson.
+In the last chapter you put these building blocks together in a small project: a task app with routing, a form, a server and tests. After that, the best next step is a project of your own. Whenever you get stuck, the search (<kbd>Ctrl</kbd>+<kbd>K</kbd>) takes you back to any lesson.
