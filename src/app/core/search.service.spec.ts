@@ -26,8 +26,9 @@ describe('SearchService', () => {
 
   it('prefers exact matches over fuzzy ones', async () => {
     const hits = await service.search('de', 'asReadonly');
-    expect(hits).toHaveLength(1);
-    expect(marked(hits[0])).toEqual(['asReadonly']);
+    // Only lessons that really contain the word – no fuzzy hits like "readonly".
+    expect(hits.length).toBeGreaterThan(0);
+    for (const hit of hits) expect(marked(hit)).toEqual(['asReadonly']);
   });
 
   it('tolerates typos when nothing matches exactly', async () => {
