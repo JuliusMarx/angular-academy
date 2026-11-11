@@ -1,5 +1,5 @@
 ---
-title: Routes and navigation
+title: Routes and Navigation
 minutes: 9
 summary: |-
   - A route connects a `path` (no leading slash, `''` is the start page) with a `component`. `title` sets the tab title.
@@ -36,7 +36,7 @@ quiz:
     answer: 1
 exercise:
   example: ex-routes
-  title: A menu with navigation
+  title: A Menu with Navigation
   task: |-
     The app already has three page components – but no routes yet.
 
@@ -51,7 +51,7 @@ exercise:
     not-found: Unknown URLs show **Page not found**
 ---
 
-# Routes and navigation
+# Routes and Navigation
 
 So far every app consisted of a single page. Real applications have many: start page, product list, detail view, cart. The **Angular router** maps every URL to a component – without the browser reloading the page.
 

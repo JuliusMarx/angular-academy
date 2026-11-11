@@ -1,5 +1,5 @@
 ---
-title: Services & dependency injection
+title: Services & Dependency Injection
 description: Move logic and state into services, use them with inject() and control with providers and injection tokens who gets which instance.
 # Placement test: this quiz question stands for the whole chapter.
 placement:

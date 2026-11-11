@@ -1,5 +1,5 @@
 ---
-title: Two-way binding with model()
+title: Two-Way Binding with model()
 minutes: 7
 summary: |-
   - `model()` is a writable signal: the child component reads it with `checked()` and changes it with `set()` or `update()`.
@@ -32,7 +32,7 @@ quiz:
     answer: 2
 exercise:
   example: ex-model
-  title: A two-way stepper
+  title: A Two-Way Stepper
   task: |-
     The stepper gets its value through an input but can't change it.
 
@@ -44,7 +44,7 @@ exercise:
     parent-sets-value: '**Set to 5** changes the stepper, and **−** then also reaches the parent'
 ---
 
-# Two-way binding with model()
+# Two-Way Binding with model()
 
 Some components don't just display a value, they let the user change it: a quantity picker, a switch, a slider. The parent provides the initial value – and wants to know when the user changes it.
 

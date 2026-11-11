@@ -1,5 +1,5 @@
 ---
-title: Reusing templates with ng-template
+title: Reusing Templates with ng-template
 minutes: 9
 summary: |-
   - An `<ng-template>` isn't displayed right away – it's a blueprint that you render once, several times or not at all.
@@ -32,7 +32,7 @@ quiz:
     explanation: Content between the tags is projected content – that's what `contentChild()` is for.
 ---
 
-# Reusing templates with ng-template
+# Reusing Templates with ng-template
 
 An `<ng-template>` is a piece of template that is **not displayed right away**. It's a blueprint you can render later – once, several times or not at all. That solves things `<ng-content>` can't.
 

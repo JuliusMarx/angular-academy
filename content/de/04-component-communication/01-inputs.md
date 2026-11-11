@@ -6,6 +6,7 @@ summary: |-
   - `[name]="ausdruck"` übergibt einen Ausdruck, `name="Notebook"` ohne Klammern einen festen String.
   - `input(0)` setzt einen Standardwert, `input.required<string>()` macht das Input zur Pflicht. Fehlt es, kompiliert das Template nicht (`NG8008`).
   - `transform: numberAttribute` bzw. `booleanAttribute` wandelt String-Attribute in Zahlen bzw. Booleans um.
+  - Im Konstruktor sind Inputs noch nicht gesetzt. Arbeit, die Inputs braucht, gehört in `ngOnInit`, das einmal nach dem Setzen der ersten Inputs läuft.
   - Mit `alias` heißt das Input im Template anders als in der Klasse.
   - Daten fließen bei Inputs nur von oben nach unten.
 
@@ -96,6 +97,22 @@ NG8008: Required input 'name' from component ProductCard must be specified.
 
 > [!TIP]
 > Nutze `input.required()` für alles, ohne das die Komponente keinen Sinn ergibt. So brauchst du im Template keine Prüfungen auf `undefined`.
+
+## Wann sind Inputs da? ngOnInit
+
+Im Konstruktor sind Inputs noch nicht gesetzt. Liest du dort einen Pflicht-Input, gibt es einen Fehler (`NG0950`). Für Vorbereitungen, die Inputs brauchen, nimmst du den Lifecycle-Hook **`ngOnInit`**: Angular ruft ihn einmal auf, nachdem die ersten Inputs gesetzt sind.
+
+```ts
+export class ProductCard implements OnInit {
+  readonly name = input.required<string>();
+
+  ngOnInit() {
+    console.log('Zeige', this.name()); // hier ist das Input gesetzt
+  }
+}
+```
+
+Das Gegenstück `ngOnDestroy` läuft, wenn die Komponente verschwindet. Alternativ registrierst du Aufräumarbeiten mit `inject(DestroyRef).onDestroy(…)`.
 
 ## Werte umwandeln mit transform
 

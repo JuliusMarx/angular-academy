@@ -1,5 +1,5 @@
 ---
-title: What is Angular?
+title: What Is Angular?
 minutes: 5
 summary: |-
   - Angular is a framework by Google that ships everything for a complete app: components, signals, router, forms, `HttpClient`, dependency injection and the Angular CLI.
@@ -24,7 +24,7 @@ quiz:
     explanation: "`ng new` from the Angular CLI generates a complete, ready-to-run project."
 ---
 
-# What is Angular?
+# What Is Angular?
 
 **Angular** is a framework by Google for building modern web applications – from small apps to large enterprise systems. Unlike a pure UI library, Angular ships with everything you need for a complete application:
 
@@ -48,6 +48,8 @@ npx @angular/cli@latest new my-project
 cd my-project
 npm start
 ```
+
+If you install the CLI globally with `npm install -g @angular/cli`, the command is simply `ng new my-project`.
 
 Your app now runs at `http://localhost:4200`. Every change in the code shows up in the browser right away.
 

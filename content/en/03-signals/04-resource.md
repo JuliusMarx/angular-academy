@@ -1,5 +1,5 @@
 ---
-title: Async data with resource()
+title: Async Data with resource()
 minutes: 9
 summary: |-
   - `resource()` loads data asynchronously and exposes the result as signals.
@@ -36,7 +36,7 @@ quiz:
     answer: 1
 exercise:
   example: ex-resource
-  title: Load a user
+  title: Load a User
   task: |-
     `fetchUser()` in `user-api.ts` simulates a slow server request.
 
@@ -48,7 +48,7 @@ exercise:
     shows-error: For **User 99** the error message appears in `<p id="error">`
 ---
 
-# Async data with resource()
+# Async Data with resource()
 
 Signals are synchronous. Data from a server, however, is asynchronous – it takes time, can fail and is sometimes outdated before it arrives. `resource()` brings the two together: it loads data asynchronously and exposes the result as signals.
 
@@ -71,7 +71,7 @@ export class UserProfile {
 
 - **`params`** is a reactive function. When a signal inside it changes, the resource reloads automatically.
 - **`loader`** is an `async` function that fetches the data. It receives the current `params` and an `abortSignal`.
-- If new `params` arrive while still loading, the old request is cancelled via the `abortSignal`.
+- If new `params` arrive while still loading, the old request is canceled via the `abortSignal`.
 
 ## Showing the state
 

@@ -1,5 +1,5 @@
 ---
-title: Connecting signals and RxJS
+title: Connecting Signals and RxJS
 minutes: 8
 summary: |-
   - The package `@angular/core/rxjs-interop` connects signals and observables.
@@ -42,7 +42,7 @@ quiz:
     explanation: "`toSignal()` needs the surrounding `DestroyRef` to unsubscribe. Outside an injection context, pass an injector via the `injector` option."
 exercise:
   example: ex-interop
-  title: Live notifications
+  title: Live Notifications
   task: |-
     The `Notifications` service delivers new messages as the observable `messages$`. Bring them into the component:
 
@@ -55,7 +55,7 @@ exercise:
     debounced-filter: The filter only applies after a typing pause
 ---
 
-# Connecting signals and RxJS
+# Connecting Signals and RxJS
 
 In Angular, signals and observables work hand in hand. Templates, `computed()` and inputs speak signals. HTTP, events and timed flows often arrive as observables. The `@angular/core/rxjs-interop` package connects the two worlds.
 

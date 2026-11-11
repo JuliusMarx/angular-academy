@@ -1,5 +1,5 @@
 ---
-title: Hands-on project
+title: Hands-On Project
 description: A small task app, step by step – with signals, routing, Signal Forms, HTTP and tests.
 # Placement test: this quiz question stands for the whole chapter.
 placement:

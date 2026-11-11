@@ -1,5 +1,5 @@
 ---
-title: Creating tasks with Signal Forms
+title: Creating Tasks with Signal Forms
 minutes: 9
 summary: |-
   - A new route `tasks/new` for the form. It must come **before** `tasks/:id`, otherwise `:id` matches "new".
@@ -48,7 +48,7 @@ quiz:
     answer: 2
 exercise:
   example: ex-project-form
-  title: Finishing the form
+  title: Finishing the Form
   task: |-
     The form under **New task** doesn't save or check anything yet.
 
@@ -60,7 +60,7 @@ exercise:
     saves-and-navigates: A valid task opens its detail page and then shows up in the list
 ---
 
-# Creating tasks with Signal Forms
+# Creating Tasks with Signal Forms
 
 So far there are only the three tasks in the store. Now you add a form to create new ones – at `/tasks/new`, with validation and a jump to the new task afterwards.
 

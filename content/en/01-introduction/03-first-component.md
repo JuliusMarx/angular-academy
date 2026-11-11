@@ -1,5 +1,5 @@
 ---
-title: Your first component
+title: Your First Component
 minutes: 7
 summary: |-
   - A component consists of a TypeScript class, a template and optional styles.
@@ -33,7 +33,7 @@ quiz:
     explanation: Components are standalone. You import them via the `imports` array wherever you need them.
 exercise:
   example: ex-first-component
-  title: A team badge
+  title: A Team Badge
   task: |-
     Build your first own component:
 
@@ -46,7 +46,7 @@ exercise:
     shows-text: Each badge shows **Angular Fan** in a `<span class="badge">`
 ---
 
-# Your first component
+# Your First Component
 
 An Angular app is made of **components**. Each component is a building block of the UI – a header, a list or a button, for example – and consists of three parts:
 

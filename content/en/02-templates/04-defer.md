@@ -1,5 +1,5 @@
 ---
-title: Lazy loading with @defer
+title: Lazy Loading with @defer
 minutes: 8
 summary: |-
   - `@defer` loads part of the template only when needed; Angular splits the components inside into a separate JavaScript file.
@@ -36,7 +36,7 @@ quiz:
     answer: 2
 ---
 
-# Lazy loading with @defer
+# Lazy Loading with @defer
 
 Not everything has to be loaded at startup. With `@defer` you tell Angular: *load this part of the template only when it's needed.* Angular automatically splits the affected components into a separate JavaScript file, so your app starts faster.
 

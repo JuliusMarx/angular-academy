@@ -1,5 +1,5 @@
 ---
-title: "Template variables with @let and #ref"
+title: "Template Variables with @let and #ref"
 minutes: 7
 summary: |-
   - `@let name = expression;` stores a value in the template and updates automatically.
@@ -33,7 +33,7 @@ quiz:
     answer: 2
 exercise:
   example: ex-template-variables
-  title: A shopping list
+  title: A Shopping List
   task: |-
     Make the **Add** button work – without a new signal for the input:
 
@@ -46,7 +46,7 @@ exercise:
     clears-input: After **Add** the input is empty
 ---
 
-# Template variables with @let and #ref
+# Template Variables with @let and #ref
 
 Sometimes you need a value several times in a template, or you want to access an element directly. Angular has two kinds of template variables for this.
 

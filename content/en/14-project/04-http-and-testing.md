@@ -1,5 +1,5 @@
 ---
-title: Connecting the server and testing
+title: Connecting the Server and Testing
 minutes: 11
 summary: |-
   - Only the store changes: it loads the tasks with `httpResource` from `/api/tasks.json` and writes with `HttpClient` via `POST` and `PUT`. The components stay almost the same.
@@ -51,9 +51,9 @@ quiz:
     answer: 3
 ---
 
-# Connecting the server and testing
+# Connecting the Server and Testing
 
-The app can do everything it should – except that it forgets new tasks on reload. Now the store fetches the tasks from the server and sends changes there. After that, you secure the behaviour with tests.
+The app can do everything it should – except that it forgets new tasks on reload. Now the store fetches the tasks from the server and sends changes there. After that, you secure the behavior with tests.
 
 ## The store speaks HTTP
 
@@ -157,7 +157,7 @@ It is registered with `provideHttpClient(withInterceptors([fakeBackendIntercepto
 
 ## Testing the store
 
-Finally, you secure the behaviour with tests. The store is the best candidate: the logic lives here, and every page depends on it. In the test, `provideHttpClientTesting()` replaces the network, and you decide what the "server" answers:
+Finally, you secure the behavior with tests. The store is the best candidate: the logic lives here, and every page depends on it. In the test, `provideHttpClientTesting()` replaces the network, and you decide what the "server" answers:
 
 ```ts
 beforeEach(() => {

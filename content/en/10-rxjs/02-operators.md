@@ -4,6 +4,7 @@ minutes: 9
 summary: |-
   - You chain operators with `pipe()`. `pipe()` returns a **new** observable, the original stays unchanged.
   - `map` and `filter` work like on arrays, `tap()` passes values through unchanged, handy for peeking.
+  - `scan()` accumulates like `reduce`, but emits every intermediate result.
   - Controlling time: `debounceTime(ms)` waits for a pause, plus `throttleTime(ms)`, `distinctUntilChanged()`, `delay(ms)`, `take(n)`.
   - `switchMap` cancels the old inner observable as soon as a new value arrives. Ideal for searches.
   - `mergeMap` runs in parallel, `concatMap` waits in order, `exhaustMap` ignores new values while one is running.
@@ -29,13 +30,13 @@ quiz:
   - question: A user types fast and the responses arrive out of order. Which operator prevents an old response from overwriting the new one?
     options: ["mergeMap", "concatMap", "switchMap", "map"]
     answer: 2
-    explanation: "`switchMap` unsubscribes from the old inner observable as soon as a new value arrives. The old request is cancelled, so its response never arrives."
+    explanation: "`switchMap` unsubscribes from the old inner observable as soon as a new value arrives. The old request is canceled, so its response never arrives."
   - question: "What does `of(1, 2, 3, 4).pipe(filter((n) => n % 2 === 0), map((n) => n * 10))` emit?"
     options: ["10, 20, 30, 40", "20, 40", "2, 4", "10, 30"]
     answer: 1
 exercise:
   example: ex-search-pipeline
-  title: A thrifty search
+  title: A Thrifty Search
   task: |-
     The search sends a request on every key press. Add to the pipeline before `switchMap`:
 
@@ -71,6 +72,14 @@ of(1, 2, 3, 4)
 
 `tap()` passes values through unchanged and is handy for taking a peek: `tap((v) => console.log('value:', v))`.
 
+`scan()` accumulates values like `reduce` on arrays, but emits **every** intermediate result instead of only the last one:
+
+```ts
+of(1, 2, 3)
+  .pipe(scan((sum, n) => sum + n, 0)) // 0 is the initial value
+  .subscribe(console.log);            // → 1, 3, 6
+```
+
 ## Controlling time
 
 Some operators work with time, and this is where RxJS shines:
@@ -97,7 +106,7 @@ query$.pipe(
 );
 ```
 
-`switchMap` unsubscribes from the old observable as soon as a new value arrives. A request that is still running is **cancelled**. That way a slow old response can never overwrite the results of a newer search.
+`switchMap` unsubscribes from the old observable as soon as a new value arrives. A request that is still running is **canceled**. That way a slow old response can never overwrite the results of a newer search.
 
 ::tryit{rxjs-operators}
 
@@ -107,7 +116,7 @@ The four `…Map` operators differ in what happens to an observable that is stil
 
 | Operator | When a new value arrives … | Typical use |
 |---|---|---|
-| `switchMap` | … the old one is cancelled | search, loading after a selection |
+| `switchMap` | … the old one is canceled | search, loading after a selection |
 | `mergeMap` | … both run in parallel | independent requests |
 | `concatMap` | … the new one waits until the old one is done | saving in a fixed order |
 | `exhaustMap` | … the new one is ignored | double click on "Submit" |

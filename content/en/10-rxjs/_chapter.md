@@ -1,5 +1,5 @@
 ---
-title: RxJS basics
+title: RxJS Basics
 description: Observables, the most important operators and working together with signals.
 # Placement test: this quiz question stands for the whole chapter.
 placement:

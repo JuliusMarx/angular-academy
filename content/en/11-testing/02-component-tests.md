@@ -1,5 +1,5 @@
 ---
-title: Testing components
+title: Testing Components
 minutes: 9
 summary: |-
   - `TestBed.createComponent()` renders the component and returns a **fixture**.
@@ -43,7 +43,7 @@ quiz:
     explanation: "Signal inputs are read-only from the outside. `setInput()` sets the input the way a parent template would."
 exercise:
   example: ex-test-component
-  title: Tests for a star rating
+  title: Tests for a Star Rating
   task: |-
     Write tests for the `Rating` component in `rating.spec.ts`:
 
@@ -59,7 +59,7 @@ exercise:
     catches-emit-bug: A test notices when `rated` is never emitted
 ---
 
-# Testing components
+# Testing Components
 
 For a component you want to know: does it show the right thing, and does it react correctly to the user? For that, `TestBed` really renders the component, and the test operates it like a user would.
 

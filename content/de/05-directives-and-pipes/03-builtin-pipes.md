@@ -107,6 +107,8 @@ protected readonly seconds$ = interval(1000).pipe(map((n) => n + 1));
 <p>Sekunden auf dieser Seite: {{ seconds$ | async }}</p>
 ```
 
+Observables wie `interval()` lernst du in Kapitel 10 (RxJS) richtig kennen. Für jetzt reicht: Sie liefern Werte über die Zeit.
+
 ::tryit{builtin-pipes}
 
 > [!NOTE]

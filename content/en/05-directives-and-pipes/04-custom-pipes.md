@@ -1,5 +1,5 @@
 ---
-title: Writing custom pipes
+title: Writing Custom Pipes
 minutes: 8
 summary: |-
   - A custom pipe is a class with `@Pipe({ name: '…' })` that implements `PipeTransform`.
@@ -39,7 +39,7 @@ quiz:
     explanation: For objects and arrays the reference counts – a pure pipe doesn't notice an array changed with `push()`.
 exercise:
   example: ex-custom-pipe
-  title: Readable file sizes
+  title: Readable File Sizes
   task: |-
     The download list shows raw byte counts. Write a pipe `fileSize` in `file-size.pipe.ts` and use it in the size column:
 
@@ -58,7 +58,7 @@ exercise:
     larger-units: 'MB and GB are right too: `1 MB`, `1.5 GB`'
 ---
 
-# Writing custom pipes
+# Writing Custom Pipes
 
 The built-in pipes cover a lot, but not everything: shortening text, building initials, making file sizes readable. A custom pipe is quickly written – and much more readable in a template than a method call.
 

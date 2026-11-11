@@ -38,7 +38,7 @@ quiz:
     answer: 1
 exercise:
   example: ex-signal-form
-  title: A profile form
+  title: A Profile Form
   task: |-
     The inputs aren't connected to the model yet – the preview stays empty.
 

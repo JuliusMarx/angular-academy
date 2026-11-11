@@ -1,5 +1,5 @@
 ---
-title: Formatting values with built-in pipes
+title: Formatting Values with Built-In Pipes
 minutes: 9
 summary: |-
   - Pipes format values directly in the template with `|`. You append parameters with colons: `{{ value | pipe: param1 : param2 }}`.
@@ -34,7 +34,7 @@ quiz:
     answer: 1
 ---
 
-# Formatting values with built-in pipes
+# Formatting Values with Built-In Pipes
 
 Data rarely comes in the shape people want to read: a date is a `Date` object, a price a number like `1234.5`. **Pipes** turn values into a readable form right in the template – with the `|` character.
 
@@ -106,6 +106,8 @@ protected readonly seconds$ = interval(1000).pipe(map((n) => n + 1));
 ```html
 <p>Seconds on this page: {{ seconds$ | async }}</p>
 ```
+
+You'll get to know observables like `interval()` properly in chapter 10 (RxJS). For now, it's enough to know that they deliver values over time.
 
 ::tryit{builtin-pipes}
 

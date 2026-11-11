@@ -37,7 +37,7 @@ quiz:
     answer: 1
 exercise:
   example: ex-validation
-  title: Validating a sign-up form
+  title: Validating a Sign-Up Form
   task: |-
     The form accepts anything so far. Give `form()` a schema function as its second argument and add these rules:
 

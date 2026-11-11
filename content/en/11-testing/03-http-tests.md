@@ -42,7 +42,7 @@ quiz:
     answer: 1
 exercise:
   example: ex-test-http
-  title: Tests for a weather service
+  title: Tests for a Weather Service
   task: |-
     Write tests for the `Weather` service in `weather.spec.ts`:
 

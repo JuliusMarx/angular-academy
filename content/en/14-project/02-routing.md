@@ -1,5 +1,5 @@
 ---
-title: List and detail page
+title: List and Detail Page
 minutes: 8
 summary: |-
   - The app becomes a **shell**: `App` only contains the navigation, the counter and `<router-outlet />`. The list moves into its own page, `TaskList`.
@@ -48,7 +48,7 @@ quiz:
     answer: 2
 ---
 
-# List and detail page
+# List and Detail Page
 
 So far the app only shows a list. Now every task gets its own page at `/tasks/<id>`. For that, `App` becomes a **shell**, and the pages switch inside the `<router-outlet />`.
 

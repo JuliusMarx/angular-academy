@@ -1,5 +1,5 @@
 ---
-title: Announcing changes and testing
+title: Announcing Changes and Testing
 minutes: 10
 summary: |-
   - If something changes without the focus moving there ("Added to cart"), a screen reader only learns about it through a **live region**.
@@ -40,7 +40,7 @@ quiz:
     explanation: "`getByRole()` searches the accessibility tree. A `<div>` with `(click)` has no role `button` there – it is just as invisible to screen readers."
 ---
 
-# Announcing changes and testing
+# Announcing Changes and Testing
 
 Sighted users notice when "Added to cart" flashes up somewhere. A screen reader, however, only reads where the focus is. It only learns about changes elsewhere if you **announce** them.
 

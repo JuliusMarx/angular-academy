@@ -45,7 +45,7 @@ quiz:
     explanation: "HTTP observables complete after the response. `interval()`, events or subjects keep running until you unsubscribe – otherwise you get a memory leak."
 exercise:
   example: ex-stopwatch
-  title: A stopwatch
+  title: A Stopwatch
   task: |-
     Build a stopwatch with `interval()` that counts up by 1 every 100 ms.
 

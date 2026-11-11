@@ -1,5 +1,5 @@
 ---
-title: Component communication
+title: Component Communication
 description: Pass data in with input(), report events with output(), two-way binding with model(), project content and query child elements.
 # Placement test: this quiz question stands for the whole chapter.
 placement:

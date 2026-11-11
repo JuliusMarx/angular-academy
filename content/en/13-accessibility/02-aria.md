@@ -53,7 +53,7 @@ quiz:
     answer: 0
 exercise:
   example: ex-a11y-faq
-  title: An accessible FAQ
+  title: An Accessible FAQ
   task: |-
     The FAQ questions can only be opened with the mouse, and screen readers don't learn whether an answer is open. Rebuild `FaqItem` following the disclosure pattern:
 

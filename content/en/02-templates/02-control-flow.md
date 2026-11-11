@@ -1,5 +1,5 @@
 ---
-title: Control flow with @if, @for and @switch
+title: Control Flow with @if, @for and @switch
 minutes: 8
 summary: |-
   - Control flow blocks start with `@` and are built in. Nothing to import.
@@ -27,7 +27,7 @@ quiz:
     answer: 2
 exercise:
   example: ex-control-flow
-  title: A task list
+  title: A Task List
   task: |-
     The list `<ul id="tasks">` is still empty. Fill it:
 
@@ -39,7 +39,7 @@ exercise:
     empty-state: 'After **Clear**, **No tasks** appears'
 ---
 
-# Control flow with @if, @for and @switch
+# Control Flow with @if, @for and @switch
 
 **Control flow blocks** decide *what* the template shows. They start with `@` and are built right into Angular – nothing to import.
 

@@ -1,5 +1,5 @@
 ---
-title: Route and query parameters
+title: Route and Query Parameters
 minutes: 9
 summary: |-
   - A colon marks a route parameter: `products/:id` matches `/products/1`, `/products/2` and so on.
@@ -32,7 +32,7 @@ quiz:
     explanation: "URLs consist of text – `transform: numberAttribute` turns it into a number."
 exercise:
   example: ex-params
-  title: A book detail page
+  title: A Book Detail Page
   task: |-
     The book list shows titles, but the detail page can't be reached.
 
@@ -45,7 +45,7 @@ exercise:
     unknown-id: "`/books/99` shows **Book not found**"
 ---
 
-# Route and query parameters
+# Route and Query Parameters
 
 Creating one detail page per product would be absurd. Instead, there is **one** route with a placeholder – and the component reads from the URL which product is meant.
 

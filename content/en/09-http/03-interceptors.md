@@ -1,5 +1,5 @@
 ---
-title: Interceptors and error handling
+title: Interceptors and Error Handling
 minutes: 9
 summary: |-
   - An interceptor (`HttpInterceptorFn`) is a function that sees every request `req` and passes it on with `next(req)`.
@@ -41,7 +41,7 @@ quiz:
     answer: 2
 exercise:
   example: ex-interceptor
-  title: Tokens and error messages
+  title: Tokens and Error Messages
   task: |-
     The profile can't be loaded (401), and errors go unnoticed.
 
@@ -54,7 +54,7 @@ exercise:
     error-banner: "A missing file shows “Request failed: 404” in the banner"
 ---
 
-# Interceptors and error handling
+# Interceptors and Error Handling
 
 Some things apply to every request: sending a login token, reporting errors, logging requests. Instead of repeating that in every service, you write an **interceptor**. It sits between your code and the network and sees every request and every response.
 
@@ -97,6 +97,9 @@ export const loggingInterceptor: HttpInterceptorFn = (req, next) => {
   );
 };
 ```
+
+> [!NOTE]
+> `pipe`, `tap`, `catchError`, `retry`, `throwError` and `EMPTY` come from RxJS: `pipe` chains operators, `tap` peeks at values without changing them, `catchError` catches errors, `retry` tries again, `throwError` creates an observable that fails, and `EMPTY` completes without a value. Chapter 10 (RxJS) explains them properly. For now, this overview is enough.
 
 ::tryit{http-interceptors}
 

@@ -1,5 +1,5 @@
 ---
-title: Custom attribute directives
+title: Custom Attribute Directives
 minutes: 8
 summary: |-
   - A directive has no template of its own – it attaches to an existing element and changes its appearance or behavior.
@@ -48,7 +48,7 @@ quiz:
     answer: 0
 exercise:
   example: ex-directive
-  title: Mark external links
+  title: Mark External Links
   task: |-
     External links should open in a new tab and be recognizable as external.
 
@@ -62,7 +62,7 @@ exercise:
     internal-untouched: The internal link stays unchanged
 ---
 
-# Custom attribute directives
+# Custom Attribute Directives
 
 A **component** brings its own template. A **directive** has none – it attaches to an existing element and changes how it looks or behaves. Angular itself ships directives, such as `routerLink` from the router, which you'll meet later. Now you'll write your own.
 

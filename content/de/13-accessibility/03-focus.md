@@ -179,6 +179,7 @@ Für eigene Overlays, Menüs und Listen bringt das Angular CDK fertige Bausteine
 **FocusTrap** hält den Fokus mit <kbd>Tab</kbd> und <kbd>Shift</kbd>+<kbd>Tab</kbd> innerhalb eines Bereichs:
 
 ```ts
+import { Component, output } from '@angular/core';
 import { CdkTrapFocus } from '@angular/cdk/a11y';
 
 @Component({
@@ -190,7 +191,13 @@ import { CdkTrapFocus } from '@angular/cdk/a11y';
     </div>
   `,
 })
-export class Panel {}
+export class Panel {
+  readonly closed = output();
+
+  close() {
+    this.closed.emit();
+  }
+}
 ```
 
 `cdkTrapFocusAutoCapture` setzt den Fokus beim Erscheinen in den Bereich (auf `cdkFocusInitial`, falls vorhanden) und gibt ihn beim Verschwinden zurück. Mausklicks nach draußen verhindert die Direktive nicht.

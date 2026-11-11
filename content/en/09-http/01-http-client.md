@@ -46,7 +46,7 @@ quiz:
     answer: 1
 exercise:
   example: ex-http-client
-  title: Loading todos from the server
+  title: Loading Todos from the Server
   task: |-
     The todo list is empty. Load it from `/api/todos.json`.
 

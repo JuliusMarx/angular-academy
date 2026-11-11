@@ -1,5 +1,5 @@
 ---
-title: Reporting events with output()
+title: Reporting Events with output()
 minutes: 7
 summary: |-
   - With outputs, a child component reports an event to the parent component.
@@ -28,7 +28,7 @@ quiz:
     answer: 1
 exercise:
   example: ex-outputs
-  title: Report likes upwards
+  title: Report Likes Upwards
   task: |-
     The like button counts its clicks, but the post never hears about them.
 
@@ -40,7 +40,7 @@ exercise:
     sends-count: After three clicks it shows **3 likes**
 ---
 
-# Reporting events with output()
+# Reporting Events with output()
 
 Inputs carry data downwards. For the way back – "the user gave 4 stars" – there are **outputs**. A child component uses them to report an event, and the parent reacts to it.
 

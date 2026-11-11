@@ -1,5 +1,5 @@
 ---
-title: Unit tests and services
+title: Unit Tests and Services
 minutes: 9
 summary: |-
   - New Angular projects test with **Vitest**. Tests live in `.spec.ts` files next to the code, `ng test` runs them.
@@ -42,7 +42,7 @@ quiz:
     answer: 1
 exercise:
   example: ex-test-service
-  title: Tests for a todo list
+  title: Tests for a Todo List
   task: |-
     Write tests for the `TodoList` service in `todo-list.spec.ts`:
 
@@ -58,7 +58,7 @@ exercise:
     catches-clear-bug: A test notices when `clearCompleted()` removes everything
 ---
 
-# Unit tests and services
+# Unit Tests and Services
 
 A **unit test** checks a small part of your app on its own, such as a service or a function. It runs in milliseconds, and you can repeat it after every change. That way you notice right away when you broke something, instead of your users noticing.
 
@@ -86,7 +86,7 @@ describe('formatPrice', () => {
 ```
 
 - `describe` groups related tests.
-- `it` is a single test. Its name describes the expected behaviour, and together they read like a sentence: "formatPrice shows two decimals".
+- `it` is a single test. Its name describes the expected behavior, and together they read like a sentence: "formatPrice shows two decimals".
 - `expect(value)` with a **matcher** checks the result. If it doesn't match, the test fails.
 
 The most important matchers:

@@ -1,5 +1,5 @@
 ---
-title: SSR and hydration
+title: SSR and Hydration
 minutes: 9
 summary: |-
   - With SSR, Angular renders the page on the server and the browser shows finished HTML right away. Prerendering (SSG) renders once at build time.
@@ -42,7 +42,7 @@ quiz:
     explanation: "Constructors, fields and `ngOnInit` also run on the server, where there is no `window`. `afterNextRender()` and `afterRenderEffect()` only run in the browser, after rendering."
 exercise:
   example: ex-after-render
-  title: Measuring a banner
+  title: Measuring a Banner
   task: |-
     The component should show the banner's height. But the banner doesn't exist yet in the constructor, so it always shows 0.
 
@@ -53,7 +53,7 @@ exercise:
     measures-again: After **Toggle size** the height is right again
 ---
 
-# SSR and hydration
+# SSR and Hydration
 
 A plain Angular app first sends the browser an almost empty HTML page. The content only appears once the JavaScript has loaded. With **server-side rendering (SSR)**, Angular renders the page on the server already. The browser gets finished HTML and can show it right away.
 

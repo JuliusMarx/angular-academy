@@ -1,5 +1,5 @@
 ---
-title: UI tests with Playwright
+title: UI Tests with Playwright
 minutes: 10
 summary: |-
   - UI tests (E2E) start the whole app in a real browser and use it like a user. They are slower, so use them only for the most important flows.
@@ -45,7 +45,7 @@ quiz:
     explanation: "`getByRole()` searches the way users and screen readers see the page. The test doesn't break when the structure or CSS classes change, and it checks accessibility along the way."
 exercise:
   example: ex-test-e2e
-  title: UI tests for a newsletter sign-up
+  title: UI Tests for a Newsletter Sign-Up
   task: |-
     Write two more tests in `e2e/newsletter.spec.ts`:
 
@@ -60,7 +60,7 @@ exercise:
     catches-address-bug: A test notices when the confirmation shows the wrong address
 ---
 
-# UI tests with Playwright
+# UI Tests with Playwright
 
 Unit and component tests check individual parts. They don't show whether the app works as a whole: Is the routing wired up correctly? Does the click really reach the server? That's what **UI tests** check, also called **end-to-end tests** (E2E). They start the finished app in a real browser and use it like a user: open the page, fill in a field, click, read the result.
 

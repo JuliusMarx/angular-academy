@@ -1,5 +1,5 @@
 ---
-title: Change detection and zoneless
+title: Change Detection and Zoneless
 minutes: 8
 summary: |-
   - In the past, **Zone.js** watched all asynchronous functions and Angular then checked the whole app. New apps run **without Zone.js**.
@@ -39,7 +39,7 @@ quiz:
     answer: 1
 exercise:
   example: ex-zoneless
-  title: A countdown that moves
+  title: A Countdown That Moves
   task: |-
     The countdown counts down in the background and the weather is being "loaded". But nothing happens on the page.
 
@@ -50,7 +50,7 @@ exercise:
     weather-updates: After loading, the weather shows “Clear skies”
 ---
 
-# Change detection and zoneless
+# Change Detection and Zoneless
 
 **Change detection** is the mechanism Angular uses to bring the DOM in line with your data. The key question is: how does Angular know *when* something has changed?
 

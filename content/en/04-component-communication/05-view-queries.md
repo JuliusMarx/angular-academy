@@ -1,5 +1,5 @@
 ---
-title: Querying child elements with viewChild()
+title: Querying Child Elements with viewChild()
 minutes: 8
 summary: |-
   - `viewChild('search')` accesses an element with `#search` in the component's own template and returns a signal.
@@ -43,7 +43,7 @@ quiz:
     answer: 1
 ---
 
-# Querying child elements with viewChild()
+# Querying Child Elements with viewChild()
 
 Most of the time, inputs, outputs and bindings are enough. Sometimes, though, the class needs direct access to an element or a child component: to focus an input, start a video or expand all entries of a list. That's what **view queries** are for.
 

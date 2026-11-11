@@ -46,7 +46,7 @@ quiz:
     answer: 2
 exercise:
   example: ex-http-resource
-  title: Loading users by ID
+  title: Loading Users by ID
   task: |-
     The buttons change the ID, but nothing is loaded yet.
 
@@ -74,7 +74,7 @@ protected readonly id = signal(1);
 protected readonly product = httpResource<Product>(() => `/api/products/${this.id()}.json`);
 ```
 
-The function reads `id()`. When the ID changes, Angular sends a new request automatically. If an older request is still on its way, it is cancelled, so a stale response can't overwrite the new one.
+The function reads `id()`. When the ID changes, Angular sends a new request automatically. If an older request is still on its way, it is canceled, so a stale response can't overwrite the new one.
 
 `httpResource` uses `HttpClient` internally and, like it, needs no setup. Interceptors you register with `provideHttpClient(withInterceptors(…))` therefore apply here too.
 

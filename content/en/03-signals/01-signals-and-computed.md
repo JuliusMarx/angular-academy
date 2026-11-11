@@ -31,7 +31,7 @@ quiz:
     explanation: computed() is read-only, lazy and cached. It only recalculates when its dependencies change.
 exercise:
   example: ex-signals-counter
-  title: Square and reset
+  title: Square and Reset
   task: |
     The counter in the starter project already works. Extend it:
 

@@ -1,5 +1,5 @@
 ---
-title: The injector hierarchy
+title: The Injector Hierarchy
 minutes: 8
 summary: |-
   - There is the root injector (`providedIn: 'root'` and `app.config.ts`) plus an injector for every component with its own `providers`.
@@ -43,7 +43,7 @@ quiz:
     answer: 1
 exercise:
   example: ex-hierarchy
-  title: Separate scores
+  title: Separate Scores
   task: |-
     Two scoreboards currently share one `ScoreService` – a point for Team A also shows up for Team B.
 
@@ -54,7 +54,7 @@ exercise:
     separate-reset: "**Reset** for Team A only resets Team A"
 ---
 
-# The injector hierarchy
+# The Injector Hierarchy
 
 With `providedIn: 'root'` there is exactly one instance for the whole app. Sometimes, though, every component should have its **own** instance: every form its own draft, every scoreboard its own score. For that, it helps to know how Angular looks for a service.
 

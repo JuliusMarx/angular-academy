@@ -1,5 +1,5 @@
 ---
-title: Lazy loading and child routes
+title: Lazy Loading and Child Routes
 minutes: 8
 summary: |-
   - With lazy loading, Angular loads a route's code only on its first visit – and not again afterwards.
@@ -40,7 +40,7 @@ quiz:
     answer: 1
 ---
 
-# Lazy loading and child routes
+# Lazy Loading and Child Routes
 
 The more pages an app has, the bigger its JavaScript gets. Does a visitor to the start page really need to download the code of the admin area? With **lazy loading**, Angular loads a route's code only when it is visited for the first time.
 

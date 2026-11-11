@@ -1,5 +1,5 @@
 ---
-title: Project start – components and signals
+title: Project Start – Components and Signals
 minutes: 9
 summary: |-
   - In this chapter you build a small task app in four steps: list, detail page, form, server. Each lesson builds on the state of the previous one.
@@ -51,7 +51,7 @@ quiz:
     answer: 2
 exercise:
   example: ex-project-filter
-  title: A filter for the list
+  title: A Filter for the List
   task: |-
     The list should be filterable: all tasks, only open ones or only finished ones.
 
@@ -64,7 +64,7 @@ exercise:
     filter-reacts: A task ticked off under **Open** disappears from the list right away
 ---
 
-# Project start – components and signals
+# Project Start – Components and Signals
 
 You now know all the important building blocks. In this chapter you put them together into **one** app: a small task list. It grows in four steps:
 

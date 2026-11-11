@@ -1,5 +1,5 @@
 ---
-title: Projecting content with ng-content
+title: Projecting Content with ng-content
 minutes: 8
 summary: |-
   - With content projection you pass a component whole markup instead of just data.
@@ -44,7 +44,7 @@ quiz:
     answer: 1
 exercise:
   example: ex-projection
-  title: An alert with a title
+  title: An Alert with a Title
   task: |-
     The alerts in `app.ts` pass content, but `Alert` doesn't show it yet.
 
@@ -56,7 +56,7 @@ exercise:
     fallback-title: The second alert shows the fallback title **Note**
 ---
 
-# Projecting content with ng-content
+# Projecting Content with ng-content
 
 With inputs you give a component **data**. Sometimes, though, you want to hand it whole **markup**: a card should provide a frame, a header and a footer – what goes inside is up to each usage. This is called **content projection**.
 

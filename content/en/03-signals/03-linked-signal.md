@@ -1,5 +1,5 @@
 ---
-title: Dependent state with linkedSignal()
+title: Dependent State with linkedSignal()
 minutes: 7
 summary: |-
   - `linkedSignal()` is a writable signal that resets when its source changes.
@@ -34,7 +34,7 @@ quiz:
     answer: 2
 exercise:
   example: ex-linked-signal
-  title: Reset the selection
+  title: Reset the Selection
   task: |-
     The starter project has a bug: when you switch the category, an item from the old category stays selected.
 
@@ -45,7 +45,7 @@ exercise:
     select-after-reset: Afterwards you can still select by clicking
 ---
 
-# Dependent state with linkedSignal()
+# Dependent State with linkedSignal()
 
 Picture a product picker: the user chooses a product and then a size. When they switch products, the size should jump back to a valid value – but they still need to be able to change the size themselves.
 

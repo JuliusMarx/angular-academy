@@ -1,5 +1,5 @@
 ---
-title: Providers and injection tokens
+title: Providers and Injection Tokens
 minutes: 10
 summary: |-
   - A provider is a rule: "Whoever asks for *X* gets *Y*." You add it to `providers` in `app.config.ts`.
@@ -38,7 +38,7 @@ quiz:
     answer: 1
 exercise:
   example: ex-providers
-  title: Provide a logger and the app name
+  title: Provide a Logger and the App Name
   task: |-
     The app asks for a `Logger` and the token `APP_NAME` – but nothing provides them. That's why it fails to start with the error `NG0201`.
 
@@ -52,7 +52,7 @@ exercise:
     memory-logger: After **Save**, **Saved** appears in the log
 ---
 
-# Providers and injection tokens
+# Providers and Injection Tokens
 
 With `providedIn: 'root'` a service provides itself. Often, though, you want to decide yourself **what** a component gets: a different implementation in a test, a configuration per environment, a value without its own class. That's what **providers** are for.
 

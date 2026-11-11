@@ -4,6 +4,7 @@ minutes: 9
 summary: |-
   - Operatoren steckst du mit `pipe()` hintereinander. `pipe()` gibt ein **neues** Observable zurück, das alte bleibt unverändert.
   - `map` und `filter` funktionieren wie bei Arrays, `tap()` lässt Werte unverändert durch, gut zum Hineinschauen.
+  - `scan()` sammelt wie `reduce`, gibt aber jedes Zwischenergebnis aus.
   - Zeit steuern: `debounceTime(ms)` wartet auf eine Pause, `throttleTime(ms)`, `distinctUntilChanged()`, `delay(ms)`, `take(n)`.
   - `switchMap` bricht das alte innere Observable ab, sobald ein neuer Wert kommt. Ideal für Suchen.
   - `mergeMap` läuft parallel, `concatMap` wartet der Reihe nach, `exhaustMap` ignoriert neue Werte, solange eins läuft.
@@ -70,6 +71,14 @@ of(1, 2, 3, 4)
 `pipe()` ändert das ursprüngliche Observable nicht, sondern gibt ein **neues** zurück. Wie bei Arrays gibt es `map` und `filter`, nur eben für Werte, die nacheinander eintreffen.
 
 `tap()` lässt die Werte unverändert durch und ist praktisch, um mal hineinzuschauen: `tap((v) => console.log('Wert:', v))`.
+
+`scan()` sammelt Werte wie `reduce` bei Arrays, gibt aber **jedes** Zwischenergebnis aus statt nur das letzte:
+
+```ts
+of(1, 2, 3)
+  .pipe(scan((sum, n) => sum + n, 0)) // 0 ist der Startwert
+  .subscribe(console.log);            // → 1, 3, 6
+```
 
 ## Zeit steuern
 

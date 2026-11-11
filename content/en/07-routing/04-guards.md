@@ -1,5 +1,5 @@
 ---
-title: Guards and resolvers
+title: Guards and Resolvers
 minutes: 9
 summary: |-
   - A guard is a function (`CanActivateFn`): `true` lets the navigation continue, a `UrlTree` redirects, `false` only cancels.
@@ -37,7 +37,7 @@ quiz:
     answer: 1
 exercise:
   example: ex-guard
-  title: Protect the admin area
+  title: Protect the Admin Area
   task: |-
     The page `/admin` can be reached by anyone. That should change.
 
@@ -49,7 +49,7 @@ exercise:
     other-pages-open: The start page stays open to everyone
 ---
 
-# Guards and resolvers
+# Guards and Resolvers
 
 Not every page should be open to everyone, and some need data before they can show anything at all. For this, the router can run code before switching pages: **guards** decide *whether* to navigate, **resolvers** load *what* the page needs.
 

@@ -49,6 +49,8 @@ cd mein-projekt
 npm start
 ```
 
+Hast du die CLI mit `npm install -g @angular/cli` global installiert, lautet der Befehl einfach `ng new mein-projekt`.
+
 Anschließend läuft deine App unter `http://localhost:4200`. Jede Änderung im Code wird sofort im Browser sichtbar.
 
 ## Der Aufbau eines Projekts

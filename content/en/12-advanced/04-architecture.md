@@ -43,7 +43,7 @@ quiz:
     answer: 1
 exercise:
   example: ex-architecture
-  title: Splitting up an app
+  title: Splitting Up an App
   task: |-
     The whole app lives in one component. Split it up:
 

@@ -43,7 +43,7 @@ quiz:
     answer: 1
 exercise:
   example: ex-service
-  title: Favorites for everyone
+  title: Favorites for Everyone
   task: |-
     The product list and the header should know the same favorites.
 

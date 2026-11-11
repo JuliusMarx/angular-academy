@@ -39,7 +39,7 @@ quiz:
     answer: 1
 exercise:
   example: ex-performance
-  title: A fast product list
+  title: A Fast Product List
   task: |-
     The list works, but it does too much work:
 

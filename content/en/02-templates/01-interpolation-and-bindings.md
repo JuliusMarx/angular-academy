@@ -1,5 +1,5 @@
 ---
-title: Interpolation & bindings
+title: Interpolation & Bindings
 minutes: 8
 summary: |-
   - `{{ value }}` outputs a value as text (interpolation, class → template).
@@ -32,7 +32,7 @@ quiz:
     answer: 1
 exercise:
   example: ex-bindings
-  title: A personal greeting
+  title: A Personal Greeting
   task: |-
     Connect the input, the heading and the button to the signal `name`:
 
@@ -45,7 +45,7 @@ exercise:
     clear-disabled: '**Clear** is disabled when the name is empty'
 ---
 
-# Interpolation & bindings
+# Interpolation & Bindings
 
 Templates connect your data to the HTML. Angular has three basic syntaxes for this:
 

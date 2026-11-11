@@ -1,5 +1,5 @@
 ---
-title: Focus management
+title: Focus Management
 minutes: 10
 summary: |-
   - Everything you can do with the mouse must also work with the keyboard: <kbd>Tab</kbd>, <kbd>Shift</kbd>+<kbd>Tab</kbd>, Enter, Space, Escape.
@@ -40,7 +40,7 @@ quiz:
     answer: 1
 ---
 
-# Focus management
+# Focus Management
 
 Keyboard users move from element to element with <kbd>Tab</kbd>. The element with the **focus** receives the keys. The browser does most of the work for you – as long as you use native elements. It gets tricky when the page changes without reloading: on route changes, in dialogs and when elements are deleted.
 
@@ -179,6 +179,7 @@ For your own overlays, menus and lists, the Angular CDK has ready-made building 
 **FocusTrap** keeps the focus inside a region for <kbd>Tab</kbd> and <kbd>Shift</kbd>+<kbd>Tab</kbd>:
 
 ```ts
+import { Component, output } from '@angular/core';
 import { CdkTrapFocus } from '@angular/cdk/a11y';
 
 @Component({
@@ -190,7 +191,13 @@ import { CdkTrapFocus } from '@angular/cdk/a11y';
     </div>
   `,
 })
-export class Panel {}
+export class Panel {
+  readonly closed = output();
+
+  close() {
+    this.closed.emit();
+  }
+}
 ```
 
 `cdkTrapFocusAutoCapture` moves the focus into the region when it appears (to `cdkFocusInitial`, if present) and returns it when the region goes away. The directive doesn't prevent mouse clicks outside.

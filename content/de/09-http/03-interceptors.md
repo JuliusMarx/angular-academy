@@ -98,6 +98,9 @@ export const loggingInterceptor: HttpInterceptorFn = (req, next) => {
 };
 ```
 
+> [!NOTE]
+> `pipe`, `tap`, `catchError`, `retry`, `throwError` und `EMPTY` stammen aus RxJS: `pipe` verkettet Operatoren, `tap` schaut Werten zu, ohne sie zu ändern, `catchError` fängt Fehler ab, `retry` versucht es erneut, `throwError` erzeugt ein Observable, das fehlschlägt, und `EMPTY` endet ohne Wert. Kapitel 10 (RxJS) erklärt sie ausführlich. Für jetzt reicht dieser Überblick.
+
 ::tryit{http-interceptors}
 
 Das Beispiel enthält einen `fakeBackendInterceptor`. Er beantwortet `/api/me` selbst, statt die Anfrage weiterzugeben, so wie ein echter Server mit Login-Prüfung. Solche Interceptors sind auch praktisch, um ohne Backend zu entwickeln.

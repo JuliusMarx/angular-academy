@@ -1,11 +1,12 @@
 ---
-title: Passing data with input()
+title: Passing Data with input()
 minutes: 8
 summary: |-
   - `input()` creates a read-only signal. The child component reads it with `name()`, the value belongs to the parent component.
   - `[name]="expression"` passes an expression, `name="Notebook"` without brackets a fixed string.
   - `input(0)` sets a default value, `input.required<string>()` makes the input mandatory. If it's missing, the template doesn't compile (`NG8008`).
   - `transform: numberAttribute` or `booleanAttribute` converts string attributes into numbers or booleans.
+  - Inputs are not set yet in the constructor. Work that needs inputs belongs in `ngOnInit`, which runs once after the first inputs are set.
   - With `alias`, the input has a different name in the template than in the class.
   - With inputs, data only flows from top to bottom.
 
@@ -36,7 +37,7 @@ quiz:
     answer: 1
 exercise:
   example: ex-inputs
-  title: A price tag
+  title: A Price Tag
   task: |-
     The `PriceTag` component still shows `? ?`.
 
@@ -49,7 +50,7 @@ exercise:
     custom-currency: The second tag shows `4.90 USD`
 ---
 
-# Passing data with input()
+# Passing Data with input()
 
 Components become really useful once you can feed them data. A product card should show a mug one time and a backpack the next. For this, the child component declares **inputs** – properties that the parent component sets in its template.
 
@@ -96,6 +97,22 @@ NG8008: Required input 'name' from component ProductCard must be specified.
 
 > [!TIP]
 > Use `input.required()` for everything the component can't work without. That way you don't need `undefined` checks in the template.
+
+## When are inputs available? ngOnInit
+
+In the constructor, inputs are not set yet. Reading a required input there throws an error (`NG0950`). For setup work that needs inputs, use the lifecycle hook **`ngOnInit`**: Angular calls it once, after the first inputs have been set.
+
+```ts
+export class ProductCard implements OnInit {
+  readonly name = input.required<string>();
+
+  ngOnInit() {
+    console.log('Showing', this.name()); // input is set here
+  }
+}
+```
+
+Its counterpart `ngOnDestroy` runs when the component goes away. Alternatively, register cleanup with `inject(DestroyRef).onDestroy(…)`.
 
 ## Converting values with transform
 
