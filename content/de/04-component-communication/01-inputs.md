@@ -4,10 +4,10 @@ minutes: 8
 summary: |-
   - `input()` erzeugt ein schreibgeschütztes Signal. Die Kind-Komponente liest es mit `name()`, der Wert gehört der Eltern-Komponente.
   - `[name]="ausdruck"` übergibt einen Ausdruck, `name="Notebook"` ohne Klammern einen festen String.
-  - `input(0)` setzt einen Standardwert, `input.required<string>()` macht das Input zur Pflicht. Fehlt es, kompiliert das Template nicht (`NG8008`).
+  - `input(0)` setzt einen Standardwert, `input.required<string>()` macht den Input zur Pflicht. Fehlt er, kompiliert das Template nicht (`NG8008`).
   - `transform: numberAttribute` bzw. `booleanAttribute` wandelt String-Attribute in Zahlen bzw. Booleans um.
   - Im Konstruktor sind Inputs noch nicht gesetzt. Arbeit, die Inputs braucht, gehört in `ngOnInit`, das einmal nach dem Setzen der ersten Inputs läuft.
-  - Mit `alias` heißt das Input im Template anders als in der Klasse.
+  - Mit `alias` heißt der Input im Template anders als in der Klasse.
   - Daten fließen bei Inputs nur von oben nach unten.
 
   ```ts
@@ -33,7 +33,7 @@ quiz:
       - Es bindet den Ausdruck Notebook
       - Es übergibt den festen String "Notebook"
       - Es ist ein Syntaxfehler
-      - Es setzt ein HTML-Attribut, aber nicht das Input
+      - Es setzt ein HTML-Attribut, aber nicht den Input
     answer: 1
 exercise:
   example: ex-inputs
@@ -107,7 +107,7 @@ export class ProductCard implements OnInit {
   readonly name = input.required<string>();
 
   ngOnInit() {
-    console.log('Zeige', this.name()); // hier ist das Input gesetzt
+    console.log('Zeige', this.name()); // hier ist der Input gesetzt
   }
 }
 ```
@@ -133,7 +133,7 @@ Jetzt ist `price()` die Zahl `4.9`, und das bloße Attribut `soldOut` wird zu `t
 
 ## Ein anderer Name nach außen
 
-Mit `alias` heißt das Input im Template anders als in der Klasse:
+Mit `alias` heißt der Input im Template anders als in der Klasse:
 
 ```ts
 readonly label = input('', { alias: 'buttonLabel' });

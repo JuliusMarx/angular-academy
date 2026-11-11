@@ -121,7 +121,7 @@ Gibt ein Binding `null` zurück, entfernt Angular den Style wieder.
 
 ## Werte übergeben
 
-Direktiven bekommen Inputs genau wie Komponenten. Hat das Input denselben Namen wie der Selektor, setzt der Attributwert direkt die Farbe:
+Direktiven bekommen Inputs genau wie Komponenten. Hat der Input denselben Namen wie der Selektor, setzt der Attributwert direkt die Farbe:
 
 ```ts
 readonly color = input('', { alias: 'appHighlight' });

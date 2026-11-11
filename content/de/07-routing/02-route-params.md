@@ -5,7 +5,7 @@ summary: |-
   - Ein Doppelpunkt markiert einen Route-Parameter: `products/:id` passt auf `/products/1`, `/products/2` usw.
   - Mit `provideRouter(routes, withComponentInputBinding())` kommen Route- und Query-Parameter als Inputs an. Der Input-Name muss zum Parameter passen (`:id` → `id`).
   - URLs bestehen aus Text: `transform: numberAttribute` macht aus dem Parameter eine Zahl.
-  - Wechselt nur der Parameter, bleibt die Komponente bestehen und nur das Input ändert sich – mit `computed()` passt sich die Anzeige automatisch an.
+  - Wechselt nur der Parameter, bleibt die Komponente bestehen und nur der Input ändert sich – mit `computed()` passt sich die Anzeige automatisch an.
   - `[routerLink]="['/products', p.id]"` setzt die URL aus einem Array zusammen, `[queryParams]` hängt Query-Parameter wie `?sort=price` an.
   - Aus dem Code navigierst du mit `inject(Router)` und `router.navigate(['/products'])`.
 
@@ -79,7 +79,7 @@ export class ProductDetail {
 Der Name des Inputs muss zum Namen des Parameters passen – `:id` → `id`. Weil URLs aus Text bestehen, wandelt `numberAttribute` den Wert in eine Zahl um.
 
 > [!TIP]
-> Wechselt der Nutzer von `/products/1` direkt zu `/products/2`, verwendet Angular dieselbe Komponente weiter und ändert nur das Input. Weil `product` ein `computed()` ist, passt sich die Anzeige automatisch an.
+> Wechselt der Nutzer von `/products/1` direkt zu `/products/2`, verwendet Angular dieselbe Komponente weiter und ändert nur den Input. Weil `product` ein `computed()` ist, passt sich die Anzeige automatisch an.
 
 ## Links mit Parametern
 
