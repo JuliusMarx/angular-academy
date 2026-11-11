@@ -105,8 +105,8 @@ export class TruncatePipe implements PipeTransform {
 ```
 
 ```html
-{{ text | truncate }}               <!-- Standard: 30 Zeichen -->
-{{ text | truncate: 40 }}           <!-- 40 Zeichen -->
+{{ text | truncate }}                 <!-- Standard: 30 Zeichen -->
+{{ text | truncate: 40 }}             <!-- 40 Zeichen -->
 {{ text | truncate: 40 : ' [mehr]' }} <!-- eigenes Suffix -->
 ```
 

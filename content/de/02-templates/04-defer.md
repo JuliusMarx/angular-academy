@@ -18,7 +18,7 @@ summary: |-
   }
   ```
 
-  > [!WARNING] Ausgelagert wird eine Komponente nur, wenn sie in derselben Datei ausschließlich in `@defer`-Blöcken vorkommt, auch nicht in einer `viewChild()`-Abfrage.
+  > [!WARNING] Ausgelagert wird eine Komponente nur, wenn sie in derselben Datei ausschließlich in `@defer`-Blöcken vorkommt – also auch nicht in einer `viewChild()`-Abfrage.
 quiz:
   - question: Was passiert mit dem Code einer Komponente, die nur in einem @defer-Block verwendet wird?
     options:

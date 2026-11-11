@@ -19,7 +19,7 @@ quiz:
   - question: How does the child component trigger an output named rated?
     options: ["this.rated.set(5)", "this.rated(5)", "this.rated.emit(5)", "this.rated.next(5)"]
     answer: 2
-  - question: What is the value an output emitted called in the template?
+  - question: What is the value emitted by an output called in the template?
     options: ["$value", "$event", "$output", "event.detail"]
     answer: 1
     explanation: "For custom outputs, `$event` is the value from `emit()` – for DOM events like `(click)` it's the DOM event."

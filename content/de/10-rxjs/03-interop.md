@@ -39,7 +39,7 @@ quiz:
       - Nur in `ngOnInit`
       - Nur in Services
     answer: 1
-    explanation: "`toSignal()` braucht den `DestroyRef` der Umgebung, um sich abzumelden. Außerhalb eines Injection Context übergibst du ihn mit der Option `injector`."
+    explanation: "`toSignal()` braucht den `DestroyRef` der Umgebung, um sich abzumelden. Außerhalb eines Injection Context übergibst du mit der Option `injector` einen Injector."
 exercise:
   example: ex-interop
   title: Live-Benachrichtigungen

@@ -103,7 +103,7 @@ Die Resource hat dieselben Signals wie `resource()`:
 
 ::tryit{http-resource}
 
-Probiere im Beispiel **Next** bis Produkt 4: Diese Datei gibt es nicht, der Server antwortet mit 404 und `error()` ist gesetzt.
+Klicke im Beispiel auf **Next** bis Produkt 4: Diese Datei gibt es nicht, der Server antwortet mit 404 und `error()` ist gesetzt.
 
 ## Mehr als eine URL
 

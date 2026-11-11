@@ -72,7 +72,7 @@ Das hat eine wichtige Folge: Änderst du ein **normales Feld** in einem Timer od
 protected plainCount = 0;
 protected readonly signalCount = signal(0);
 
-setTimeout(() => this.plainCount++, 1000);                 // Seite bleibt alt
+setTimeout(() => this.plainCount++, 1000);                     // Seite bleibt alt
 setTimeout(() => this.signalCount.update((n) => n + 1), 1000); // Seite aktualisiert sich
 ```
 

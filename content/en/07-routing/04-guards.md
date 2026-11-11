@@ -68,7 +68,7 @@ export const authGuard: CanActivateFn = (_route, state) => {
 ```
 
 - Angular calls guards in an **injection context** – that's why `inject()` works.
-- `state.url` is the URL the user wanted to open. Passed along as `returnUrl`, the login page can send them back there afterwards.
+- `state.url` is the URL the user wanted to open. If you pass it along as `returnUrl`, the login page can send the user back there afterwards.
 
 You attach the guard to the route:
 

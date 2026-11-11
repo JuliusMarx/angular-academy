@@ -72,7 +72,7 @@ export const GLOSSARY: GlossaryEntry[] = [
     term: 'track',
     text: {
       de: 'Pflichtangabe bei `@for`: sagt Angular, woran es Listeneinträge wiedererkennt, damit nur Geändertes neu gerendert wird.',
-      en: 'Required in `@for`: tells Angular how to recognise list items, so only changed ones are re-rendered.',
+      en: 'Required in `@for`: tells Angular how to recognize list items, so only changed ones are re-rendered.',
     },
     lessons: ['templates/control-flow', 'advanced/performance'],
   },
@@ -116,7 +116,7 @@ export const GLOSSARY: GlossaryEntry[] = [
     id: 'linked-signal',
     term: 'linkedSignal()',
     text: {
-      de: 'Beschreibbares Signal, das sich auf einen Startwert zurücksetzt, wenn sich seine Quelle ändert.',
+      de: 'Beschreibbares Signal, das sich auf einen abgeleiteten Wert zurücksetzt, sobald sich seine Quelle ändert.',
       en: 'Writable signal that resets to a derived value whenever its source changes.',
     },
     lessons: ['signals/linked-signal'],
@@ -171,7 +171,7 @@ export const GLOSSARY: GlossaryEntry[] = [
     term: { de: 'Direktive', en: 'Directive' },
     text: {
       de: 'Klasse mit `@Directive`, die einem vorhandenen Element Verhalten oder Aussehen hinzufügt.',
-      en: 'Class with `@Directive` that adds behaviour or styling to an existing element.',
+      en: 'Class with `@Directive` that adds behavior or styling to an existing element.',
     },
     lessons: ['directives-and-pipes/attribute-directives'],
   },

@@ -39,7 +39,7 @@ quiz:
       - Only in `ngOnInit`
       - Only in services
     answer: 1
-    explanation: "`toSignal()` needs the surrounding `DestroyRef` to unsubscribe. Outside an injection context, pass it via the `injector` option."
+    explanation: "`toSignal()` needs the surrounding `DestroyRef` to unsubscribe. Outside an injection context, pass an injector via the `injector` option."
 exercise:
   example: ex-interop
   title: Live notifications

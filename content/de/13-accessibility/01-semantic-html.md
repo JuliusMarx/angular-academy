@@ -144,7 +144,7 @@ Für ARIA-Attribute gibt es meist keine passende DOM-Eigenschaft, die zuverläss
 <a routerLink="/cart" [attr.aria-current]="active() ? 'page' : null">Warenkorb</a>
 ```
 
-Ist der Wert `null` oder `undefined`, entfernt Angular das Attribut. Seit Angular 20.2 darfst du das `attr.` bei ARIA-Attributen auch weglassen: `[aria-current]="…"`. Hat eine Direktive auf dem Element ein Input mit diesem Namen, bekommt allerdings das Input den Wert. Mit `attr.` ist immer klar, dass ein Attribut gemeint ist.
+Ist der Wert `null` oder `undefined`, entfernt Angular das Attribut. Seit Angular 20.2 darfst du das `attr.` bei ARIA-Attributen auch weglassen: `[aria-current]="…"`. Hat eine Direktive auf dem Element einen Input mit diesem Namen, bekommt allerdings der Input den Wert. Mit `attr.` ist immer klar, dass ein Attribut gemeint ist.
 
 > [!TIP]
 > Für aktive Links gibt es schon eine fertige Lösung: `routerLinkActive="active" ariaCurrentWhenActive="page"` setzt `aria-current="page"` automatisch.
